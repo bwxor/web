@@ -15,6 +15,7 @@ import AudioEssentials from "./components/audioessentials/AudioEssentials.tsx";
 import {ThemeProvider} from "./context/ThemeContext.tsx";
 import Register from "./components/auth/Register.tsx";
 import SignIn from "./components/auth/SignIn.tsx";
+import {AuthenticationContextProvider} from "./context/AuthenticationContext.tsx";
 // import YouTube2Mp3 from "./components/yt2mp3/YouTube2Mp3.tsx";
 
 const router = createBrowserRouter(
@@ -39,9 +40,11 @@ const router = createBrowserRouter(
 
 function App() {
     return (
-        <ThemeProvider>
-            <RouterProvider router={router}/>
-        </ThemeProvider>
+        <AuthenticationContextProvider>
+            <ThemeProvider>
+                <RouterProvider router={router}/>
+            </ThemeProvider>
+        </AuthenticationContextProvider>
 
     );
 }

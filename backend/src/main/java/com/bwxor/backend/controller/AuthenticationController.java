@@ -7,16 +7,14 @@ import com.bwxor.backend.response.LoginResponse;
 import com.bwxor.backend.service.AuthenticationService;
 import com.bwxor.backend.service.JwtService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.login.LoginException;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
+@RequestMapping("/api/auth/")
 public class AuthenticationController {
     private final JwtService jwtService;
 
