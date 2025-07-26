@@ -38,7 +38,7 @@ MONGODB_NAME=bwxor
 JWT_SECRET_KEY=<KEY>
 ```
 
-Of course, the `<PASSWORD>` field needs to be replaced with the actual database password, while `KEY` needs to be a secure BASE64 encoded string. 
+Of course, the `<PASSWORD>` field needs to be replaced with the actual database password, while `<KEY>` needs to be a secure BASE64 encoded string. 
 
 #### Run `docker build` to create a new image from the `Dockerfile`:
 ```
