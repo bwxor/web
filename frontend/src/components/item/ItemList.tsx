@@ -21,7 +21,6 @@ function ItemList(props: ItemListProps) {
                 return response.json();
             })
             .then((data) => {
-                console.log(data);
                 setItems(data);
             })
             .catch((error) => console.error(error));

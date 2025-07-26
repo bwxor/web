@@ -354,3 +354,7 @@
 .full-width {
     width: 100%;
 }
+
+.error {
+    color: #e40c2c;
+}

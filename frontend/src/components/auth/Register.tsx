@@ -1,31 +1,105 @@
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useTheme} from "../../context/ThemeContext.tsx";
+import {useEffect, useState} from "react";
+import {useAuth} from "../../context/AuthenticationContext.tsx";
 
 function Register() {
     const {theme} = useTheme();
+    const {auth, initAuth} = useAuth();
+    const navigate = useNavigate();
+
+    const [email, setEmail] = useState("");
+    const [displayName, setDisplayName] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [error, setError] = useState(false);
+
+    useEffect(() => {
+        if (auth.token != "") {
+            navigate("/");
+        }
+    }, []);
+
+    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(event.target.value);
+    }
+
+    const handleDisplayNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setDisplayName(event.target.value);
+    }
+
+
+    const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(event.target.value);
+    }
+
+    const handleConfirmPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setConfirmPassword(event.target.value);
+    }
+
+    const handleRegister = async () => {
+        try {
+            const response = await fetch("https://bwxor.com/api/auth/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email,
+                    displayName,
+                    password,
+                    confirmPassword
+                }),
+            });
+
+            if (!response.ok) {
+                setError(true);
+            }
+
+            const data = await response.json();
+
+            initAuth(data.token, data.user.email, data.user.displayName);
+
+            navigate("/");
+        } catch {
+            setError(true);
+        }
+    }
 
     return (
         <>
             <div className="center">
-                <form className="form">
+                <div className="form">
                     <div className="form-item">
                         <h1>Create an account</h1>
                         <p>Already have an account? <Link to="/signin">Sign in</Link>.</p>
+                        {
+                            error ?
+                                <>
+                                    <div className="form-item error">
+                                        There was an error trying to register.
+                                    </div>
+                                </> :
+                                <></>
+                        }
                     </div>
                     <div className="form-input-group">
                         <label className="form-input-label">E-Mail Address</label>
                         <input type="email" placeholder="johndoe@bwxor.com"
-                               className={"form-input-area textbox textbox-" + theme}></input>
+                               className={"form-input-area textbox textbox-" + theme}
+                        onChange={handleEmailChange}></input>
                     </div>
                     <div className="form-input-group">
                         <label className="form-input-label">Display Name</label>
                         <input type="text" placeholder="John Doe"
-                               className={"form-input-area textbox textbox-" + theme}></input>
+                               className={"form-input-area textbox textbox-" + theme}
+                        onChange={handleDisplayNameChange}></input>
                     </div>
                     <div className="form-input-group">
                         <label className="form-input-label">Password</label>
                         <input type="password" placeholder="PickASecurePassword"
-                               className={"form-input-area textbox textbox-" + theme}></input>
+                               className={"form-input-area textbox textbox-" + theme}
+                        onChange={handlePasswordChange}></input>
                         <div className="form-tip">
                             Your password should consist of:
                             <ul>
@@ -40,13 +114,14 @@ function Register() {
                     <div className="form-input-group">
                         <label className="form-input-label">Confirm Password</label>
                         <input type="password" placeholder="PickASecurePassword"
-                               className={"form-input-area textbox textbox-" + theme}></input>
+                               className={"form-input-area textbox textbox-" + theme}
+                        onChange={handleConfirmPasswordChange}></input>
                     </div>
                     <div className="form-input-group">
-                        <button className={"button button-" + theme}><span className="fa-solid fa-user-plus"></span>Register</button>
+                        <button className={"button button-" + theme} onClick={handleRegister}><span className="fa-solid fa-user-plus"></span>Register</button>
                         <button className={"button button-" + theme}><span className="fa-solid fa-life-ring"></span>Contact support</button>
                     </div>
-                </form>
+                </div>
             </div>
         </>
     );

@@ -62,7 +62,6 @@ function AudioEssentials() {
                 `-filter:a`, `atempo=${tempoMultiplier},asetrate=44100*${pitchMultiplier},aresample=44100`,
                 outputFile
             ]);
-            console.log(outputFile);
             const data = await ffmpeg.readFile(outputFile) as Uint8Array;
 
             // Create a Blob from the Uint8Array returned by ffmpeg

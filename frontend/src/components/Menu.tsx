@@ -1,6 +1,7 @@
 import {Link, Outlet} from "react-router-dom";
 import {useTheme} from "../context/ThemeContext.tsx";
 import {useState} from "react";
+import {useAuth} from "../context/AuthenticationContext.tsx";
 
 interface PopupMenuProps {
     theme: string
@@ -31,6 +32,7 @@ function PopupMenu(props: PopupMenuProps) {
 function Menu() {
     const [popupMenu, setPopupMenu] = useState(false);
     const {theme, toggleTheme} = useTheme();
+    const {auth} = useAuth();
 
     function burgerClickHandler() {
         setPopupMenu(!popupMenu);
@@ -66,9 +68,16 @@ function Menu() {
                             <Link to="/docu">
                                 <span className={"menu-item menu-item-" + theme}>Documentation</span>
                             </Link>
-                            <Link to="/signin">
-                                <span className={"menu-item menu-item-" + theme}>Sign in</span>
-                            </Link>
+                            {auth.token == "" ?
+                                <Link to="/signin">
+                                    <span className={"menu-item menu-item-" + theme}>Sign&nbsp;In</span>
+                                </Link>
+                                :
+                                <Link to="/account">
+                                    <span className={"menu-item menu-item-" + theme}>{auth.displayName}</span>
+                                </Link>
+                            }
+
                         </div>
                         <div className="menu-items-secondary">
                             <div className={"menu-item menu-item-" + theme} onClick={toggleTheme}>

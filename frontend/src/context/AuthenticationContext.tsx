@@ -1,37 +1,42 @@
 import React, { createContext, useEffect, useState, useContext } from 'react';
 
 interface AuthType {
+    token: string;
     email: string;
     displayName: string;
 }
 
 interface AuthenticationContextType {
     auth : AuthType;
-    initAuth: (email:string, displayName: string) => void;
+    initAuth: (token: string, email:string, displayName: string) => void;
 }
 
 const AuthenticationContext = createContext<AuthenticationContextType | undefined>(undefined);
 
 export const AuthenticationContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [auth, setAuth] = useState<AuthType>({ email: "", displayName: "" });
+    const [auth, setAuth] = useState<AuthType>({ token: "", email: "", displayName: "" });
 
     useEffect(() => {
+        const token = sessionStorage.getItem("token");
         const email = sessionStorage.getItem("email");
         const displayName = sessionStorage.getItem("displayName");
-        if (email != null && displayName != null) {
+        if (token != null && token != "" && email != null && email != "" && displayName != null && displayName != "") {
             setAuth({
+                token,
                 email,
                 displayName
             });
         }
     }, []);
 
-    const initAuth = (email:string, displayName: string) => {
+    const initAuth = (token: string, email:string, displayName: string) => {
         setAuth({
+            token,
             email,
             displayName
         });
 
+        sessionStorage.setItem("token", token);
         sessionStorage.setItem("email", email);
         sessionStorage.setItem("displayName", displayName);
     };
