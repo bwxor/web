@@ -71,6 +71,8 @@ img {
     flex: 1;
     padding: 1rem 1.5rem;
     font-family: Roboto;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .body-content-dark {

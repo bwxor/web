@@ -83,6 +83,8 @@
         padding: 0 1.5rem;
         align-items: center;
         height: 4.5rem;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
     }
 
     .menu-small {
@@ -142,6 +144,8 @@
         flex-direction: row;
         align-items: center;
         padding: 1.5rem;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
     }
 
     .menu-branding {

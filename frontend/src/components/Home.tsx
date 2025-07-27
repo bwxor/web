@@ -1,4 +1,5 @@
-import architecture from "../assets/img/architecture.png"
+import architectureLight from "../assets/img/architecture-light.png"
+import architectureDark from "../assets/img/architecture-dark.png"
 import githubDark from "../assets/img/social/github-dark.png"
 import githubLight from "../assets/img/social/github-light.png"
 import linkedin from "../assets/img/social/linkedin.png"
@@ -78,7 +79,7 @@ function Home() {
                     <div className="split-left">
                         <h2>General Architecture of my Website</h2>
                         <div className="center">
-                            <img src={architecture}/>
+                            <img src={theme == "light" ? architectureLight : architectureDark}/>
                         </div>
                     </div>
                     <div className="split-right">
