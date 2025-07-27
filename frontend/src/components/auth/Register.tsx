@@ -39,7 +39,7 @@ function Register() {
 
     const handleRegister = async () => {
         try {
-            const response = await fetch("https://bwxor.com/api/auth/register", {
+            const registerResponse = await fetch("https://bwxor.com/api/auth/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -52,15 +52,28 @@ function Register() {
                 }),
             });
 
-            if (!response.ok) {
+            if (!registerResponse.ok) {
                 setError(true);
+            } else {
+                const loginResponse = await fetch("https://bwxor.com/api/auth/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        email,
+                        password
+                    }),
+                });
+
+                if (!registerResponse.ok) {
+                    setError(true);
+                } else {
+                    const loginData = await loginResponse.json();
+                    initAuth(loginData.token, loginData.user.email, loginData.user.displayName);
+                    navigate("/");
+                }
             }
-
-            const data = await response.json();
-
-            initAuth(data.token, data.user.email, data.user.displayName);
-
-            navigate("/");
         } catch {
             setError(true);
         }
@@ -87,19 +100,19 @@ function Register() {
                         <label className="form-input-label">E-Mail Address</label>
                         <input type="email" placeholder="johndoe@bwxor.com"
                                className={"form-input-area textbox textbox-" + theme}
-                        onChange={handleEmailChange}></input>
+                               onChange={handleEmailChange}></input>
                     </div>
                     <div className="form-input-group">
                         <label className="form-input-label">Display Name</label>
                         <input type="text" placeholder="John Doe"
                                className={"form-input-area textbox textbox-" + theme}
-                        onChange={handleDisplayNameChange}></input>
+                               onChange={handleDisplayNameChange}></input>
                     </div>
                     <div className="form-input-group">
                         <label className="form-input-label">Password</label>
                         <input type="password" placeholder="PickASecurePassword"
                                className={"form-input-area textbox textbox-" + theme}
-                        onChange={handlePasswordChange}></input>
+                               onChange={handlePasswordChange}></input>
                         <div className="form-tip">
                             Your password should consist of:
                             <ul>
@@ -115,11 +128,15 @@ function Register() {
                         <label className="form-input-label">Confirm Password</label>
                         <input type="password" placeholder="PickASecurePassword"
                                className={"form-input-area textbox textbox-" + theme}
-                        onChange={handleConfirmPasswordChange}></input>
+                               onChange={handleConfirmPasswordChange}></input>
                     </div>
                     <div className="form-input-group">
-                        <button className={"button button-" + theme} onClick={handleRegister}><span className="fa-solid fa-user-plus"></span>Register</button>
-                        <button className={"button button-" + theme}><span className="fa-solid fa-life-ring"></span>Contact support</button>
+                        <button className={"button button-" + theme} onClick={handleRegister}><span
+                            className="fa-solid fa-user-plus"></span>Register
+                        </button>
+                        <button className={"button button-" + theme}><span className="fa-solid fa-life-ring"></span>Contact
+                            support
+                        </button>
                     </div>
                 </div>
             </div>

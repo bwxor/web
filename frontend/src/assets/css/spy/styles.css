@@ -11,7 +11,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-family: PoppinsRegular;
+    font-family: Roboto;
 }
 
 @media (orientation: landscape) {
@@ -75,7 +75,7 @@
 
 .spy-textarea {
     flex: 1;
-    font-family: PoppinsRegular;
+    font-family: Roboto;
     font-size: 15px;
     border: 1px solid #484848;
     resize: none;

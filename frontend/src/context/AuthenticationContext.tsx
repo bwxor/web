@@ -14,7 +14,16 @@ interface AuthenticationContextType {
 const AuthenticationContext = createContext<AuthenticationContextType | undefined>(undefined);
 
 export const AuthenticationContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [auth, setAuth] = useState<AuthType>({ token: "", email: "", displayName: "" });
+    const getInitialAuth = (): AuthType => {
+        return {
+            token: sessionStorage.getItem("token") || "",
+            email: sessionStorage.getItem("email") || "",
+            displayName: sessionStorage.getItem("displayName") || "",
+        };
+    };
+
+    const [auth, setAuth] = useState<AuthType>(getInitialAuth);
+
 
     useEffect(() => {
         const token = sessionStorage.getItem("token");

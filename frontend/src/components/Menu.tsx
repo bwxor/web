@@ -3,12 +3,20 @@ import {useTheme} from "../context/ThemeContext.tsx";
 import {useState} from "react";
 import {useAuth} from "../context/AuthenticationContext.tsx";
 
+interface AuthType {
+    token: string;
+    email: string;
+    displayName: string;
+}
+
 interface PopupMenuProps {
     theme: string
+    auth: AuthType
 }
 
 function PopupMenu(props: PopupMenuProps) {
     const theme = props["theme"];
+    const auth = props["auth"];
 
     return (
         <div className={"menu-items-small menu-items-small-" + theme}>
@@ -21,9 +29,15 @@ function PopupMenu(props: PopupMenuProps) {
             <Link to="/docu" style={{color: 'inherit'}} className={"menu-item-small-" + theme}>
                 Documentation
             </Link>
-            <Link to="/signin" style={{color: 'inherit'}} className={"menu-item-small-" + theme}>
-                Sign in
-            </Link>
+            {auth.token == "" ?
+                <Link to="/signin" style={{color: 'inherit'}} className={"menu-item-small-" + theme}>
+                    Sign in
+                </Link>
+                :
+                <Link to="/account" style={{color: 'inherit'}} className={"menu-item-small-" + theme}>
+                    {auth.displayName}
+                </Link>
+            }
         </div>
     );
 }
@@ -88,7 +102,7 @@ function Menu() {
                     </div>
                 </nav>
                 {
-                    popupMenu ? <PopupMenu theme={theme}/> : null
+                    popupMenu ? <PopupMenu theme={theme} auth={auth}/> : null
                 }
 
                 <main className={"body-content body-content-" + theme}>
