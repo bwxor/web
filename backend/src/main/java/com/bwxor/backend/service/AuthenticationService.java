@@ -46,11 +46,11 @@ public class AuthenticationService {
             throw new LoginException("Confirmed password is incorrect.");
         }
 
-        if (!userRepository.findByEmail(input.getEmail()).isEmpty()) {
+        if (userRepository.findByEmail(input.getEmail()).isPresent()) {
             throw new LoginException("A user with the same email already exists.");
         }
 
-        User user = new User(input.getEmail(), input.getDisplayName(), passwordEncoder.encode(input.getPassword()));
+        User user = new User(input.getEmail(), input.getDisplayName(), passwordEncoder.encode(input.getPassword()), false);
         return userRepository.save(user);
     }
 

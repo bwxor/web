@@ -15,11 +15,13 @@ public class User implements UserDetails {
     private String email;
     private String displayName;
     private String password;
+    private boolean admin;
 
-    public User(String email, String displayName, String password) {
+    public User(String email, String displayName, String password, boolean admin) {
         this.email = email;
         this.displayName = displayName;
         this.password = password;
+        this.admin = admin;
     }
 
     public String getId() {
@@ -55,6 +57,14 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
@@ -84,5 +94,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 }
