@@ -23,7 +23,9 @@ public class SecurityConfiguration {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
-                .authorizeHttpRequests((auth) -> auth.anyRequest().permitAll())
+                .authorizeHttpRequests((auth) -> auth
+                        .requestMatchers("/api/profile/**").authenticated()
+                        .anyRequest().permitAll())
                 .sessionManagement((sess) -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();

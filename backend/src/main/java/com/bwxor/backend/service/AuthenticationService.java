@@ -2,7 +2,9 @@ package com.bwxor.backend.service;
 
 import com.bwxor.backend.dto.LoginDto;
 import com.bwxor.backend.dto.RegisterDto;
+import com.bwxor.backend.repository.ProfileRepository;
 import com.bwxor.backend.repository.UserRepository;
+import com.bwxor.backend.util.PasswordValidator;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import com.bwxor.backend.entity.User;
@@ -14,6 +16,8 @@ import javax.security.auth.login.LoginException;
 @Service
 public class AuthenticationService {
     private final UserRepository userRepository;
+    private final ProfileRepository profileRepository;
+    private final PasswordValidator passwordValidator;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -21,11 +25,15 @@ public class AuthenticationService {
 
     public AuthenticationService(
             UserRepository userRepository,
+            ProfileRepository profileRepository,
             AuthenticationManager authenticationManager,
+            PasswordValidator passwordValidator,
             PasswordEncoder passwordEncoder
     ) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
+        this.profileRepository = profileRepository;
+        this.passwordValidator = passwordValidator;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -48,6 +56,10 @@ public class AuthenticationService {
 
         if (userRepository.findByEmail(input.getEmail()).isPresent()) {
             throw new LoginException("A user with the same email already exists.");
+        }
+
+        if (!passwordValidator.validatePassword(input.getPassword())) {
+            throw new LoginException("Password doesn't meet the given criteria.");
         }
 
         User user = new User(input.getEmail(), input.getDisplayName(), passwordEncoder.encode(input.getPassword()), false);

@@ -24,4 +24,8 @@ public class MarkdownService {
     public List<Markdown> findByCategoryAndSlug(String category, String slug) {
         return markdownRepository.findByCategoryAndSlug(category, slug);
     }
+
+    public void createMarkdown() {
+
+    }
 }

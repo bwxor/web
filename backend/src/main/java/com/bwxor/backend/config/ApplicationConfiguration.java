@@ -1,6 +1,7 @@
 package com.bwxor.backend.config;
 
 import com.bwxor.backend.repository.UserRepository;
+import com.bwxor.backend.util.PasswordValidator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,5 +32,10 @@ public class ApplicationConfiguration {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
+    }
+
+    @Bean
+    public PasswordValidator passwordValidator() {
+        return new PasswordValidator();
     }
 }

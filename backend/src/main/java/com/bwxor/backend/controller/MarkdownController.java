@@ -20,13 +20,13 @@ public class MarkdownController {
 
     @GetMapping("/{category}")
     public ResponseEntity<List<MarkdownSummary>> getPagesByCategory(@PathVariable String category) {
-        List<MarkdownSummary> indexPage = markdownService.findByCategory(category);
-        return ResponseEntity.ok(indexPage);
+        List<MarkdownSummary> pages = markdownService.findByCategory(category);
+        return ResponseEntity.ok(pages);
     }
 
     @GetMapping("/{category}/{slug}")
     public ResponseEntity<List<Markdown>> getPagesByCategoryAndSlug(@PathVariable String category, @PathVariable String slug) {
-        List<Markdown> indexPage = markdownService.findByCategoryAndSlug(category, slug);
-        return ResponseEntity.ok(indexPage);
+        List<Markdown> pages = markdownService.findByCategoryAndSlug(category, slug);
+        return ResponseEntity.ok(pages);
     }
 }
