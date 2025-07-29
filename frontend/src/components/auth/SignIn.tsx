@@ -39,6 +39,10 @@ function Register() {
             });
 
             if (!response.ok) {
+                console.log(email);
+                console.log(password);
+                console.log("ok");
+                console.log(response);
                 setError(true);
             }
 

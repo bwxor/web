@@ -14,16 +14,16 @@ public class PasswordValidator {
         }
 
         for (int i = 0; i<password.length(); i++) {
-            if (UPPERCASE.contains(password.substring(i, 1))) {
+            if (UPPERCASE.contains(password.substring(i, i+1))) {
                 hasUppercase = true;
             }
-            else if (LOWERCASE.contains(password.substring(i, 1))) {
+            else if (LOWERCASE.contains(password.substring(i, i+1))) {
                 hasLowerCase = true;
             }
-            else if (DIGITS.contains(password.substring(i, 1))) {
+            else if (DIGITS.contains(password.substring(i, i+1))) {
                 hasDigit = true;
             }
-            else if (SPECIAL_CHARACTERS.contains(password.substring(i, 1))) {
+            else if (SPECIAL_CHARACTERS.contains(password.substring(i, i+1))) {
                 hasSpecialChar = true;
             }
         }

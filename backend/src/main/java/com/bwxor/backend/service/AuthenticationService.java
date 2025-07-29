@@ -2,6 +2,7 @@ package com.bwxor.backend.service;
 
 import com.bwxor.backend.dto.LoginDto;
 import com.bwxor.backend.dto.RegisterDto;
+import com.bwxor.backend.entity.Profile;
 import com.bwxor.backend.repository.ProfileRepository;
 import com.bwxor.backend.repository.UserRepository;
 import com.bwxor.backend.util.PasswordValidator;
@@ -62,8 +63,12 @@ public class AuthenticationService {
             throw new LoginException("Password doesn't meet the given criteria.");
         }
 
-        User user = new User(input.getEmail(), input.getDisplayName(), passwordEncoder.encode(input.getPassword()), false);
-        return userRepository.save(user);
+        User user = new User(input.getEmail(), input.getDisplayName(), passwordEncoder.encode(input.getPassword()));
+        User savedUser = userRepository.save(user);
+
+        Profile profile = new Profile(user.getEmail(), false, 1900, "Unspecified");
+        profileRepository.save(profile);
+        return savedUser;
     }
 
     public User login(LoginDto input) {

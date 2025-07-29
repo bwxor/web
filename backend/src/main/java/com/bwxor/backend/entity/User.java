@@ -15,13 +15,11 @@ public class User implements UserDetails {
     private String email;
     private String displayName;
     private String password;
-    private boolean admin;
 
-    public User(String email, String displayName, String password, boolean admin) {
+    public User(String email, String displayName, String password) {
         this.email = email;
         this.displayName = displayName;
         this.password = password;
-        this.admin = admin;
     }
 
     public String getId() {
@@ -55,14 +53,6 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public boolean isAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
     }
 
     @Override
