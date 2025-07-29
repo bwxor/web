@@ -1,13 +1,13 @@
-package com.bwxor.backend.to;
+package com.bwxor.backend.dto;
 
 import com.bwxor.backend.entity.Markdown;
 
-public class MarkdownSummary {
+public class MarkdownSummaryDto {
     private String title;
     private String slug;
     private String description;
 
-    public MarkdownSummary(Markdown markdown) {
+    public MarkdownSummaryDto(Markdown markdown) {
         this.title = markdown.getTitle();
         this.slug = markdown.getSlug();
         this.description = markdown.getDescription();

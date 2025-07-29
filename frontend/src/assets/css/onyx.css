@@ -398,6 +398,14 @@
     outline: none;
 }
 
+.textbox-error {
+    border-bottom-color: #e40c2c !important;
+}
+
+.textarea-error {
+    border-bottom-color: #e40c2c !important;
+}
+
 /*Others*/
 .full-width {
     width: 100%;

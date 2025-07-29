@@ -2,7 +2,7 @@ package com.bwxor.backend.controller;
 
 import com.bwxor.backend.entity.Markdown;
 import com.bwxor.backend.service.MarkdownService;
-import com.bwxor.backend.to.MarkdownSummary;
+import com.bwxor.backend.dto.MarkdownSummaryDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +19,8 @@ public class MarkdownController {
     private MarkdownService markdownService;
 
     @GetMapping("/{category}")
-    public ResponseEntity<List<MarkdownSummary>> getPagesByCategory(@PathVariable String category) {
-        List<MarkdownSummary> pages = markdownService.findByCategory(category);
+    public ResponseEntity<List<MarkdownSummaryDto>> getPagesByCategory(@PathVariable String category) {
+        List<MarkdownSummaryDto> pages = markdownService.findByCategory(category);
         return ResponseEntity.ok(pages);
     }
 

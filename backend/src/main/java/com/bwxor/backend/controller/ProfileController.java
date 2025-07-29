@@ -1,5 +1,6 @@
 package com.bwxor.backend.controller;
 
+import com.bwxor.backend.dto.ProfileDto;
 import com.bwxor.backend.entity.Profile;
 import com.bwxor.backend.exception.ServiceException;
 import com.bwxor.backend.service.ProfileService;
@@ -23,11 +24,11 @@ public class ProfileController {
     }
 
     @PutMapping("update")
-    public ResponseEntity<Profile> update(@RequestBody Profile profile) {
+    public ResponseEntity<Profile> update(@RequestBody ProfileDto profileDto) {
         Profile updatedProfile;
 
         try {
-            updatedProfile = profileService.update(profile);
+            updatedProfile = profileService.update(profileDto);
         } catch (ServiceException e) {
             return ResponseEntity.badRequest().build();
         }
