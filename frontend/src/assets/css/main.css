@@ -248,15 +248,6 @@ a:hover {
     flex: 1;
 }
 
-.textarea {
-    flex: 1;
-    font-size: 30px;
-    border: 1px solid #1b7cda;
-    resize: none;
-    width: 100%;
-    min-height: 300px;
-}
-
 .slider {
     width: 100%;
     background: #d2d1d1;
@@ -314,6 +305,22 @@ input[type=range] {
     display: flex;
     flex-direction: column;
     gap: .5rem;
+}
+
+.account-group-header {
+    display: flex;
+    flex-direction: row;
+    gap: .75rem;
+}
+
+.account-group-header-title {
+    font-size: 2rem;
+}
+
+.account-group-header-logout {
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
 }
 
 .account-group-label {

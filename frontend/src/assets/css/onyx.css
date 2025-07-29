@@ -325,7 +325,6 @@
 .textbox-light:focus {
     outline: none;
     border-bottom: 3px solid #1b7cda;
-
 }
 
 .textbox-light:active {
@@ -344,7 +343,6 @@
 .textbox-dark:focus {
     outline: none;
     border-bottom: 3px solid #48a5ff;
-
 }
 
 .textbox-dark:active {
@@ -354,6 +352,50 @@
 .form-tip {
     flex: 1;
     font-size: 12px;
+}
+
+.textarea {
+    padding: .35rem;
+    width: 100%;
+    min-height: 75px;
+    max-width: 500px;
+    resize: vertical;
+}
+
+.textarea-light {
+    background-color: transparent;
+    color: #151515;
+    border-top: 0;
+    border-right: 0px;
+    border-bottom: 3px solid #737373;
+    border-left: 0;
+}
+
+.textarea-light:focus {
+    outline: none;
+    border-bottom: 3px solid #1b7cda;
+}
+
+.textarea-dark:active {
+    outline: none;
+}
+
+.textarea-dark {
+    background-color: transparent;
+    color: white;
+    border-top: 0;
+    border-left: 0;
+    border-bottom: 3px solid #737373;
+    border-right: 0;
+}
+
+.textarea-dark:focus {
+    outline: none;
+    border-bottom: 3px solid #48a5ff;
+}
+
+.textarea-dark:active {
+    outline: none;
 }
 
 /*Others*/
