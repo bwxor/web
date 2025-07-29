@@ -338,3 +338,8 @@ input[type=range] {
 .account-group-content-light {
     color: #454545;
 }
+
+.delimited-links {
+    display: inline-flex;
+    gap: .5rem;
+}

@@ -45,7 +45,7 @@ function Account() {
         if (auth.token == "") {
             navigate("/signin");
         } else {
-            fetch("https://bwxor.com/api/profile/" + auth.email)
+            fetch("https://bwxor.com/api/profile/" + auth.id)
                 .then((response) => {
                     return response.json();
                 })
@@ -89,12 +89,12 @@ function Account() {
                 </div>
                 <div className="account-group-item">
                     <div className="account-group-label">
-                        <span className="fa-solid fa-info-circle"></span> <strong>Biography</strong>
+                        <span className="fa-solid fa-info-circle"></span> <strong>Biography </strong>
                         {editBiography ?
-                            <>
+                            <div className="delimited-links">
                                 <a href="#" onClick={handleCancelEditBiographyPress}>Cancel</a>
                                 <a href="#" onClick={handleEditBiographyPress}>Save</a>
-                            </> :
+                            </div> :
                             <>
                                 <a href="#" onClick={handleEditBiographyPress}>Edit</a>
                             </>
@@ -113,13 +113,13 @@ function Account() {
                 </div>
                 <div className="account-group-item">
                     <div className="account-group-label">
-                        <span className="fa-solid fa-calendar"></span> <strong>Birth year</strong>
+                        <span className="fa-solid fa-calendar"></span> <strong>Birth year </strong>
                         {
                             editBirthYear ?
-                                <>
-                                    <a href="#" onClick={handleCancelEditBirthYearPress}>Edit</a>
-                                    <a href="#" onClick={handleEditBirthYearPress}>Edit</a>
-                                </> :
+                                <div className="delimited-links">
+                                    <a href="#" onClick={handleCancelEditBirthYearPress}>Cancel</a>
+                                    <a href="#" onClick={handleEditBirthYearPress}>Save</a>
+                                </div> :
                                 <>
                                     <a href="#" onClick={handleEditBirthYearPress}>Edit</a>
                                 </>

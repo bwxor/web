@@ -16,6 +16,12 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
+    @GetMapping("find/{email}")
+    public ResponseEntity<Profile> findByEmail(@PathVariable String email) {
+        Profile foundProfile = profileService.findByEmail(email);
+        return ResponseEntity.ok(foundProfile);
+    }
+
     @PutMapping("update")
     public ResponseEntity<Profile> update(@RequestBody Profile profile) {
         Profile updatedProfile;
