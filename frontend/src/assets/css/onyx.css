@@ -291,6 +291,11 @@
     gap: 1.5rem;
 }
 
+.form-large {
+    max-width: 1000px !important;
+    width: 100% !important;
+}
+
 .form-item {
     flex: 1;
 }
@@ -311,6 +316,10 @@
 
 .textbox {
     padding: .35rem;
+}
+
+.textbox-large {
+    width: 100% !important;
 }
 
 .textbox-light {
@@ -360,6 +369,12 @@
     min-height: 75px;
     max-width: 500px;
     resize: vertical;
+}
+
+.textarea-large {
+    max-width: 1000px !important;
+    min-height: 350px;
+    width: 100% !important;
 }
 
 .textarea-light {
