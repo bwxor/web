@@ -94,7 +94,7 @@ function CreateItem() {
             });
     }
 
-    function isValidSlug(str) {
+    function isValidSlug(str: string) {
         let code, i, len;
 
         let minusPreviously = false;
@@ -108,11 +108,11 @@ function CreateItem() {
             if (!(code > 47 && code < 58) && // numeric (0-9)
                 !(code > 64 && code < 91) && // upper alpha (A-Z)
                 !(code > 96 && code < 123) // lower alpha (a-z)
-                && code != '-') {
+                && code != 45) {
                 return false;
             }
 
-            if (code == '-') {
+            if (code == 45) {
                 if (minusPreviously) {
                     return true;
                 }
@@ -158,7 +158,7 @@ function CreateItem() {
             if (!response.ok) {
                 setError(true);
             } else {
-                navigate("/" + props.category + "/" + slug);
+                navigate("/" + category + "/" + slug);
             }
         }
     }
