@@ -55,7 +55,7 @@ function ItemList(props: ItemListProps) {
         <section className="projects">
             {auth.token != "" && profile?.admin ?
                 <div className="management-button-group">
-                    <Link to={"/new"} style={{ textDecoration: 'none' }}>
+                    <Link to={"/new/" + props.category} style={{ textDecoration: 'none' }}>
                         <button className={"button button-" + theme + " management-button-group-item"}><span
                             className="fa-solid fa-plus"> </span> Add new
                         </button>

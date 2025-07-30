@@ -32,7 +32,7 @@ const router = createBrowserRouter(
                 <Route path="register" element={<Register/>}/>
                 <Route path="signin" element={<SignIn/>}/>
                 <Route path="account" element={<Account />} />
-                <Route path="new" element={<CreateItem />} />
+                <Route path="new/:category" element={<CreateItem />} />
             </Route>
             <Route path="apps/spy" element={<Spy/>}/>
             <Route path="kerwei" element={<Kerwei/>}/>

@@ -1,32 +1,18 @@
-package com.bwxor.backend.entity;
+package com.bwxor.backend.dto;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document("Markdown")
-public class Markdown {
-    @Id
-    private String id;
+public class CreatePageDto {
     private String title;
     private String slug;
     private String category;
     private String content;
     private String description;
 
-    public Markdown(String title, String slug, String category, String content, String description) {
+    public CreatePageDto(String title, String slug, String category, String content, String description) {
         this.title = title;
         this.slug = slug;
         this.category = category;
         this.content = content;
         this.description = description;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getTitle() {
