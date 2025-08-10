@@ -28,3 +28,9 @@
     font-size: 85%;
     font-style: italic;
 }
+
+.photo-button-row {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
