@@ -35,6 +35,12 @@ const translatedItems = [
 ]
 
 function getIndexOfCurrentEvent() {
+    if (year > eventDate.year ||
+        (year == eventDate.year && month > eventDate.month) ||
+        (year == eventDate.year && month == eventDate.month && day > eventDate.day)) {
+        return translatedItems.length;
+    }
+
     if (day == eventDate.day && month == eventDate.month && year == eventDate.year) {
         // Do nothing
     }
@@ -64,11 +70,11 @@ function Kerwei() {
                 <h1>Lowriner Kerwei</h1>
                 <TranslatedItem romanian="Sâmbătă, 9 august 2025" german= "Samstag, 9. August 2025" />
 
-                <h2>Program</h2>
+                <h2>Program / Programmbuch</h2>
                 <div className="translated-item-list">
                     {translatedItems.map((item, i) => (
                         <TranslatedItem key={i}
-                                        status={i < indexOfCurrentEvent ? "✅" : (
+                                        status= {i < indexOfCurrentEvent ? "✅" : (
                                             i == indexOfCurrentEvent ? "⌛" : "❌"
                                         )}
                                         title={item.hour + ":" + item.min}
@@ -78,7 +84,9 @@ function Kerwei() {
                 </div>
 
                 <br/>
-                Fotografiile nu sunt momentan valabile, dar vor putea fi descărcate de aici.
+
+                <h2>Fotografii / Fotos</h2>
+                <button className="button button-light"><a href="https://drive.google.com/drive/folders/1shq_SiTwPmEBLEyjmyx0lRyh3U9Xhlkv?usp=sharing" style={{color: 'inherit'}}><span className="fa-solid fa-camera"> </span> &nbsp;Ciprian Borozoiu (Drive Link)</a></button>
 
             </div>
         </>
