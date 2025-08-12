@@ -365,3 +365,9 @@ input[type=range] {
 .form-button-group-item {
     flex: 1;
 }
+
+.items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}

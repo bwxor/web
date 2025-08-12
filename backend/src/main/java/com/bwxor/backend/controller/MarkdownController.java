@@ -1,5 +1,6 @@
 package com.bwxor.backend.controller;
 
+import com.bwxor.backend.dto.CreatePageDto;
 import com.bwxor.backend.entity.Markdown;
 import com.bwxor.backend.service.MarkdownService;
 import com.bwxor.backend.dto.MarkdownSummaryDto;
@@ -28,5 +29,12 @@ public class MarkdownController {
     public ResponseEntity<List<Markdown>> getPagesByCategoryAndSlug(@PathVariable String category, @PathVariable String slug) {
         List<Markdown> pages = markdownService.findByCategoryAndSlug(category, slug);
         return ResponseEntity.ok(pages);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<Markdown> createPage(@RequestBody CreatePageDto page) {
+        Markdown createdPage = markdownService.createPage(page);
+
+        return createdPage != null ? ResponseEntity.ok(createdPage) : ResponseEntity.badRequest().build();
     }
 }

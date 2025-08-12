@@ -87,6 +87,7 @@ function Kerwei() {
 
                 <h2>Fotografii / Fotos</h2>
                 <div className="photo-button-row">
+                <button className="button button-light"><a href="https://drive.google.com/drive/folders/1wBQ5JKakvrjCHrKM4eKV4wQm0qvGa4Q3?usp=drive_link" style={{color: 'inherit'}}><span className="fa-solid fa-camera"> </span> &nbsp;Luci Oprea</a></button>
                 <button className="button button-light"><a href="https://borozoiuciprian.smugmug.com/Zilele-Lovrinului/Kerwei/n-gStmbD" style={{color: 'inherit'}}><span className="fa-solid fa-camera"> </span> &nbsp;Ciprian Borozoiu</a></button>
                 <button className="button button-light"><a href="https://drive.google.com/drive/folders/1o0BTlptIrmxgpFWlgJPEAQNG0vTUPdKv?usp=sharing" style={{color: 'inherit'}}><span className="fa-solid fa-camera"> </span> &nbsp;Dragos Chirita</a></button>
                <button className="button button-light"><a href="https://s.go.ro/6j2mttz1" style={{color: 'inherit'}}><span className="fa-solid fa-camera"> </span> &nbsp;Razvan Hodorog</a></button>

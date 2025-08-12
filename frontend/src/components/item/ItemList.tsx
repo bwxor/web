@@ -65,7 +65,7 @@ function ItemList(props: ItemListProps) {
                     </button>
                 </div>
                 : <></>}
-            <div>
+            <div className="items">
                 {items.map((item: ItemInfo) => <ItemSummary key={item.id} category={props.category} slug={item.slug}
                                                             title={item.title} description={item.description}/>)}
             </div>

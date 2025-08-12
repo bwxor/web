@@ -1,19 +1,41 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
 import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vs, vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { useTheme } from "../../context/ThemeContext.tsx";
-import { Components } from "react-markdown";
+import {Prism as SyntaxHighlighter} from "react-syntax-highlighter";
+import {vs, vscDarkPlus} from "react-syntax-highlighter/dist/esm/styles/prism";
+import {useTheme} from "../../context/ThemeContext.tsx";
+import {Components} from "react-markdown";
+import {useAuth} from "../../context/AuthenticationContext.tsx";
 
 interface ItemViewProps {
     category: string | undefined;
 }
 
+interface ProfileType {
+    admin: boolean;
+    biography: string;
+    birthYear: string;
+}
+
 function ItemView(props: ItemViewProps) {
-    const { slug } = useParams();
+    const {slug} = useParams();
     const [markdown, setMarkdown] = useState("Loading...");
-    const { theme } = useTheme();
+    const {theme} = useTheme();
+    const {auth} = useAuth();
+    const [profile, setProfile] = useState<ProfileType | null>({biography: "", birthYear: "", admin: false});
+
+    useEffect(() => {
+        if (auth.token != "") {
+            fetch("https://bwxor.com/api/profile/find/" + auth.email)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    setProfile(data);
+                })
+                .catch((error) => console.error(error));
+        }
+    }, [])
 
     useEffect(() => {
         fetch(`https://bwxor.com/api/pages/${props.category}/${slug}`)
@@ -23,10 +45,10 @@ function ItemView(props: ItemViewProps) {
     }, [props.category, slug]);
 
     const components: Components = {
-        code({ inline, className, children, ...props } : {
+        code({inline, className, children, ...props}: {
             inline?: boolean;
             className?: string;
-            children?:React.ReactNode;
+            children?: React.ReactNode;
         }) {
             const match = /language-(\w+)/.exec(className || "");
             return !inline && match ? (
@@ -47,9 +69,22 @@ function ItemView(props: ItemViewProps) {
     };
 
     return (
-        <ReactMarkdown components={components}>
-            {markdown}
-        </ReactMarkdown>
+        <>
+            {auth.token != "" && profile?.admin ?
+                <div className="management-button-group">
+                    <button className={"button button-" + theme + " management-button-group-item"}><span
+                        className="fa-solid fa-pen"> </span> Edit
+                    </button>
+                    <button className={"button button-red management-button-group-item"}><span
+                        className="fa-solid fa-trash"> </span> Delete
+                    </button>
+                </div>
+                : <></>}
+
+            <ReactMarkdown components={components}>
+                {markdown}
+            </ReactMarkdown>
+        </>
     );
 }
 
