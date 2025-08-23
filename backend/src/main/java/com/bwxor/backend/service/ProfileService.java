@@ -1,8 +1,8 @@
 package com.bwxor.backend.service;
 
-import com.bwxor.backend.dto.ProfileDto;
+import com.bwxor.backend.dto.auth.UpdateProfileRequestDto;
+import com.bwxor.backend.reqres.ServiceResponse;
 import com.bwxor.backend.entity.Profile;
-import com.bwxor.backend.exception.ServiceException;
 import com.bwxor.backend.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,27 +12,33 @@ public class ProfileService {
     @Autowired
     private ProfileRepository profileRepository;
 
-    public Profile findByEmail(String email) {
-        return profileRepository.findByEmail(email).orElse(null);
+    public ServiceResponse<Profile> findByEmail(String email) {
+        var foundProfile = profileRepository.findByEmail(email);
+
+        if (foundProfile.isPresent()) {
+            return ServiceResponse.ofItem(foundProfile.get());
+        }
+
+        return ServiceResponse.ofError(Profile.class, "Could not find profile with specified email.");
     }
 
-    public Profile update(ProfileDto updatedProfileInfo) throws ServiceException {
+    public ServiceResponse<Profile> update(UpdateProfileRequestDto updateProfileInfo) {
+        var foundProfile = profileRepository.findByEmail(updateProfileInfo.email());
 
-        String id = profileRepository.findByEmail(updatedProfileInfo.getEmail()).orElseThrow(
-                () -> new ServiceException(null)
-        ).getId();
+        if (foundProfile.isEmpty()) {
+            return ServiceResponse.ofError(Profile.class, "Could not find profile with specified email.");
+        }
 
-        Profile profileToBeUpdated = new Profile(
-                updatedProfileInfo.getEmail(),
-                updatedProfileInfo.isAdmin(),
-                updatedProfileInfo.getBirthYear(),
-                updatedProfileInfo.getBiography()
+        Profile newProfileData = new Profile(
+                updateProfileInfo.email(),
+                updateProfileInfo.isAdmin(),
+                updateProfileInfo.birthYear(),
+                updateProfileInfo.biography()
         );
 
-        profileToBeUpdated.setId(id);
+        newProfileData.setId(foundProfile.get().getId());
+        profileRepository.save(newProfileData);
 
-        profileRepository.save(profileToBeUpdated);
-
-        return profileToBeUpdated;
+        return ServiceResponse.ofItem(newProfileData);
     }
 }

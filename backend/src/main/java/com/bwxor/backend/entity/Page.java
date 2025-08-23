@@ -3,8 +3,8 @@ package com.bwxor.backend.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document("Markdown")
-public class Markdown {
+@Document("Page")
+public class Page {
     @Id
     private String id;
     private String title;
@@ -13,7 +13,7 @@ public class Markdown {
     private String content;
     private String description;
 
-    public Markdown(String title, String slug, String category, String content, String description) {
+    public Page(String title, String slug, String category, String content, String description) {
         this.title = title;
         this.slug = slug;
         this.category = category;

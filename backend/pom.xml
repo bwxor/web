@@ -67,13 +67,6 @@
 			<version>2.8.6</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.github.sealedtx/java-youtube-downloader -->
-		<dependency>
-			<groupId>com.github.sealedtx</groupId>
-			<artifactId>java-youtube-downloader</artifactId>
-			<version>3.2.6</version>
-		</dependency>
-
 		<!-- JWT Token Management -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>

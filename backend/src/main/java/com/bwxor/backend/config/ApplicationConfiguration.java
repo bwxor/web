@@ -2,6 +2,7 @@ package com.bwxor.backend.config;
 
 import com.bwxor.backend.repository.UserRepository;
 import com.bwxor.backend.util.PasswordValidator;
+import com.bwxor.backend.validator.impl.SlugValidator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -42,12 +43,17 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    AuthenticationProvider authenticationProvider() {
+    public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
         authProvider.setUserDetailsService(userDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;
+    }
+
+    @Bean
+    public SlugValidator slugValidator() {
+        return new SlugValidator();
     }
 }
