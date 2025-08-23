@@ -24,12 +24,12 @@ function ItemView(props: ItemViewProps) {
     const {auth} = useAuth();
     const [profile, setProfile] = useState<ProfileType | null>({biography: "", birthYear: "", admin: false});
     const navigate = useNavigate();
-    
+
     const handleDeletePress = async () => {
         const confirmed = window.confirm("Are you sure you want to delete the page?");
         if (confirmed) {
             try {
-                const registerResponse = await fetch("http://localhost:8080/api/pages/delete", {
+                const registerResponse = await fetch("https://bwxor.com/api/pages/delete", {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
@@ -58,7 +58,7 @@ function ItemView(props: ItemViewProps) {
 
     useEffect(() => {
         if (auth.token != "") {
-            fetch("http://localhost:8080/api/profile/find/" + auth.email)
+            fetch("https://bwxor.com/api/profile/find/" + auth.email)
                 .then((response) => {
                     return response.json();
                 })
@@ -70,7 +70,7 @@ function ItemView(props: ItemViewProps) {
     }, [])
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/pages/${props.category}/${slug}`)
+        fetch(`https://bwxor.com/api/pages/${props.category}/${slug}`)
             .then((response) => response.json())
             .then((data) => setMarkdown(data.content))
             .catch(() => setMarkdown("ItemView with specified name not found."));
