@@ -64,7 +64,7 @@ function Account() {
         else {
             setErrorBiography(false);
 
-            const response = await fetch("https://bwxor.com/api/profile/update", {
+            const response = await fetch("http://localhost:8080/api/profile/update", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -97,7 +97,7 @@ function Account() {
         else {
             setErrorBirthYear(false);
 
-            const response = await fetch("https://bwxor.com/api/profile/update", {
+            const response = await fetch("http://localhost:8080/api/profile/update", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -127,11 +127,12 @@ function Account() {
         if (auth.token == "") {
             navigate("/signin");
         } else {
-            fetch("https://bwxor.com/api/profile/find/" + auth.email)
+            fetch("http://localhost:8080/api/profile/find/" + auth.email)
                 .then((response) => {
                     return response.json();
                 })
                 .then((data) => {
+                    console.log(data);
                     setProfile(data);
                 })
                 .catch((error) => console.error(error));

@@ -6,6 +6,8 @@ import com.bwxor.backend.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/auth/")
@@ -24,7 +26,7 @@ public class AuthenticationController {
             return ResponseEntity.ok(registerResponse.item());
         }
 
-        return ResponseEntity.badRequest().body(registerResponse.serviceError().message());
+        return ResponseEntity.badRequest().body(Map.of("message", registerResponse.serviceError().message()));
     }
 
     @PostMapping("/login")
@@ -32,9 +34,9 @@ public class AuthenticationController {
         var loginResponse = authenticationService.login(loginUserDto);
 
         if (!loginResponse.ok()) {
-            return ResponseEntity.badRequest().body(loginResponse.serviceError().message());
+            return ResponseEntity.badRequest().body(Map.of("message", loginResponse.serviceError().message()));
         }
 
-        return ResponseEntity.ok(loginResponse);
+        return ResponseEntity.ok(loginResponse.item());
     }
 }

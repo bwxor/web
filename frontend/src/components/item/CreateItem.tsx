@@ -45,6 +45,7 @@ function CreateItem() {
     const [errorDescription, setErrorDescription] = useState(false);
     const [errorContent, setErrorContent] = useState(false);
     const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const title = event.target.value;
@@ -79,7 +80,7 @@ function CreateItem() {
     }
 
     const fetchProfile = async () => {
-        await fetch("https://bwxor.com/api/profile/find/" + auth.email)
+        await fetch("http://localhost:8080/api/profile/find/" + auth.email)
             .then((response) => {
                 return response.json();
             })
@@ -126,6 +127,7 @@ function CreateItem() {
 
     const handleCreateClick = async () => {
         setError(false);
+        setErrorMessage("");
         setErrorTitle(false);
         setErrorSlug(false);
         setErrorDescription(false);
@@ -140,7 +142,7 @@ function CreateItem() {
         } else if (content.trim() == "") {
             setErrorContent(true);
         } else {
-            const response = await fetch("https://bwxor.com/api/pages/create", {
+            const response = await fetch("http://localhost:8080/api/pages/create", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -156,7 +158,9 @@ function CreateItem() {
             });
 
             if (!response.ok) {
+                const errorData = await response.json();
                 setError(true);
+                setErrorMessage(errorData.message);
             } else {
                 navigate("/" + category + "/" + slug);
             }
@@ -184,7 +188,7 @@ function CreateItem() {
                         {error ?
                             <>
                                 <div className="form-item error">
-                                    Could not create new item. Make sure the slug doesn't already exist.
+                                    {errorMessage}
                                 </div>
                             </> :
                             <></>

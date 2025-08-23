@@ -9,6 +9,7 @@ function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -27,7 +28,7 @@ function Register() {
 
     const handleAuth = async () => {
         try {
-            const response = await fetch("https://bwxor.com/api/auth/login", {
+            const response = await fetch("http://localhost:8080/api/auth/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -39,11 +40,13 @@ function Register() {
             });
 
             if (!response.ok) {
+                const errorData = await response.json();
                 setError(true);
+                setErrorMessage(errorData.message);
             }
 
             const data = await response.json();
-
+            console.log(data);
             initAuth(data.token, data.user.email, data.user.displayName);
 
             navigate("/");
@@ -63,7 +66,7 @@ function Register() {
                             error ?
                                 <>
                                     <div className="form-item error">
-                                        There was an error trying to sign in.
+                                        {errorMessage}
                                     </div>
                                 </> :
                                 <></>

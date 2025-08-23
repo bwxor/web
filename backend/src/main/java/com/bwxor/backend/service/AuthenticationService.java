@@ -11,6 +11,7 @@ import com.bwxor.backend.util.PasswordValidator;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import com.bwxor.backend.entity.User;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -77,12 +78,16 @@ public class AuthenticationService {
     }
 
     public ServiceResponse<LoginResponseDto> login(LoginRequestDto input) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        input.email(),
-                        input.password()
-                )
-        );
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            input.email(),
+                            input.password()
+                    )
+            );
+        } catch(AuthenticationException ex) {
+            return ServiceResponse.ofError(LoginResponseDto.class, "Email or password are invalid.");
+        }
 
         var user = userRepository.findByEmail(input.email());
         if (user.isEmpty()) {

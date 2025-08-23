@@ -5,6 +5,8 @@ import com.bwxor.backend.service.ProfileService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/profile/")
@@ -23,7 +25,7 @@ public class ProfileController {
             return ResponseEntity.ok(findProfileResponse.item());
         }
 
-        return ResponseEntity.badRequest().body(findProfileResponse.serviceError().message());
+        return ResponseEntity.badRequest().body(Map.of("message", findProfileResponse.serviceError().message()));
     }
 
     @PutMapping("update")
@@ -34,6 +36,6 @@ public class ProfileController {
             return ResponseEntity.ok(updateProfileResponse.item());
         }
 
-        return ResponseEntity.badRequest().body(updateProfileResponse.serviceError().message());
+        return ResponseEntity.badRequest().body(Map.of("message", updateProfileResponse.serviceError().message()));
     }
 }

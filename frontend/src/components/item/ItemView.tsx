@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import ReactMarkdown from "react-markdown";
 import {Prism as SyntaxHighlighter} from "react-syntax-highlighter";
@@ -23,10 +23,42 @@ function ItemView(props: ItemViewProps) {
     const {theme} = useTheme();
     const {auth} = useAuth();
     const [profile, setProfile] = useState<ProfileType | null>({biography: "", birthYear: "", admin: false});
+    const navigate = useNavigate();
+    
+    const handleDeletePress = async () => {
+        const confirmed = window.confirm("Are you sure you want to delete the page?");
+        if (confirmed) {
+            try {
+                const registerResponse = await fetch("http://localhost:8080/api/pages/delete", {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + auth.token
+                    },
+                    body: JSON.stringify({
+                        slug: slug,
+                        category: props.category
+                    }),
+                });
+
+                if (!registerResponse.ok) {
+                    const errorData = await registerResponse.json();
+                    alert(errorData.message);
+                } else {
+                    alert("Page deleted successfully");
+                    navigate(`/${props.category}`)
+                }
+            } catch {
+                alert("There was an unexpected error while trying to delete the page.");
+            }
+        } else {
+            // Ignore deletion attempt
+        }
+    }
 
     useEffect(() => {
         if (auth.token != "") {
-            fetch("https://bwxor.com/api/profile/find/" + auth.email)
+            fetch("http://localhost:8080/api/profile/find/" + auth.email)
                 .then((response) => {
                     return response.json();
                 })
@@ -38,9 +70,9 @@ function ItemView(props: ItemViewProps) {
     }, [])
 
     useEffect(() => {
-        fetch(`https://bwxor.com/api/pages/${props.category}/${slug}`)
+        fetch(`http://localhost:8080/api/pages/${props.category}/${slug}`)
             .then((response) => response.json())
-            .then((data) => setMarkdown(data[0].content))
+            .then((data) => setMarkdown(data.content))
             .catch(() => setMarkdown("ItemView with specified name not found."));
     }, [props.category, slug]);
 
@@ -75,7 +107,8 @@ function ItemView(props: ItemViewProps) {
                     <button className={"button button-" + theme + " management-button-group-item"}><span
                         className="fa-solid fa-pen"> </span> Edit
                     </button>
-                    <button className={"button button-red management-button-group-item"}><span
+                    <button className={"button button-red management-button-group-item"}
+                            onClick={handleDeletePress}><span
                         className="fa-solid fa-trash"> </span> Delete
                     </button>
                 </div>

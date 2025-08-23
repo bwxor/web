@@ -13,6 +13,7 @@ function Register() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
         if (auth.token != "") {
@@ -39,7 +40,7 @@ function Register() {
 
     const handleRegister = async () => {
         try {
-            const registerResponse = await fetch("https://bwxor.com/api/auth/register", {
+            const registerResponse = await fetch("http://localhost:8080/api/auth/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -53,9 +54,11 @@ function Register() {
             });
 
             if (!registerResponse.ok) {
+                const errorData = await registerResponse.json();
                 setError(true);
+                setErrorMessage(errorData.message);
             } else {
-                const loginResponse = await fetch("https://bwxor.com/api/auth/login", {
+                const loginResponse = await fetch("http://localhost:8080/api/auth/login", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -70,7 +73,7 @@ function Register() {
                     setError(true);
                 } else {
                     const loginData = await loginResponse.json();
-                    initAuth(loginData.token, loginData.user.email, loginData.user.displayName);
+                    initAuth(logindata.token, logindata.user.email, logindata.user.displayName);
                     navigate("/");
                 }
             }
@@ -90,7 +93,7 @@ function Register() {
                             error ?
                                 <>
                                     <div className="form-item error">
-                                        There was an error trying to register.
+                                        {errorMessage}
                                     </div>
                                 </> :
                                 <></>
