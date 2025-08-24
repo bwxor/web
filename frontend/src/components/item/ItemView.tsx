@@ -25,6 +25,10 @@ function ItemView(props: ItemViewProps) {
     const [profile, setProfile] = useState<ProfileType | null>({biography: "", birthYear: "", admin: false});
     const navigate = useNavigate();
 
+    const handleEditPress = () => {
+        navigate("/update/" + props.category + "/" + slug)
+    }
+
     const handleDeletePress = async () => {
         const confirmed = window.confirm("Are you sure you want to delete the page?");
         if (confirmed) {
@@ -73,7 +77,7 @@ function ItemView(props: ItemViewProps) {
         fetch(`https://bwxor.com/api/pages/${props.category}/${slug}`)
             .then((response) => response.json())
             .then((data) => setMarkdown(data.content))
-            .catch(() => setMarkdown("ItemView with specified name not found."));
+            .catch(() => setMarkdown("Page with given info not found."));
     }, [props.category, slug]);
 
     const components: Components = {
@@ -104,7 +108,8 @@ function ItemView(props: ItemViewProps) {
         <>
             {auth.token != "" && profile?.admin ?
                 <div className="management-button-group">
-                    <button className={"button button-" + theme + " management-button-group-item"}><span
+                    <button className={"button button-" + theme + " management-button-group-item"}
+                    onClick={handleEditPress}><span
                         className="fa-solid fa-pen"> </span> Edit
                     </button>
                     <button className={"button button-red management-button-group-item"}

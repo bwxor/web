@@ -2,6 +2,7 @@ package com.bwxor.backend.service;
 
 import com.bwxor.backend.dto.page.CreatePageRequestDto;
 import com.bwxor.backend.dto.page.DeletePageRequestDto;
+import com.bwxor.backend.dto.page.UpdatePageRequestDto;
 import com.bwxor.backend.reqres.ServiceResponse;
 import com.bwxor.backend.entity.Page;
 import com.bwxor.backend.entity.Profile;
@@ -62,7 +63,7 @@ public class PageService {
                         || pageInfo.slug().isBlank()
                         || pageInfo.category().isBlank()
                         || pageInfo.content().isBlank()
-                || pageInfo.description().isBlank()) {
+                        || pageInfo.description().isBlank()) {
                     return ServiceResponse.ofError(Page.class, "Page contents cannot be blank.");
                 }
 
@@ -96,9 +97,9 @@ public class PageService {
                     description = description.substring(0, 128);
                 }
 
-                var markdown = new Page(title, slug, category, content, description);
+                var newPage = new Page(title, slug, category, content, description);
 
-                var createdPage = pageRepository.save(markdown);
+                var createdPage = pageRepository.save(newPage);
                 return ServiceResponse.ofItem(createdPage);
             } else {
                 return ServiceResponse.ofError(Page.class, "Could not fetch authentication details.");
@@ -128,12 +129,45 @@ public class PageService {
 
                 pageRepository.deleteById(foundPage.get().getId());
                 return ServiceResponse.ofItem(foundPage.get());
-            }
-            else {
+            } else {
                 return ServiceResponse.ofError(Page.class, "Could not fetch authentication info.");
             }
+        } else {
+            return ServiceResponse.ofError(Page.class, "You are not authenticated.");
         }
-        else {
+    }
+
+    public ServiceResponse<Page> updatePage(UpdatePageRequestDto updatePageRequestDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            if (authentication.getPrincipal() instanceof UserDetails userDetails) {
+                String email = userDetails.getUsername();
+
+                Optional<Profile> profile = profileRepository.findByEmail(email);
+
+                if (profile.isEmpty() || !profile.get().isAdmin()) {
+                    return ServiceResponse.ofError(Page.class, "Cannot delete page with current identity.");
+                }
+
+                var oldPage = pageRepository.findByCategoryAndSlug(updatePageRequestDto.category(), updatePageRequestDto.oldSlug());
+                String id = oldPage.get().getId();
+
+                if (!updatePageRequestDto.oldSlug().equals(updatePageRequestDto.newSlug())) {
+                    var foundPage = pageRepository.findByCategoryAndSlug(updatePageRequestDto.category(), updatePageRequestDto.newSlug());
+                    if (foundPage.isPresent()) {
+                        return ServiceResponse.ofError(Page.class, "Page with specified slug already exists for the current category.");
+                    }
+                }
+
+                var newPage = new Page(id, updatePageRequestDto.title(), updatePageRequestDto.newSlug(), oldPage.get().getCategory(), updatePageRequestDto.content(), updatePageRequestDto.description());
+                pageRepository.save(newPage);
+
+                return ServiceResponse.ofItem(newPage);
+            } else {
+                return ServiceResponse.ofError(Page.class, "Could not fetch authentication info.");
+            }
+        } else {
             return ServiceResponse.ofError(Page.class, "You are not authenticated.");
         }
     }

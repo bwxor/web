@@ -18,6 +18,7 @@ import SignIn from "./components/auth/SignIn.tsx";
 import {AuthenticationContextProvider} from "./context/AuthenticationContext.tsx";
 import Account from "./components/auth/Account.tsx";
 import CreateItem from "./components/item/CreateItem.tsx";
+import UpdateItem from "./components/item/UpdateItem.tsx";
 // import YouTube2Mp3 from "./components/yt2mp3/YouTube2Mp3.tsx";
 
 const router = createBrowserRouter(
@@ -33,6 +34,7 @@ const router = createBrowserRouter(
                 <Route path="signin" element={<SignIn/>}/>
                 <Route path="account" element={<Account />} />
                 <Route path="new/:category" element={<CreateItem />} />
+                <Route path="update/:category/:oldSlug" element={<UpdateItem />} />
             </Route>
             <Route path="apps/spy" element={<Spy/>}/>
             <Route path="kerwei" element={<Kerwei/>}/>

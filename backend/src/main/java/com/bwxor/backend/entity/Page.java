@@ -13,7 +13,18 @@ public class Page {
     private String content;
     private String description;
 
+    public Page() {}
+
     public Page(String title, String slug, String category, String content, String description) {
+        this.title = title;
+        this.slug = slug;
+        this.category = category;
+        this.content = content;
+        this.description = description;
+    }
+
+    public Page(String id, String title, String slug, String category, String content, String description) {
+        this.id = id;
         this.title = title;
         this.slug = slug;
         this.category = category;

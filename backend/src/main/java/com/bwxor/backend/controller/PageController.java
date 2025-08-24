@@ -2,6 +2,7 @@ package com.bwxor.backend.controller;
 
 import com.bwxor.backend.dto.page.CreatePageRequestDto;
 import com.bwxor.backend.dto.page.DeletePageRequestDto;
+import com.bwxor.backend.dto.page.UpdatePageRequestDto;
 import com.bwxor.backend.service.PageService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,16 @@ public class PageController {
         }
 
         return ResponseEntity.badRequest().body(Map.of("message", deletePageResponse.serviceError().message()));
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> updatePage(@RequestBody UpdatePageRequestDto page) {
+        var updatePageResponse = pageService.updatePage(page);
+
+        if (updatePageResponse.ok()) {
+            return ResponseEntity.ok(updatePageResponse.item());
+        }
+
+        return ResponseEntity.badRequest().body(Map.of("message", updatePageResponse.serviceError().message()));
     }
 }
