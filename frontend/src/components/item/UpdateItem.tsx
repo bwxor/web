@@ -6,13 +6,7 @@ import ReactMarkdown, {Components} from "react-markdown";
 import {Prism as SyntaxHighlighter} from "react-syntax-highlighter";
 import {vs, vscDarkPlus} from "react-syntax-highlighter/dist/esm/styles/prism";
 
-interface OldItemInfo {
-    title: string;
-    description: string;
-    content: string;
-}
-
-function UpdateItem(props: OldItemInfo) {
+function UpdateItem() {
     const components: Components = {
         code({inline, className, children, ...props}: {
             inline?: boolean;
@@ -75,7 +69,7 @@ function UpdateItem(props: OldItemInfo) {
                     setSlug(data.slug);
                 }
             })
-            .catch(() => setMarkdown("Page with given info not found."));
+            .catch(() => navigate("/" + category));
     }, [])
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
