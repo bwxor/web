@@ -64,6 +64,8 @@ function Account() {
         else {
             setErrorBiography(false);
 
+            console.log("setting admin: " + profile?.admin);
+
             const response = await fetch("https://bwxor.com/api/profile/update", {
                 method: "PUT",
                 headers: {
@@ -74,7 +76,7 @@ function Account() {
                     email: auth.email,
                     birthYear: profile?.birthYear,
                     biography: newBiography,
-                    admin: profile?.admin
+                    isAdmin: profile?.admin
                 }),
             });
 
@@ -107,7 +109,7 @@ function Account() {
                     email: auth.email,
                     birthYear: newBirthYear,
                     biography: profile?.biography,
-                    admin: profile?.admin
+                    isAdmin: profile?.admin
                 }),
             });
 
