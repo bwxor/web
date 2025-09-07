@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {useAuth} from "../../context/AuthenticationContext.tsx";
 import {useNavigate} from "react-router-dom";
 import {useTheme} from "../../context/ThemeContext.tsx";
+import ProfileBanner from "./ProfileBanner.tsx";
 
 interface ProfileType {
     admin: boolean;
@@ -9,7 +10,7 @@ interface ProfileType {
     birthYear: string;
 }
 
-function Account() {
+function Profile() {
     const {auth, initAuth} = useAuth();
     const navigate = useNavigate();
     const {theme} = useTheme();
@@ -49,19 +50,18 @@ function Account() {
         setEditBirthYear(false);
     }
 
-    const handleBiographyInputChange = (event : React.ChangeEvent<HTMLTextAreaElement>) => {
+    const handleBiographyInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setNewBiography(event.target.value);
     }
 
-    const handleBirthYearInputChange = (event : React.ChangeEvent<HTMLInputElement>) => {
+    const handleBirthYearInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNewBirthYear(event.target.value);
     }
 
     const handleBiographySavePress = async () => {
         if (newBiography.trim() === "") {
             setErrorBiography(true);
-        }
-        else {
+        } else {
             setErrorBiography(false);
 
             console.log("setting admin: " + profile?.admin);
@@ -82,8 +82,7 @@ function Account() {
 
             if (!response.ok) {
                 setErrorBiography(true);
-            }
-            else {
+            } else {
                 if (profile != null) {
                     profile.biography = newBiography;
                 }
@@ -93,10 +92,9 @@ function Account() {
     }
 
     const handleBirthYearSavePress = async () => {
-        if (typeof(newBirthYear) == typeof("") && newBirthYear.trim() === "") {
+        if (typeof (newBirthYear) == typeof ("") && newBirthYear.trim() === "") {
             setErrorBirthYear(true);
-        }
-        else {
+        } else {
             setErrorBirthYear(false);
 
             const response = await fetch("https://bwxor.com/api/profile/update", {
@@ -115,8 +113,7 @@ function Account() {
 
             if (!response.ok) {
                 setErrorBirthYear(true);
-            }
-            else {
+            } else {
                 if (profile != null) {
                     profile.birthYear = newBirthYear;
                 }
@@ -145,32 +142,7 @@ function Account() {
         <>
             <div className="account-group">
                 <div className="account-group-item">
-                    <div className="account-group-header">
-                        <div className="account-group-header-title">
-                            {auth.displayName}
-                        </div>
-                        <div className="account-group-header-logout">
-                            <a href="#" onClick={handleLogoutPress}>Logout</a>
-                        </div>
-                    </div>
-                </div>
-                <div className="account-group-item">
-                    <div className="account-group-label">
-                        <span className="fa-solid fa-envelope"></span> <strong>E-Mail Address</strong>
-                    </div>
-                    <div className={"account-group-content account-group-content-" + theme}>
-                        {auth.email}
-                    </div>
-                </div>
-                <div className="account-group-item">
-                    <div className="account-group-label">
-                        <span className="fa-solid fa-ranking-star"></span> <strong>Rank</strong>
-                    </div>
-                    <div className={"account-group-content account-group-content-" + theme}>
-                        {profile != null && profile.admin ?
-                            "Admin" : "Member"
-                        }
-                    </div>
+                    <ProfileBanner displayName={auth.displayName} email={auth.email} isAdmin={profile?.admin}/>
                 </div>
                 <div className="account-group-item">
                     <div className="account-group-label">
@@ -189,7 +161,8 @@ function Account() {
                         {editBiography ?
                             <>
                                 <textarea placeholder="Write something interesting here..."
-                                          className={"textarea textarea-" + theme + (errorBiography ? " textarea-error" : "")} onChange={handleBiographyInputChange}>{profile?.biography}</textarea>
+                                          className={"textarea textarea-" + theme + (errorBiography ? " textarea-error" : "")}
+                                          onChange={handleBiographyInputChange}>{profile?.biography}</textarea>
                             </>
                             :
                             profile?.biography
@@ -213,13 +186,34 @@ function Account() {
                     <div className={"account-group-content account-group-content-" + theme}>
                         {
                             editBirthYear ?
-                                <input type="number" className={"textbox textbox-" + theme + (errorBirthYear ? " textbox-error" : "")}
+                                <input type="number"
+                                       className={"textbox textbox-" + theme + (errorBirthYear ? " textbox-error" : "")}
                                        min="1900"
                                        max="2025"
                                        defaultValue={profile?.birthYear} onChange={handleBirthYearInputChange}/>
                                 :
                                 profile?.birthYear
                         }
+                    </div>
+                </div>
+                <div className="account-group-item">
+                    <div className="account-elements">
+                        <div className="account-elements-header">
+                            Friends
+                        </div>
+                        <div className="account-elements-content">
+                            Could not fetch friends data from this user.
+                        </div>
+                    </div>
+                </div>
+                <div className="account-group-item">
+                    <div className="account-elements">
+                        <div className="account-elements-header">
+                            Posts
+                        </div>
+                        <div className="account-elements-content">
+                            Could not fetch posts data from this user.
+                        </div>
                     </div>
                 </div>
             </div>
@@ -229,4 +223,4 @@ function Account() {
         ;
 }
 
-export default Account;
+export default Profile;

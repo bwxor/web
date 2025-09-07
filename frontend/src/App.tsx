@@ -16,7 +16,7 @@ import {ThemeProvider} from "./context/ThemeContext.tsx";
 import Register from "./components/auth/Register.tsx";
 import SignIn from "./components/auth/SignIn.tsx";
 import {AuthenticationContextProvider} from "./context/AuthenticationContext.tsx";
-import Account from "./components/auth/Account.tsx";
+import Profile from "./components/profile/Profile.tsx";
 import CreateItem from "./components/item/CreateItem.tsx";
 import UpdateItem from "./components/item/UpdateItem.tsx";
 // import YouTube2Mp3 from "./components/yt2mp3/YouTube2Mp3.tsx";
@@ -32,7 +32,7 @@ const router = createBrowserRouter(
                 <Route path="docu/:slug" element={<ItemView category="docu"/>}/>
                 <Route path="register" element={<Register/>}/>
                 <Route path="signin" element={<SignIn/>}/>
-                <Route path="account" element={<Account />} />
+                <Route path="account" element={<Profile />} />
                 <Route path="new/:category" element={<CreateItem />} />
                 <Route path="update/:category/:oldSlug" element={<UpdateItem />} />
             </Route>
