@@ -11,7 +11,7 @@ interface ProfileType {
 }
 
 function Profile() {
-    const {auth, initAuth} = useAuth();
+    const {auth} = useAuth();
     const navigate = useNavigate();
     const {theme} = useTheme();
     const [profile, setProfile] = useState<ProfileType | null>({biography: "", birthYear: "", admin: false});
@@ -22,11 +22,6 @@ function Profile() {
     const [newBirthYear, setNewBirthYear] = useState("");
     const [errorBiography, setErrorBiography] = useState(false);
     const [errorBirthYear, setErrorBirthYear] = useState(false);
-
-    const handleLogoutPress = () => {
-        initAuth("", "", "");
-        navigate("/");
-    }
 
     const handleEditBiographyPress = () => {
         setNewBiography(profile?.biography ?? "");

@@ -3,9 +3,9 @@ import {useAuth} from "../../context/AuthenticationContext.tsx";
 import {useNavigate} from "react-router-dom";
 
 interface ProfileBannerProps {
-    displayName: string;
-    email: string;
-    isAdmin: boolean;
+    displayName: string | undefined;
+    email: string | undefined;
+    isAdmin: boolean | undefined;
 }
 
 function ProfileBanner(props: ProfileBannerProps) {
@@ -23,7 +23,7 @@ function ProfileBanner(props: ProfileBannerProps) {
             <div className="profile-banner-header">
                 <div className="profile-banner-image-section">
                     <div className={"profile-banner-image-placeholder profile-banner-image-placeholder-" + theme}>
-                        {props.displayName.substring(0, 1)}
+                        {props.displayName?.substring(0, 1)}
                     </div>
                 </div>
                 <div className="profile-banner-user-info-section">
@@ -44,7 +44,7 @@ function ProfileBanner(props: ProfileBannerProps) {
                     <div className="profile-banner-user-info-buttons profile-banner-button-group">
                         <button className={"button button-" + theme}><i className="fa-solid fa-image"></i> Change Avatar</button>
                         <button className={"button button-" + theme}><i className="fa-solid fa-life-ring"></i> Support Center</button>
-                        <button className={"button button-" + theme} onClick={handleLogout}><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+                        <button className={"button button-" + theme} onClick={handleLogout}><i className="fa-solid fa-right-from-bracket"></i> Logout</button>
                     </div>
                 </div>
             </div>

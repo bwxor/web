@@ -8,7 +8,7 @@ interface AuthType {
 
 interface AuthenticationContextType {
     auth : AuthType;
-    initAuth: (token: string, email:string, displayName: string) => void;
+     initAuth: (token: string, email:string, displayName: string) => void;
 }
 
 const AuthenticationContext = createContext<AuthenticationContextType | undefined>(undefined);
