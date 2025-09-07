@@ -421,6 +421,40 @@
     border-bottom-color: #e40c2c !important;
 }
 
+/*Tooltips*/
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 115px;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    font-size: 1rem;
+
+    /* Position the tooltip */
+   position: absolute;
+    margin-left: .25rem;
+    z-index: 1;
+}
+
+.tooltiptext-dark {
+    background-color: black;
+    color: #fff;
+}
+
+.tooltiptext-light {
+    background-color: #fff;
+    color: black;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
 /*Others*/
 .full-width {
     width: 100%;

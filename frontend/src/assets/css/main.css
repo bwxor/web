@@ -126,59 +126,6 @@ img {
     }
 }
 
-@media (max-width: 600px) {
-    .profile-banner {
-        padding: 1.5rem 1.5rem;
-    }
-
-    .profile-banner-user-info-section {
-        align-items: center;
-    }
-
-    .profile-banner-button-group {
-        display: flex;
-        flex-direction: column;
-        gap: .5rem;
-        padding-top: .75rem;
-    }
-
-    .profile-banner-header {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .profile-banner-user-info-header {
-        display: flex;
-        flex-direction: row;
-        gap: .5rem;
-    }
-
-    .profile-banner-user-info-header-username{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        flex: 1;
-    }
-
-    .profile-banner-user-info-content {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .profile-banner-user-info-header-username {
-        font-size: 1.5rem;
-    }
-
-    .profile-banner-user-info-header-badge {
-        font-size: 1rem;
-    }
-}
-
 @media(min-width: 750px) {
     .profile-banner {
         padding: 1rem 1.5rem;
@@ -189,6 +136,7 @@ img {
         display: flex;
         flex-direction: row;
         gap: 2rem;
+        padding: .25rem;
     }
 
     .profile-banner-user-info-header {
@@ -573,6 +521,14 @@ input[type=range] {
 }
 
 .profile-banner-user-info-header-badge {
+}
+
+.profile-banner-user-info-header-badge-dark:hover {
+    color: #6e89bd;
+}
+
+.profile-banner-user-info-header-badge-light:hover {
+    color: #58abf6;
 }
 
 .profile-banner-user-info-content {
