@@ -32,7 +32,7 @@ function ProfileBanner(props: ProfileBannerProps) {
                             <div className="profile-banner-user-info-header-username">
                                 {props.displayName}
                             </div>
-                            {!props.isAdmin ?
+                            {props.isAdmin ?
                             <div className={"profile-banner-user-info-header-badge"}>
                                  <i className="fa-solid fa-shield-halved"></i>
                             </div> : ""}
