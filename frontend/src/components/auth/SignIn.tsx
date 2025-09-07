@@ -49,7 +49,7 @@ function Register() {
             console.log(data);
             initAuth(data.token, data.user.email, data.user.displayName);
 
-            navigate("/");
+            navigate("/account");
         } catch {
             setError(true);
         }
