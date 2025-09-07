@@ -57,7 +57,7 @@ function Menu() {
             <div className={"body-padded body-padded-" + theme}>
                 <nav className={"menu menu-" + theme}>
                     <div className="menu-branding">
-                        <Link to="/">
+                        <Link to="/" style={{ textDecoration: 'none' }}>
                             <span className={"menu-branding-text-" + theme}>bwxor</span>
                         </Link>
                     </div>
