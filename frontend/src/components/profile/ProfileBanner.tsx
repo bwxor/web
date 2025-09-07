@@ -36,7 +36,7 @@ function ProfileBanner(props: ProfileBannerProps) {
                                 <div
                                     className={"tooltip profile-banner-user-info-header-badge profile-banner-user-info-header-badge-" + theme}>
                                     <i className="fa-solid fa-shield-halved"></i>
-                                    <span className={"tooltiptext tooltiptext-" + theme}>This user is an admin.</span>
+                                    <span className={"tooltiptext tooltiptext-" + theme}>Admin</span>
                                 </div> : ""}
                         </div>
                         <div className="profile-banner-user-info-content">
