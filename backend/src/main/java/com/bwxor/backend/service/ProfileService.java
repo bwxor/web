@@ -7,6 +7,8 @@ import com.bwxor.backend.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class ProfileService {
     @Autowired
@@ -23,6 +25,18 @@ public class ProfileService {
     }
 
     public ServiceResponse<Profile> update(UpdateProfileRequestDto updateProfileInfo) {
+        if (updateProfileInfo.biography().isEmpty()) {
+            return ServiceResponse.ofError(Profile.class, "Biography cannot be empty.");
+        }
+
+        if (updateProfileInfo.biography().length() >= 64) {
+            return ServiceResponse.ofError(Profile.class, "Biography should not be longer than 64 characters.");
+        }
+
+        if (updateProfileInfo.birthYear() < 1900 || updateProfileInfo.birthYear() > LocalDate.now().getYear()) {
+            return ServiceResponse.ofError(Profile.class, "Invalid birth year.");
+        }
+
         var foundProfile = profileRepository.findByEmail(updateProfileInfo.email());
 
         if (foundProfile.isEmpty()) {

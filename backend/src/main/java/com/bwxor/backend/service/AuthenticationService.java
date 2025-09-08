@@ -53,6 +53,10 @@ public class AuthenticationService {
             return ServiceResponse.ofError(User.class, "Display name cannot be empty.");
         }
 
+        if (input.displayName().length() < 5 && input.displayName().length() > 16) {
+            return ServiceResponse.ofError(User.class, "Display name should be between 5 and 16 characters.");
+        }
+
         if (input.password() == null || input.password().trim().isBlank()) {
             return ServiceResponse.ofError(User.class, "Password cannot be empty.");
         }
