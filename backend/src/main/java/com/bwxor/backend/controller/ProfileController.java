@@ -2,6 +2,7 @@ package com.bwxor.backend.controller;
 
 import com.bwxor.backend.dto.auth.UpdateProfileRequestDto;
 import com.bwxor.backend.service.ProfileService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,6 +10,7 @@ import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
+@Tag(name="Profile")
 @RequestMapping("/api/profile/")
 public class ProfileController {
     private final ProfileService profileService;

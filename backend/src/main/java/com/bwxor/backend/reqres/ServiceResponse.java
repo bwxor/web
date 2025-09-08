@@ -10,6 +10,11 @@ public record ServiceResponse<T>(T item, ServiceError serviceError) {
                 new ServiceError(errorMessage));
     }
 
+    public static <T> ServiceResponse<T> ofError(String errorMessage) {
+        return new ServiceResponse<>(null,
+                new ServiceError(errorMessage));
+    }
+
     public boolean ok() {
         return serviceError == null;
     }

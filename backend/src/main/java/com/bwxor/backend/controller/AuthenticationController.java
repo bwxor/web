@@ -3,6 +3,7 @@ package com.bwxor.backend.controller;
 import com.bwxor.backend.dto.auth.LoginRequestDto;
 import com.bwxor.backend.dto.auth.RegisterRequestDto;
 import com.bwxor.backend.service.AuthenticationService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,7 @@ import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
+@Tag(name="Authentication")
 @RequestMapping("/api/auth/")
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
