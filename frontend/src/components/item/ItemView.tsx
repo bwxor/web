@@ -6,6 +6,7 @@ import {vs, vscDarkPlus} from "react-syntax-highlighter/dist/esm/styles/prism";
 import {useTheme} from "../../context/ThemeContext.tsx";
 import {Components} from "react-markdown";
 import {useAuth} from "../../context/AuthenticationContext.tsx";
+import Comments from "./Comments.tsx";
 
 interface ItemViewProps {
     category: string | undefined;
@@ -24,6 +25,7 @@ function ItemView(props: ItemViewProps) {
     const {auth} = useAuth();
     const [profile, setProfile] = useState<ProfileType | null>({biography: "", birthYear: "", admin: false});
     const navigate = useNavigate();
+
 
     const handleEditPress = () => {
         navigate("/update/" + props.category + "/" + slug)
@@ -122,6 +124,8 @@ function ItemView(props: ItemViewProps) {
             <ReactMarkdown components={components}>
                 {markdown}
             </ReactMarkdown>
+
+            <Comments slug={slug} category={props.category} />
         </>
     );
 }

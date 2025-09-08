@@ -194,20 +194,20 @@ function Profile() {
                 <div className="account-group-item">
                     <div className="account-elements">
                         <div className="account-elements-header">
-                            Friends
+                            Latest Activity
                         </div>
                         <div className="account-elements-content">
-                            Could not fetch friends data from this user.
+                            Could not fetch activity info from this user.
                         </div>
                     </div>
                 </div>
                 <div className="account-group-item">
                     <div className="account-elements">
                         <div className="account-elements-header">
-                            Posts
+                            Friends
                         </div>
                         <div className="account-elements-content">
-                            Could not fetch posts data from this user.
+                            Could not fetch friends data from this user.
                         </div>
                     </div>
                 </div>

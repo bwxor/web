@@ -555,3 +555,62 @@ input[type=range] {
 .account-elements-content {
 
 }
+
+.comments-section {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+    gap: 1rem;
+}
+
+.comments-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.comments-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.comment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.comment-item {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.comment-user-date-group {
+    display: flex;
+    flex-direction: row;
+    gap: .5rem;
+    align-items: center;
+}
+
+.comment-user {
+    flex: 1;
+    font-size: 1.3rem;
+}
+
+.comment-date {
+    flex: 1;
+}
+
+.comment-date-dark {
+    color: #bfbfbf;
+}
+
+.comment-date-light {
+    color: #8f8f8f;
+}
+
+.comment-content {
+    word-break: break-all;
+}
