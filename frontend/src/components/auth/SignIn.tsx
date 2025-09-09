@@ -47,7 +47,7 @@ function Register() {
 
             const data = await response.json();
             console.log(data);
-            initAuth(data.token, data.user.email, data.user.displayName);
+            initAuth(data.token, data.user.id, data.user.email, data.user.displayName);
 
             navigate("/account");
         } catch {

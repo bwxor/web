@@ -73,7 +73,7 @@ function Register() {
                     setError(true);
                 } else {
                     const loginData = await loginResponse.json();
-                    initAuth(loginData.token, loginData.user.email, loginData.user.displayName);
+                    initAuth(loginData.token, loginData.user.id, loginData.user.email, loginData.user.displayName);
                     navigate("/");
                 }
             }

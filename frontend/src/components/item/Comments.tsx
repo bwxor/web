@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {useTheme} from "../../context/ThemeContext.tsx";
 import Comment from "../item/Comment.tsx";
 import {useAuth} from "../../context/AuthenticationContext.tsx";
+import {Link} from "react-router-dom";
 
 interface CommentsProps {
     slug: string | undefined;
@@ -9,7 +10,9 @@ interface CommentsProps {
 }
 
 interface CommentModel {
+    id: string | undefined;
     userId: string | undefined,
+    userDisplayName: string | undefined,
     content: string | undefined,
     dateTime: string | undefined
 }
@@ -46,13 +49,17 @@ const Comments = (props: CommentsProps) => {
                 const errorData = await createCommentResponse.json();
                 setError(true);
                 setErrorMessage(errorData.message);
-            }
-            else {
+            } else {
                 setContent("");
+                fetchComments();
             }
         } catch {
             setError(true);
         }
+    }
+
+    const handleClearPress = () => {
+        setContent("");
     }
 
     const fetchComments = async () => {
@@ -96,18 +103,29 @@ const Comments = (props: CommentsProps) => {
                         {error ? errorMessage : ""}
                     </div>
                     <div className="comments-input-element">
-                <textarea placeholder="Add your comment here!"
-                          className={"textarea textarea-" + theme} value={content}
-                          onChange={handleCommentInputChange}></textarea>
-                    </div>
-                    <div className="comments-input-element">
-                        <button className={"button button-" + theme} disabled={!createButtonEnabled}
-                                onClick={handleCreateComment}>Create
-                        </button>
+                        {auth.token != "" ?
+                            <><textarea placeholder="Add your comment here!"
+                                        className={"textarea textarea-" + theme + " no-max-width"} value={content}
+                                        onChange={handleCommentInputChange}></textarea>
+                                <div className="form-button-group">
+                                    <button className={"button button-" + theme} disabled={!createButtonEnabled}
+                                            onClick={handleCreateComment}>Create
+                                    </button>
+                                    <button onClick={handleClearPress}
+                                            className={"button button-red"}><span
+                                        className="fa-solid fa-trash-can"></span>Clear
+                                    </button>
+                                </div>
+                            </>
+                            :
+                            <div>
+                                You need to <Link to={"/signin"}>sign in</Link> before commenting.
+                            </div>
+                        }
                     </div>
                 </div>
                 <div className="comment-list">
-                    {comments.map((comment) => <Comment userId={comment.userId} content={comment.content}
+                    {comments.map((comment) => <Comment id={comment.id} userId={comment.userId} displayName={comment.userDisplayName} content={comment.content}
                                                         date={comment.dateTime}/>)}
                 </div>
             </div>

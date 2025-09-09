@@ -444,7 +444,7 @@ input[type=range] {
 .form-button-group {
     display: flex;
     flex-direction: row;
-    gap: 1rem;
+    gap: .5rem;
 }
 
 .form-button-group-item {
@@ -574,6 +574,12 @@ input[type=range] {
     gap: .5rem;
 }
 
+.comments-input-element {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
+
 .comment-list {
     display: flex;
     flex-direction: column;
@@ -601,6 +607,7 @@ input[type=range] {
 
 .comment-date {
     flex: 1;
+    font-size: .8rem;
 }
 
 .comment-date-dark {
@@ -613,4 +620,8 @@ input[type=range] {
 
 .comment-content {
     word-break: break-all;
+}
+
+.no-max-width {
+    max-width: none;
 }

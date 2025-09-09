@@ -1,5 +1,6 @@
 package com.bwxor.backend.service;
 
+import com.bwxor.backend.dto.comment.CommentResponseDto;
 import com.bwxor.backend.dto.comment.CreateCommentRequestDto;
 import com.bwxor.backend.dto.comment.DeleteCommentRequestDto;
 import com.bwxor.backend.entity.Comment;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,17 +88,30 @@ public class CommentService {
         }
     }
 
-    public ServiceResponse<List<Comment>> findByPostId(String postId) {
+    public ServiceResponse<List<CommentResponseDto>> findByPostId(String postId) {
         if (pageRepository.findById(postId).isEmpty()) {
-            return ServiceResponse.ofError( "Could not find post with given id.");
+            return ServiceResponse.ofError("Could not find post with given id.");
         }
 
-        return ServiceResponse.ofItem(commentRepository.findByPostIdOrderByDateTimeAsc(postId));
+        List<Comment> comments = commentRepository.findByPostIdOrderByDateTimeAsc(postId);
+
+        List<CommentResponseDto> commentResponses = new ArrayList<>();
+
+        comments.forEach(e -> mapCommentToCommentResponse(e, commentResponses));
+
+        return ServiceResponse.ofItem(commentResponses);
+    }
+
+    private void mapCommentToCommentResponse(Comment e, List<CommentResponseDto> commentResponses) {
+        Optional<User> user = userRepository.findById(e.getUserId());
+        if (user.isPresent()) {
+            commentResponses.add(new CommentResponseDto(e.getId(), e.getUserId(), user.get().getDisplayName(), e.getPostId(), e.getContent(), e.getDateTime()));
+        }
     }
 
     public ServiceResponse<List<Comment>> findByUserId(String userId) {
         if (userRepository.findById(userId).isEmpty()) {
-            return ServiceResponse.ofError( "Could not find user with given id.");
+            return ServiceResponse.ofError("Could not find user with given id.");
         }
 
         return ServiceResponse.ofItem(commentRepository.findByUserId(userId));

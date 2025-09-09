@@ -364,6 +364,7 @@
 }
 
 .textarea {
+    font-family: Roboto;
     padding: .35rem;
     width: 100%;
     min-height: 75px;
@@ -462,4 +463,12 @@
 
 .error {
     color: #e40c2c;
+}
+
+.red {
+    color: #e40c2c;
+}
+
+.red:hover {
+    color: #ff4646;
 }

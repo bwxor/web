@@ -2,13 +2,14 @@ import React, { createContext, useEffect, useState, useContext } from 'react';
 
 interface AuthType {
     token: string;
+    id: string,
     email: string;
     displayName: string;
 }
 
 interface AuthenticationContextType {
     auth : AuthType;
-     initAuth: (token: string, email:string, displayName: string) => void;
+     initAuth: (token: string, id:string, email:string, displayName: string) => void;
 }
 
 const AuthenticationContext = createContext<AuthenticationContextType | undefined>(undefined);
@@ -17,6 +18,7 @@ export const AuthenticationContextProvider: React.FC<{ children: React.ReactNode
     const getInitialAuth = (): AuthType => {
         return {
             token: sessionStorage.getItem("token") || "",
+            id: sessionStorage.getItem("id") || "",
             email: sessionStorage.getItem("email") || "",
             displayName: sessionStorage.getItem("displayName") || "",
         };
@@ -27,25 +29,29 @@ export const AuthenticationContextProvider: React.FC<{ children: React.ReactNode
 
     useEffect(() => {
         const token = sessionStorage.getItem("token");
+        const id = sessionStorage.getItem("id");
         const email = sessionStorage.getItem("email");
         const displayName = sessionStorage.getItem("displayName");
-        if (token != null && token != "" && email != null && email != "" && displayName != null && displayName != "") {
+        if (token != null && token != "" && id != null && id != "" && email != null && email != "" && displayName != null && displayName != "") {
             setAuth({
                 token,
+                id,
                 email,
                 displayName
             });
         }
     }, []);
 
-    const initAuth = (token: string, email:string, displayName: string) => {
+    const initAuth = (token: string, id:string, email:string, displayName: string) => {
         setAuth({
             token,
+            id,
             email,
             displayName
         });
 
         sessionStorage.setItem("token", token);
+        sessionStorage.setItem("id", id);
         sessionStorage.setItem("email", email);
         sessionStorage.setItem("displayName", displayName);
     };
