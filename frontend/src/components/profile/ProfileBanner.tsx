@@ -14,7 +14,7 @@ function ProfileBanner(props: ProfileBannerProps) {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        initAuth("", "", "");
+        initAuth("", "", "", "");
         navigate("/");
     }
 
