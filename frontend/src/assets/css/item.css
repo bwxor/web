@@ -1,14 +1,20 @@
 .item-summary {
     display: flex;
     flex-direction: column;
-    gap: .5rem;
+    gap: .75rem;
 }
 
 .item-summary-title {
-    flex: 1;
     font-size: 1.75rem;
 }
 
+.item-summary-title-dark {
+    color: #48a5ff;
+}
+
+.item-summary-title-light {
+    color: #1b7cda;
+}
+
 .item-summary-description {
-    flex: 1;
 }

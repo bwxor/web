@@ -29,7 +29,7 @@ html, body {
 }
 
 .body-padded-dark {
-    background-color: #121212;
+    background-color: #1a1d20;
     color: white;
 }
 
@@ -161,7 +161,7 @@ img {
 }
 
 .body-content-dark {
-    background-color: #171717;
+    background-color: #202327;
 }
 
 .body-content-light {
@@ -237,7 +237,8 @@ a:hover {
 }
 
 .app-button {
-    border: 0px;
+    border: 1px solid;
+    border-radius: 8px;
     padding: .75rem;
     display: flex;
     flex-direction: column;
@@ -250,6 +251,7 @@ a:hover {
 
 .app-button:hover {
     cursor: pointer;
+    transition: 0.2s;
 }
 
 .app-button-row {
@@ -262,7 +264,8 @@ a:hover {
 }
 
 .app-button-dark {
-    background-color: #1c1c1c;
+    background-color: #363e47;
+    border-color: #434c57;
     color: white;
 }
 
@@ -271,7 +274,11 @@ a:hover {
 }
 
 .app-button-dark:hover {
-    background-color: #262626;
+    background-color: #46505a;
+}
+
+.app-button-dark:active {
+    background-color: #2e363e;
 }
 
 .app-button-title {
@@ -433,6 +440,7 @@ input[type=range] {
     display: flex;
     flex-direction: row;
     gap: .5rem;
+    justify-content: center;
 }
 
 .projects {
@@ -452,9 +460,10 @@ input[type=range] {
 }
 
 .items {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 400px));
     gap: 1rem;
+    justify-content: center;
 }
 
 .profile-banner {
@@ -469,8 +478,9 @@ input[type=range] {
 }
 
 .profile-banner-dark {
-    background-color: #a8c7fa;
-    color: black;
+    background-color: #282f35;
+    border-color: #38424a;
+    color: white;
 }
 
 .profile-banner-image-section {
@@ -523,8 +533,12 @@ input[type=range] {
 .profile-banner-user-info-header-badge {
 }
 
+.profile-banner-user-info-header-badge:hover {
+    transition: 0.2s;
+}
+
 .profile-banner-user-info-header-badge-dark:hover {
-    color: #6e89bd;
+    color: #a1a1a1;
 }
 
 .profile-banner-user-info-header-badge-light:hover {
@@ -624,4 +638,44 @@ input[type=range] {
 
 .no-max-width {
     max-width: none;
+}
+
+.item-summary {
+    border: 1px solid;
+    border-radius: 8px;
+    padding: .75rem;
+    display: flex;
+    flex-direction: column;
+    font-size: .9rem;
+    gap: .5rem;
+    max-width: 400px;
+    min-height: 100px;
+}
+
+.item-summary:hover {
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.item-summary-light {
+    background-color: #f1f1f1;
+    color: black;
+}
+
+.item-summary-dark {
+    background-color: #282f35;
+    border-color: #323a42;
+    color: white;
+}
+
+.item-summary-light:hover {
+    background-color: #e7e7e7;
+}
+
+.item-summary-dark:hover {
+    background-color: #313a42;
+}
+
+.item-summary-dark:active {
+    background-color: #23292e;
 }

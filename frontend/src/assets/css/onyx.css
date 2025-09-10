@@ -13,7 +13,7 @@
 }
 
 .menu-dark {
-    background-color: #1c1c1c;
+    background-color: #24272c;
 }
 
 .menu-branding-text-light {
@@ -33,11 +33,15 @@
 }
 
 .menu-item-small-dark {
-    background-color: #1c1c1c;
+    background-color: #24272c;
 }
 
 .menu-item-small-light {
     background-color: white;
+}
+
+.menu-item:hover {
+    transition: 0.2s;
 }
 
 .menu-item-light:hover {
@@ -45,7 +49,11 @@
 }
 
 .menu-item-dark:hover {
-    background-color: #262626;
+    background-color: #353940;
+}
+
+.menu-item-dark:active {
+    background-color: #292c32;
 }
 
 .menu-items-small-light {
@@ -54,7 +62,7 @@
 }
 
 .menu-items-small-dark {
-    background-color: #1c1c1c;
+    background-color: #24272c;
     color: white;
 }
 
@@ -105,6 +113,7 @@
         gap: .5rem;
         height: 100%;
         width: 100%;
+        align-items: center;
     }
 
     .menu-items-secondary {
@@ -124,8 +133,9 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        height: 100%;
         padding: 0 1rem;
+        height: 50px;
+        border-radius: 8px;
     }
 
     .menu-item-burger {
@@ -187,7 +197,8 @@
 
 /*Buttons*/
 .button {
-    border: 0px;
+    border: 1px solid;
+    border-radius: 8px;
     padding: .75rem;
     display: flex;
     align-items: center;
@@ -196,13 +207,18 @@
     justify-content: center;
 }
 
+.button:hover {
+    transition: 0.2s;
+}
+
 .button-light {
     background-color: #f1f1f1;
     color: black;
 }
 
 .button-dark {
-    background-color: #202020;
+    background-color: #363e47;
+    border-color: #434c57;
     color: white;
 }
 
@@ -212,17 +228,27 @@
 }
 
 .button-dark:hover {
-    background-color: #2e2e2e;
+    background-color: #46505a;
     cursor: pointer;
+}
+
+.button-dark:active {
+    background-color: #2e363e;
 }
 
 .button-red {
     background-color: #e40c2c;
     color: white;
+    border-color: #ff2f4f;
 }
 
 .button-red:hover {
-    background-color: #f32844;
+    background-color: #ff1133;
+    cursor: pointer;
+}
+
+.button-red:active {
+    background-color: #cc0c29;
     cursor: pointer;
 }
 
@@ -236,6 +262,7 @@
     color: black;
     display: flex;
     border-radius: 10px;
+    border: 1px solid;
 }
 
 .banner-light {
@@ -244,8 +271,9 @@
 }
 
 .banner-dark {
-    background-color: #a8c7fa;
-    color: black
+    background-color: #282f35;
+    border-color: #38424a;
+    color: white
 }
 
 .banner-buttons {
@@ -292,7 +320,7 @@
 }
 
 .form-large {
-    max-width: 600px !important;
+    max-width: 800px !important;
     width: 100% !important;
 }
 
@@ -315,11 +343,9 @@
 }
 
 .textbox {
-    padding: .35rem;
-}
-
-.textbox-large {
-    width: 100% !important;
+    border: 1px solid;
+    border-radius: 8px;
+    padding: .75rem;
 }
 
 .textbox-light {
@@ -341,17 +367,14 @@
 }
 
 .textbox-dark {
-    background-color: transparent;
+    background-color: #2b3239;
+    border-color: #323a42;
     color: white;
-    border-top: 0;
-    border-left: 0;
-    border-bottom: 3px solid #737373;
-    border-right: 0;
 }
 
 .textbox-dark:focus {
     outline: none;
-    border-bottom: 3px solid #48a5ff;
+    border-color: #48a5ff;
 }
 
 .textbox-dark:active {
@@ -365,17 +388,26 @@
 
 .textarea {
     font-family: Roboto;
-    padding: .35rem;
+    padding: .75rem;
     width: 100%;
     min-height: 75px;
     max-width: 500px;
     resize: vertical;
+    border: 1px solid;
+    border-radius: 8px;
+}
+
+.textarea-medium {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box;
 }
 
 .textarea-large {
-    max-width: 1000px !important;
+    max-width: 100% !important;
     min-height: 350px;
     width: 100% !important;
+    box-sizing: border-box;
 }
 
 .textarea-light {
@@ -397,17 +429,14 @@
 }
 
 .textarea-dark {
-    background-color: transparent;
+    background-color: #2b3239;
+    border-color: #323a42;
     color: white;
-    border-top: 0;
-    border-left: 0;
-    border-bottom: 3px solid #737373;
-    border-right: 0;
 }
 
 .textarea-dark:focus {
     outline: none;
-    border-bottom: 3px solid #48a5ff;
+    border-color: #48a5ff;
 }
 
 .textarea-dark:active {
@@ -415,11 +444,11 @@
 }
 
 .textbox-error {
-    border-bottom-color: #e40c2c !important;
+    border-color: #e40c2c !important;
 }
 
 .textarea-error {
-    border-bottom-color: #e40c2c !important;
+    border-color: #e40c2c !important;
 }
 
 /*Tooltips*/

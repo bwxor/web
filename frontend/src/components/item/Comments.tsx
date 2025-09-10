@@ -105,7 +105,7 @@ const Comments = (props: CommentsProps) => {
                     <div className="comments-input-element">
                         {auth.token != "" ?
                             <><textarea placeholder="Add your comment here!"
-                                        className={"textarea textarea-" + theme + " no-max-width"} value={content}
+                                        className={"textarea textarea-" + theme + " textarea-medium"} value={content}
                                         onChange={handleCommentInputChange}></textarea>
                                 <div className="form-button-group">
                                     <button className={"button button-" + theme} disabled={!createButtonEnabled}
