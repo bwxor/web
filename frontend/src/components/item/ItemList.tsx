@@ -54,6 +54,7 @@ function ItemList(props: ItemListProps) {
 
     return (
         <section className="projects">
+            <input type="text" className={"textbox textbox-medium textbox-" + theme} placeholder="Search..."></input>
             {auth.token != "" && profile?.admin ?
                 <div className="management-button-group">
                     <Link to={"/new/" + props.category} style={{ textDecoration: 'none' }}>

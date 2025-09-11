@@ -259,7 +259,8 @@ a:hover {
 }
 
 .app-button-light {
-    background-color: #f1f1f1;
+    background-color: #fdfdfd;
+    border-color: #dfdfdf;
     color: black;
 }
 
@@ -270,7 +271,12 @@ a:hover {
 }
 
 .app-button-light:hover {
-    background-color: #e7e7e7;
+    background-color: #f4f4f4;
+}
+
+.app-button-light:active {
+    background-color: #eaeaea;
+    cursor: pointer;
 }
 
 .app-button-dark:hover {
@@ -447,6 +453,7 @@ input[type=range] {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    align-items: center;
 }
 
 .form-button-group {
@@ -467,14 +474,16 @@ input[type=range] {
 }
 
 .profile-banner {
+    border: 1px solid;
     border-radius: 8px;
     display: flex;
     flex-direction: row;
 }
 
 .profile-banner-light {
-    background-color: #0b77d0;
-    color: white;
+    background-color: #ededed;
+    border-color: #e1e1e1;
+    color: black;
 }
 
 .profile-banner-dark {
@@ -542,7 +551,7 @@ input[type=range] {
 }
 
 .profile-banner-user-info-header-badge-light:hover {
-    color: #58abf6;
+    color: #bdbdbd;
 }
 
 .profile-banner-user-info-content {
@@ -658,7 +667,8 @@ input[type=range] {
 }
 
 .item-summary-light {
-    background-color: #f1f1f1;
+    background-color: #f6f6f6;
+    border-color: #e4e4e4;
     color: black;
 }
 
@@ -669,7 +679,11 @@ input[type=range] {
 }
 
 .item-summary-light:hover {
-    background-color: #e7e7e7;
+    background-color: #e8e8e8;
+}
+
+.item-summary-light:active {
+    background-color: #dddddd;
 }
 
 .item-summary-dark:hover {
