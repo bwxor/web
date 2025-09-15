@@ -9,7 +9,7 @@
 }
 
 .menu-light {
-    background-color: #ffffff;
+    background-color: #f8fafb;
 }
 
 .menu-dark {
@@ -37,7 +37,7 @@
 }
 
 .menu-item-small-light {
-    background-color: white;
+    background-color: #f8fafb;
 }
 
 .menu-item:hover {
@@ -45,11 +45,11 @@
 }
 
 .menu-item-light:hover {
-    background-color: #f3f3f3;
+    background-color: #e8eced;
 }
 
 .menu-item-light:active {
-    background-color: #e1e1e1;
+    background-color: #d8dedf;
 }
 
 .menu-item-dark:hover {
@@ -61,7 +61,7 @@
 }
 
 .menu-items-small-light {
-    background-color: white;
+    background-color: #f8fafb;
     color: black;
 }
 
@@ -216,8 +216,8 @@
 }
 
 .button-light {
-    background-color: #fdfdfd;
-    border-color: #dfdfdf;
+    background-color: #f2f5f6;
+    border-color: #dfe1e4;
     color: black;
 }
 
@@ -228,12 +228,12 @@
 }
 
 .button-light:hover {
-    background-color: #f4f4f4;
+    background-color: #e9eced;
     cursor: pointer;
 }
 
 .button-light:active {
-    background-color: #eaeaea;
+    background-color: #dce0e1;
     cursor: pointer;
 }
 
@@ -277,8 +277,8 @@
 }
 
 .banner-light {
-    background-color: #ededed;
-    border-color: #e1e1e1;
+    background-color: #f6f8fa;
+    border-color: #e5e6ea;
     color: black;
 }
 

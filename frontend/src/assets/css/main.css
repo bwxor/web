@@ -34,7 +34,7 @@ html, body {
 }
 
 .body-padded-light {
-    background-color: #e8e8e8;
+    background-color: #eaedf1;
     color: black;
 }
 
@@ -165,7 +165,7 @@ img {
 }
 
 .body-content-light {
-    background-color: #fbfbfb;
+    background-color: #ffffff;
 }
 
 a {
@@ -259,8 +259,8 @@ a:hover {
 }
 
 .app-button-light {
-    background-color: #fdfdfd;
-    border-color: #dfdfdf;
+    background-color: #f2f5f6;
+    border-color: #d7d9dd;
     color: black;
 }
 
@@ -271,11 +271,10 @@ a:hover {
 }
 
 .app-button-light:hover {
-    background-color: #f4f4f4;
-}
+    background-color: #e9eced;}
 
 .app-button-light:active {
-    background-color: #eaeaea;
+    background-color: #dce0e1;
     cursor: pointer;
 }
 
@@ -481,8 +480,8 @@ input[type=range] {
 }
 
 .profile-banner-light {
-    background-color: #ededed;
-    border-color: #e1e1e1;
+    background-color: #f6f8fa;
+    border-color: #e5e6ea;
     color: black;
 }
 
@@ -551,7 +550,7 @@ input[type=range] {
 }
 
 .profile-banner-user-info-header-badge-light:hover {
-    color: #bdbdbd;
+    color: #505050;
 }
 
 .profile-banner-user-info-content {
@@ -667,8 +666,8 @@ input[type=range] {
 }
 
 .item-summary-light {
-    background-color: #f6f6f6;
-    border-color: #e4e4e4;
+    background-color: #f2f5f6;
+    border-color: #d7d9dd;
     color: black;
 }
 
@@ -679,11 +678,11 @@ input[type=range] {
 }
 
 .item-summary-light:hover {
-    background-color: #e8e8e8;
+    background-color: #e6eaec;
 }
 
 .item-summary-light:active {
-    background-color: #dddddd;
+    background-color: #d9dee1;
 }
 
 .item-summary-dark:hover {
