@@ -39,7 +39,6 @@ const Comment = (props: Comment) => {
                     const errorData = await registerResponse.json();
                     alert(errorData.message);
                 } else {
-                    alert("Comment deleted successfully");
                     setDeleted(true);
                 }
             } catch {
@@ -61,7 +60,10 @@ const Comment = (props: Comment) => {
                             </div>
                         </Link>
                         {auth.id == props.userId ?
-                            <span className="fa-solid fa-trash-can red" onClick={handleDelete}></span> : ""}
+                            <button onClick={handleDelete}
+                                    className={"button button-small red button-" + theme}>Delete
+                            </button>
+                            : ""}
                         <div className={"comment-date comment-date-" + theme}>
                             {props.date != null ? parseDate(false) : ""}
                         </div>

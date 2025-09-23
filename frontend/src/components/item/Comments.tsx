@@ -10,7 +10,7 @@ interface CommentsProps {
 }
 
 interface CommentModel {
-    id: string | undefined;
+    commentId: string | undefined;
     userId: string | undefined,
     userDisplayName: string | undefined,
     content: string | undefined,
@@ -125,7 +125,7 @@ const Comments = (props: CommentsProps) => {
                     </div>
                 </div>
                 <div className="comment-list">
-                    {comments.map((comment) => <Comment id={comment.id} userId={comment.userId} displayName={comment.userDisplayName} content={comment.content}
+                    {comments.map((comment) => <Comment id={comment.commentId} userId={comment.userId} displayName={comment.userDisplayName} content={comment.content}
                                                         date={comment.dateTime}/>)}
                 </div>
             </div>

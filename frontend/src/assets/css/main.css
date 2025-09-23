@@ -666,8 +666,8 @@ input[type=range] {
 }
 
 .item-summary-light {
-    background-color: #f2f5f6;
-    border-color: #d7d9dd;
+    background-color: #fbfdfd;
+    border-color: #dce6e6;
     color: black;
 }
 
@@ -678,11 +678,11 @@ input[type=range] {
 }
 
 .item-summary-light:hover {
-    background-color: #e6eaec;
+    background-color: #ededed;
 }
 
 .item-summary-light:active {
-    background-color: #d9dee1;
+    background-color: #ededed;
 }
 
 .item-summary-dark:hover {

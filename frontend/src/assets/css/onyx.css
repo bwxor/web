@@ -211,6 +211,11 @@
     justify-content: center;
 }
 
+.button-small {
+    padding: .35rem;
+    font-size: .8rem;
+}
+
 .button:hover {
     transition: 0.2s;
 }
