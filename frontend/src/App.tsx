@@ -32,7 +32,7 @@ const router = createBrowserRouter(
                 <Route path="docu/:slug" element={<ItemView category="docu"/>}/>
                 <Route path="register" element={<Register/>}/>
                 <Route path="signin" element={<SignIn/>}/>
-                <Route path="account" element={<Profile />} />
+                <Route path="profile/:key" element={<Profile />} />
                 <Route path="new/:category" element={<CreateItem />} />
                 <Route path="update/:category/:oldSlug" element={<UpdateItem />} />
             </Route>

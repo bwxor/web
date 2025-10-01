@@ -54,7 +54,7 @@ const Comment = (props: Comment) => {
             {!deleted ?
                 <div className="comment-item">
                     <div className="comment-user-date-group">
-                        <Link to="/">
+                        <Link to={"/profile/" + props.userId}>
                             <div className="comment-user">
                                 {props.displayName}
                             </div>

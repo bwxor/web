@@ -19,9 +19,9 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
-    @GetMapping("find/{email}")
-    public ResponseEntity<?> findByEmail(@PathVariable String email) {
-        var findProfileResponse = profileService.findByEmail(email);
+    @GetMapping("find/{key}")
+    public ResponseEntity<?> findByKey(@PathVariable String key) {
+        var findProfileResponse = profileService.findByKey(key);
 
         if (findProfileResponse.ok()) {
             return ResponseEntity.ok(findProfileResponse.item());

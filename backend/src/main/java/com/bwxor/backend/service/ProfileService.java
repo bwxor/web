@@ -1,6 +1,7 @@
 package com.bwxor.backend.service;
 
 import com.bwxor.backend.dto.auth.UpdateProfileRequestDto;
+import com.bwxor.backend.repository.UserRepository;
 import com.bwxor.backend.reqres.ServiceResponse;
 import com.bwxor.backend.entity.Profile;
 import com.bwxor.backend.repository.ProfileRepository;
@@ -13,15 +14,27 @@ import java.time.LocalDate;
 public class ProfileService {
     @Autowired
     private ProfileRepository profileRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    public ServiceResponse<Profile> findByEmail(String email) {
-        var foundProfile = profileRepository.findByEmail(email);
+    public ServiceResponse<Profile> findByKey(String key) {
+        var foundProfile = profileRepository.findByEmail(key);
 
         if (foundProfile.isPresent()) {
             return ServiceResponse.ofItem(foundProfile.get());
         }
 
-        return ServiceResponse.ofError(Profile.class, "Could not find profile with specified email.");
+        var foundUser = userRepository.findById(key);
+
+        if (foundUser.isPresent()) {
+            foundProfile = profileRepository.findByEmail(foundUser.get().getEmail());
+
+            if (foundProfile.isPresent()) {
+                return ServiceResponse.ofItem(foundProfile.get());
+            }
+        }
+
+        return ServiceResponse.ofError(Profile.class, "Could not find profile with specified email or id.");
     }
 
     public ServiceResponse<Profile> update(UpdateProfileRequestDto updateProfileInfo) {
@@ -45,6 +58,7 @@ public class ProfileService {
 
         Profile newProfileData = new Profile(
                 updateProfileInfo.email(),
+                updateProfileInfo.displayName(),
                 updateProfileInfo.isAdmin(),
                 updateProfileInfo.birthYear(),
                 updateProfileInfo.biography()

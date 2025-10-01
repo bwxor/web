@@ -9,7 +9,7 @@ interface ProfileBannerProps {
 }
 
 function ProfileBanner(props: ProfileBannerProps) {
-    const {initAuth} = useAuth();
+    const {auth, initAuth} = useAuth();
     const {theme} = useTheme();
     const navigate = useNavigate();
 
@@ -43,11 +43,23 @@ function ProfileBanner(props: ProfileBannerProps) {
                             {props.email}
                         </div>
                     </div>
-                    <div className="profile-banner-user-info-buttons profile-banner-button-group">
-                        <button className={"button button-" + theme}><i className="fa-solid fa-image"></i> Change Avatar</button>
-                        <button className={"button button-" + theme}><i className="fa-solid fa-life-ring"></i> Support Center</button>
-                        <button className={"button button-" + theme} onClick={handleLogout}><i className="fa-solid fa-right-from-bracket"></i> Logout</button>
-                    </div>
+                    {auth.email == props.email ?
+                        <div className="profile-banner-user-info-buttons profile-banner-button-group">
+                            <button className={"button button-" + theme}><i className="fa-solid fa-image"></i> Change
+                                Avatar
+                            </button>
+                            <button className={"button button-" + theme}><i
+                                className="fa-solid fa-life-ring"></i> Support Center
+                            </button>
+                            <button className={"button button-" + theme} onClick={handleLogout}><i
+                                className="fa-solid fa-right-from-bracket"></i> Logout
+                            </button>
+                        </div>
+                        :
+                        <div className="profile-banner-user-info-buttons profile-banner-button-group">
+                            <button className={"button button-" + theme}><i className="fa-solid fa-user-plus"></i> Send Friend Request
+                            </button>
+                        </div>}
                 </div>
             </div>
         </div>

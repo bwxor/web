@@ -13,12 +13,10 @@ public class User implements UserDetails {
     @Id
     private String id;
     private String email;
-    private String displayName;
     private String password;
 
-    public User(String email, String displayName, String password) {
+    public User(String email, String password) {
         this.email = email;
-        this.displayName = displayName;
         this.password = password;
     }
 
@@ -36,14 +34,6 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
     }
 
     @Override

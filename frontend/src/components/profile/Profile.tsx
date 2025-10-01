@@ -1,20 +1,23 @@
 import {useEffect, useState} from "react";
 import {useAuth} from "../../context/AuthenticationContext.tsx";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useTheme} from "../../context/ThemeContext.tsx";
 import ProfileBanner from "./ProfileBanner.tsx";
 
 interface ProfileType {
+    displayName: string;
+    email: string;
     admin: boolean;
     biography: string;
     birthYear: string;
 }
 
 function Profile() {
+    const {key} = useParams();
     const {auth} = useAuth();
     const navigate = useNavigate();
     const {theme} = useTheme();
-    const [profile, setProfile] = useState<ProfileType | null>({biography: "", birthYear: "", admin: false});
+    const [profile, setProfile] = useState<ProfileType | null>({displayName: "", email: "", biography: "", birthYear: "", admin: false});
 
     const [editBiography, setEditBiography] = useState(false);
     const [editBirthYear, setEditBirthYear] = useState(false);
@@ -59,8 +62,6 @@ function Profile() {
         } else {
             setErrorBiography(false);
 
-            console.log("setting admin: " + profile?.admin);
-
             const response = await fetch("https://bwxor.com/api/profile/update", {
                 method: "PUT",
                 headers: {
@@ -69,6 +70,7 @@ function Profile() {
                 },
                 body: JSON.stringify({
                     email: auth.email,
+                    displayName: profile?.displayName,
                     birthYear: profile?.birthYear,
                     biography: newBiography,
                     isAdmin: profile?.admin
@@ -100,6 +102,7 @@ function Profile() {
                 },
                 body: JSON.stringify({
                     email: auth.email,
+                    displayName: profile?.displayName,
                     birthYear: newBirthYear,
                     biography: profile?.biography,
                     isAdmin: profile?.admin
@@ -121,7 +124,7 @@ function Profile() {
         if (auth.token == "") {
             navigate("/signin");
         } else {
-            fetch("https://bwxor.com/api/profile/find/" + auth.email)
+            fetch("https://bwxor.com/api/profile/find/" + key)
                 .then((response) => {
                     return response.json();
                 })
@@ -131,26 +134,28 @@ function Profile() {
                 })
                 .catch((error) => console.error(error));
         }
-    }, [])
+    }, [key])
 
     return (
         <>
             <div className="account-group">
                 <div className="account-group-item">
-                    <ProfileBanner displayName={auth.displayName} email={auth.email} isAdmin={profile?.admin}/>
+                    <ProfileBanner displayName={profile?.displayName} email={profile?.email} isAdmin={profile?.admin}/>
                 </div>
                 <div className="account-group-item">
                     <div className="account-group-label">
                         <span className="fa-solid fa-info-circle"></span> <strong>Biography </strong>
-                        {editBiography ?
-                            <div className="delimited-links">
-                                <a href="#" onClick={handleCancelEditBiographyPress}>Cancel</a>
-                                <a href="#" onClick={handleBiographySavePress}>Save</a>
-                            </div> :
-                            <>
-                                <a href="#" onClick={handleEditBiographyPress}>Edit</a>
-                            </>
-                        }
+                        {auth.email == profile?.email ?
+                            editBiography ?
+                                <div className="delimited-links">
+                                    <a href="#" onClick={handleCancelEditBiographyPress}>Cancel</a>
+                                    <a href="#" onClick={handleBiographySavePress}>Save</a>
+                                </div> :
+                                <>
+                                    <a href="#" onClick={handleEditBiographyPress}>Edit</a>
+                                </>
+                            :
+                            <></>}
                     </div>
                     <div className={"account-group-content account-group-content-" + theme}>
                         {editBiography ?
@@ -168,14 +173,16 @@ function Profile() {
                     <div className="account-group-label">
                         <span className="fa-solid fa-calendar"></span> <strong>Birth year </strong>
                         {
-                            editBirthYear ?
-                                <div className="delimited-links">
-                                    <a href="#" onClick={handleCancelEditBirthYearPress}>Cancel</a>
-                                    <a href="#" onClick={handleBirthYearSavePress}>Save</a>
-                                </div> :
-                                <>
-                                    <a href="#" onClick={handleEditBirthYearPress}>Edit</a>
-                                </>
+                            auth.email == profile?.email ?
+                                editBirthYear ?
+                                    <div className="delimited-links">
+                                        <a href="#" onClick={handleCancelEditBirthYearPress}>Cancel</a>
+                                        <a href="#" onClick={handleBirthYearSavePress}>Save</a>
+                                    </div> :
+                                    <>
+                                        <a href="#" onClick={handleEditBirthYearPress}>Edit</a>
+                                    </>
+                                : <></>
                         }
                     </div>
                     <div className={"account-group-content account-group-content-" + theme}>

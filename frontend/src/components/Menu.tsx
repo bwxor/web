@@ -4,6 +4,7 @@ import {useState} from "react";
 import {useAuth} from "../context/AuthenticationContext.tsx";
 
 interface AuthType {
+    id: string;
     token: string;
     email: string;
     displayName: string;
@@ -34,7 +35,7 @@ function PopupMenu(props: PopupMenuProps) {
                     Sign in
                 </Link>
                 :
-                <Link to="/account" style={{color: 'inherit'}} className={"menu-item-small-" + theme}>
+                <Link to={"/profile/" + auth.id} style={{color: 'inherit'}} className={"menu-item-small-" + theme}>
                     {auth.displayName}
                 </Link>
             }
@@ -87,7 +88,7 @@ function Menu() {
                                     <span className={"menu-item menu-item-" + theme}>Sign&nbsp;In</span>
                                 </Link>
                                 :
-                                <Link to="/account">
+                                <Link to={"/profile/" + auth.id}>
                                     <span className={"menu-item menu-item-" + theme}>{auth.displayName}</span>
                                 </Link>
                             }

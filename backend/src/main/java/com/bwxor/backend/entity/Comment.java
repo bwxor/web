@@ -10,14 +10,16 @@ public class Comment {
     @Id
     private String id;
     private String userId;
+    private String displayName;
     private String postId;
     private String content;
     private LocalDateTime dateTime;
 
     public Comment() {}
 
-    public Comment(String userId, String postId, String content, LocalDateTime dateTime) {
+    public Comment(String userId, String displayName, String postId, String content, LocalDateTime dateTime) {
         this.userId = userId;
+        this.displayName = displayName;
         this.postId = postId;
         this.content = content;
         this.dateTime = dateTime;
@@ -37,6 +39,14 @@ public class Comment {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public String getPostId() {

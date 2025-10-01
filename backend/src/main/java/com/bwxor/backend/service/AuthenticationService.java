@@ -73,10 +73,10 @@ public class AuthenticationService {
             return ServiceResponse.ofError(User.class, "Password doesn't meet the given criteria.");
         }
 
-        User user = new User(input.email(), input.displayName(), passwordEncoder.encode(input.password()));
+        User user = new User(input.email(), passwordEncoder.encode(input.password()));
         User savedUser = userRepository.save(user);
 
-        Profile profile = new Profile(user.getEmail(), false, 1900, "Unspecified");
+        Profile profile = new Profile(user.getEmail(), input.displayName(), false, 1900, "Unspecified");
         profileRepository.save(profile);
         return ServiceResponse.ofItem(savedUser);
     }

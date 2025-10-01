@@ -28,7 +28,7 @@ function Register() {
 
     const handleAuth = async () => {
         try {
-            const response = await fetch("https://bwxor.com/api/auth/login", {
+            const userResponse = await fetch("https://bwxor.com/api/auth/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -39,17 +39,20 @@ function Register() {
                 }),
             });
 
-            if (!response.ok) {
-                const errorData = await response.json();
+            if (!userResponse.ok) {
+                const errorData = await userResponse.json();
                 setError(true);
                 setErrorMessage(errorData.message);
             }
 
-            const data = await response.json();
-            console.log(data);
-            initAuth(data.token, data.user.id, data.user.email, data.user.displayName);
+            const userData = await userResponse.json();
 
-            navigate("/account");
+            const profileResponse = await fetch("https://bwxor.com/api/profile/find/" + userData.user.id);
+            const profileData = await profileResponse.json();
+
+            initAuth(userData.token, userData.user.id, userData.user.email, profileData.displayName);
+
+            navigate("/profile/" + userData.user.id);
         } catch {
             setError(true);
         }

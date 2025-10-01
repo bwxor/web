@@ -8,12 +8,14 @@ public class Profile {
     @Id
     private String Id;
     private String email;
+    private String displayName;
     private boolean isAdmin;
     private int birthYear;
     private String biography;
 
-    public Profile(String email, boolean isAdmin, int birthYear, String biography) {
+    public Profile(String email, String displayName, boolean isAdmin, int birthYear, String biography) {
         this.email = email;
+        this.displayName = displayName;
         this.isAdmin = isAdmin;
         this.birthYear = birthYear;
         this.biography = biography;
@@ -29,6 +31,14 @@ public class Profile {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public void setEmail(String email) {

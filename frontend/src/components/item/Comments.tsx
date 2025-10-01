@@ -51,7 +51,7 @@ const Comments = (props: CommentsProps) => {
                 setErrorMessage(errorData.message);
             } else {
                 setContent("");
-                fetchComments();
+                await fetchComments();
             }
         } catch {
             setError(true);
@@ -69,6 +69,7 @@ const Comments = (props: CommentsProps) => {
             })
             .then((data) => {
                 setPostId(data.id);
+                console.log(data.id);
 
                 fetch("https://bwxor.com/api/comments/post/" + data.id)
                     .then((response) => response.json())
@@ -125,7 +126,7 @@ const Comments = (props: CommentsProps) => {
                     </div>
                 </div>
                 <div className="comment-list">
-                    {comments.map((comment) => <Comment id={comment.commentId} userId={comment.userId} displayName={comment.userDisplayName} content={comment.content}
+                    {comments.map((comment) => <Comment key={comment.commentId} id={comment.commentId} userId={comment.userId} displayName={comment.userDisplayName} content={comment.content}
                                                         date={comment.dateTime}/>)}
                 </div>
             </div>

@@ -73,6 +73,7 @@ public class CommentService {
 
                 Comment commentToCreate = new Comment(
                         user.get().getId(),
+                        profile.get().getDisplayName(),
                         createCommentDto.postId(),
                         createCommentDto.content(),
                         LocalDateTime.now()
@@ -105,7 +106,7 @@ public class CommentService {
     private void mapCommentToCommentResponse(Comment e, List<CommentResponseDto> commentResponses) {
         Optional<User> user = userRepository.findById(e.getUserId());
         if (user.isPresent()) {
-            commentResponses.add(new CommentResponseDto(e.getId(), e.getUserId(), user.get().getDisplayName(), e.getPostId(), e.getContent(), e.getDateTime()));
+            commentResponses.add(new CommentResponseDto(e.getId(), e.getUserId(), e.getDisplayName(), e.getPostId(), e.getContent(), e.getDateTime()));
         }
     }
 
