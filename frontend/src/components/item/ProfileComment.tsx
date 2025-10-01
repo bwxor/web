@@ -20,7 +20,7 @@ const ProfileComment = (props: ProfileComment) => {
     }
 
     const fetchPageInfo = async () => {
-        fetch("http://localhost:8080/api/pages/find/" + props.postId)
+        fetch("https://bwxor.com/api/pages/find/" + props.postId)
             .then((res) => res.json())
             .then((data) => {
                 setCategory(data?.category);

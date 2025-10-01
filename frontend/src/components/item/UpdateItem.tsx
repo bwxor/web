@@ -48,7 +48,7 @@ function UpdateItem() {
     const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/pages/${category}/${oldSlug}`)
+        fetch(`https://bwxor.com/api/pages/${category}/${oldSlug}`)
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);
@@ -99,7 +99,7 @@ function UpdateItem() {
     }
 
     const fetchProfile = async () => {
-        await fetch("http://localhost:8080/api/profile/find/" + auth.email)
+        await fetch("https://bwxor.com/api/profile/find/" + auth.email)
             .then((response) => {
                 return response.json();
             })
@@ -161,7 +161,7 @@ function UpdateItem() {
         } else if (content.trim() == "") {
             setErrorContent(true);
         } else {
-            const response = await fetch("http://localhost:8080/api/pages/update", {
+            const response = await fetch("https://bwxor.com/api/pages/update", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
