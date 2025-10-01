@@ -110,12 +110,22 @@ public class CommentService {
         }
     }
 
-    public ServiceResponse<List<Comment>> findByUserId(String userId) {
-        if (userRepository.findById(userId).isEmpty()) {
-            return ServiceResponse.ofError("Could not find user with given id.");
+    public ServiceResponse<List<Comment>> findNewest5ByKey(String key) {
+        String userId;
+
+        if (userRepository.findById(key).isPresent()) {
+            userId = key;
+        }
+        else {
+            var user = userRepository.findByEmail(key);
+            if (!user.isPresent()) {
+                return ServiceResponse.ofError("Could not find user with given id or email.");
+            }
+
+            userId = user.get().getId();
         }
 
-        return ServiceResponse.ofItem(commentRepository.findByUserId(userId));
+        return ServiceResponse.ofItem(commentRepository.findFirst5ByUserIdOrderByDateTimeDesc(userId));
     }
 
     public ServiceResponse<Comment> deleteComment(DeleteCommentRequestDto deleteCommentRequestDto) {

@@ -30,8 +30,8 @@ public class CommentController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getPagesByCategoryAndSlug(@PathVariable String userId) {
-        var findPageResponse = commentService.findByUserId(userId);
+    public ResponseEntity<?> getNewest5ByUserId(@PathVariable String userId) {
+        var findPageResponse = commentService.findNewest5ByKey(userId);
 
         if (findPageResponse.ok()) {
             return ResponseEntity.ok(findPageResponse.item());

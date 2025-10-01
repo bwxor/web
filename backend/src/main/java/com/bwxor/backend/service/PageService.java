@@ -31,8 +31,18 @@ public class PageService {
     private SlugValidator slugValidator;
 
 
+    public ServiceResponse<Page> findById(String id) {
+        var page = pageRepository.findById(id);
+
+        if (page.isPresent()) {
+            return ServiceResponse.ofItem(page.get());
+        }
+
+        return ServiceResponse.ofError(Page.class, "Unable to find page with specified id.");
+    }
+
     public ServiceResponse<List<Page>> findByCategory(String category) {
-        var pagesWithGivenCategory = new ArrayList<>(pageRepository.findByCategory(category));
+        var pagesWithGivenCategory = pageRepository.findByCategory(category);
         return ServiceResponse.ofItem(pagesWithGivenCategory);
     }
 

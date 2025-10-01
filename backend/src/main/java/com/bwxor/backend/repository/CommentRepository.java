@@ -12,4 +12,5 @@ public interface CommentRepository extends MongoRepository<Comment, String> {
     List<Comment> findByPostIdOrderByDateTimeAsc(String postId);
     List<Comment> findByUserId(String userId);
     Optional<Comment> findFirstByUserIdOrderByDateTimeDesc(String userId);
+    List<Comment> findFirst5ByUserIdOrderByDateTimeDesc(String userId);
 }

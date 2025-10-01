@@ -602,6 +602,13 @@ input[type=range] {
     gap: .75rem;
 }
 
+.profile-comment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: 1rem;
+}
+
 .comment-list {
     display: flex;
     flex-direction: column;
@@ -615,11 +622,29 @@ input[type=range] {
     gap: .5rem;
 }
 
+.profile-comment-item {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
 .comment-user-date-group {
     display: flex;
     flex-direction: row;
     gap: .5rem;
     align-items: center;
+}
+
+.profile-comment-post-info {
+    display: flex;
+    flex-direction: row;
+    gap: .5rem;
+    align-items: center;
+}
+
+.profile-comment-content {
+    word-break: break-all;
+    font-style: italic;
 }
 
 .comment-user {

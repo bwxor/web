@@ -3,6 +3,7 @@ import {useAuth} from "../../context/AuthenticationContext.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {useTheme} from "../../context/ThemeContext.tsx";
 import ProfileBanner from "./ProfileBanner.tsx";
+import ProfileComment from "../item/ProfileComment.tsx";
 
 interface ProfileType {
     displayName: string;
@@ -12,12 +13,27 @@ interface ProfileType {
     birthYear: string;
 }
 
+interface CommentModel {
+    commentId: string | undefined;
+    userId: string | undefined,
+    postId: string | undefined,
+    content: string | undefined,
+    dateTime: string | undefined
+}
+
 function Profile() {
     const {key} = useParams();
     const {auth} = useAuth();
     const navigate = useNavigate();
     const {theme} = useTheme();
-    const [profile, setProfile] = useState<ProfileType | null>({displayName: "", email: "", biography: "", birthYear: "", admin: false});
+    const [profile, setProfile] = useState<ProfileType | null>({
+        displayName: "",
+        email: "",
+        biography: "",
+        birthYear: "",
+        admin: false
+    });
+    const [comments, setComments] = useState<CommentModel[]>([]);
 
     const [editBiography, setEditBiography] = useState(false);
     const [editBirthYear, setEditBirthYear] = useState(false);
@@ -62,7 +78,7 @@ function Profile() {
         } else {
             setErrorBiography(false);
 
-            const response = await fetch("https://bwxor.com/api/profile/update", {
+            const response = await fetch("http://localhost:8080/api/profile/update", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -94,7 +110,7 @@ function Profile() {
         } else {
             setErrorBirthYear(false);
 
-            const response = await fetch("https://bwxor.com/api/profile/update", {
+            const response = await fetch("http://localhost:8080/api/profile/update", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -120,20 +136,37 @@ function Profile() {
         }
     }
 
+    const fetchComments = async (profileData: ProfileType) => {
+        console.log(profileData);
+
+        await fetch("http://localhost:8080/api/comments/user/" + profileData.email)
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                setComments(data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
     useEffect(() => {
         if (auth.token == "") {
             navigate("/signin");
         } else {
-            fetch("https://bwxor.com/api/profile/find/" + key)
+            fetch("http://localhost:8080/api/profile/find/" + key)
                 .then((response) => {
                     return response.json();
                 })
                 .then((data) => {
-                    console.log(data);
                     setProfile(data);
+                    fetchComments(data);
                 })
                 .catch((error) => console.error(error));
         }
+
+
     }, [key])
 
     return (
@@ -204,7 +237,20 @@ function Profile() {
                             Latest Activity
                         </div>
                         <div className="account-elements-content">
-                            Could not fetch activity info from this user.
+                            {comments.length > 0 ?
+                                <div className="profile-comment-list">
+                                    {comments.map((comment) => <ProfileComment key={comment.commentId}
+                                                                               id={comment.commentId}
+                                                                               userId={comment.userId}
+                                                                               postId={comment.postId}
+                                                                               content={comment.content}
+                                                                               date={comment.dateTime}/>)
+                                    }
+
+                                </div>
+                                : "No activity found for this user."
+                            }
+
                         </div>
                     </div>
                 </div>

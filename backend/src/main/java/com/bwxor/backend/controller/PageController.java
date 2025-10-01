@@ -19,6 +19,17 @@ public class PageController {
     @Autowired
     private PageService pageService;
 
+    @GetMapping("/find/{id}")
+    public ResponseEntity<?> getPageById(@PathVariable String id) {
+        var findPagesResponse = pageService.findById(id);
+
+        if (findPagesResponse.ok()) {
+            return ResponseEntity.ok(findPagesResponse.item());
+        }
+
+        return ResponseEntity.badRequest().body(Map.of("message", findPagesResponse.serviceError().message()));
+    }
+
     @GetMapping("/{category}")
     public ResponseEntity<?> getPagesByCategory(@PathVariable String category) {
         var findPagesResponse = pageService.findByCategory(category);
