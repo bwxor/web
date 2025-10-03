@@ -29,9 +29,9 @@ public class CommentController {
         return ResponseEntity.badRequest().body(Map.of("message", findPagesResponse.serviceError().message()));
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getNewest5ByUserId(@PathVariable String userId) {
-        var findPageResponse = commentService.findNewest5ByKey(userId);
+    @GetMapping("/user/{userKey}")
+    public ResponseEntity<?> getNewest5ByUserId(@PathVariable String userKey) {
+        var findPageResponse = commentService.findNewest5ByKey(userKey);
 
         if (findPageResponse.ok()) {
             return ResponseEntity.ok(findPageResponse.item());

@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import {useAuth} from "../../context/AuthenticationContext.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {useTheme} from "../../context/ThemeContext.tsx";
-import ProfileBanner from "./ProfileBanner.tsx";
 import ProfileComment from "../item/ProfileComment.tsx";
 
 interface ProfileType {
@@ -23,7 +22,7 @@ interface CommentModel {
 
 function Profile() {
     const {key} = useParams();
-    const {auth} = useAuth();
+    const {auth, initAuth} = useAuth();
     const navigate = useNavigate();
     const {theme} = useTheme();
     const [profile, setProfile] = useState<ProfileType | null>({
@@ -34,13 +33,69 @@ function Profile() {
         admin: false
     });
     const [comments, setComments] = useState<CommentModel[]>([]);
-
+    const [followerCount, setFollowerCount] = useState(0);
+    const [followStatus, setFollowStatus] = useState(false);
     const [editBiography, setEditBiography] = useState(false);
     const [editBirthYear, setEditBirthYear] = useState(false);
     const [newBiography, setNewBiography] = useState("");
     const [newBirthYear, setNewBirthYear] = useState("");
     const [errorBiography, setErrorBiography] = useState(false);
     const [errorBirthYear, setErrorBirthYear] = useState(false);
+
+    const handleLogout = () => {
+        initAuth("", "", "", "");
+        navigate("/");
+    }
+
+    const handleFollow = async () => {
+        try {
+            const createFollowResponse = await fetch("http://localhost:8080/api/follows/create", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + auth.token
+                },
+                body: JSON.stringify({
+                    toId: profile?.email
+                }),
+            });
+
+            if (!createFollowResponse.ok) {
+                const errorData = await createFollowResponse.json();
+                console.error(errorData);
+            } else {
+                setFollowStatus(true);
+                fetchFollowCount(profile?.email);
+            }
+        } catch(error) {
+            console.error(error);
+        }
+    }
+
+    const handleUnfollow = async () => {
+        try {
+            const deleteFollowResponse = await fetch("http://localhost:8080/api/follows/delete", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + auth.token
+                },
+                body: JSON.stringify({
+                    toId: profile?.email
+                }),
+            });
+
+            if (!deleteFollowResponse.ok) {
+                const errorData = await deleteFollowResponse.json();
+                console.error(errorData);
+            } else {
+                setFollowStatus(false);
+                fetchFollowCount(profile?.email);
+            }
+        } catch(error) {
+            console.error(error);
+        }
+    }
 
     const handleEditBiographyPress = () => {
         setNewBiography(profile?.biography ?? "");
@@ -78,7 +133,7 @@ function Profile() {
         } else {
             setErrorBiography(false);
 
-            const response = await fetch("https://bwxor.com/api/profile/update", {
+            const response = await fetch("http://localhost:8080/api/profile/update", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -110,7 +165,7 @@ function Profile() {
         } else {
             setErrorBirthYear(false);
 
-            const response = await fetch("https://bwxor.com/api/profile/update", {
+            const response = await fetch("http://localhost:8080/api/profile/update", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -136,10 +191,49 @@ function Profile() {
         }
     }
 
+    const fetchFollowCount = async (email: string | undefined) => {
+        await fetch("http://localhost:8080/api/follows/count/" + email, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + auth.token
+            },
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data);
+                setFollowerCount(data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    const fetchFollowStatus = async (profileData: ProfileType) => {
+        await fetch("http://localhost:8080/api/follows/status/" + profileData.email, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + auth.token
+            },
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                if (data == true) {
+                    setFollowStatus(data);
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
     const fetchComments = async (profileData: ProfileType) => {
         console.log(profileData);
 
-        await fetch("https://bwxor.com/api/comments/user/" + profileData.email)
+        await fetch("http://localhost:8080/api/comments/user/" + profileData.email)
             .then((response) => {
                 return response.json();
             })
@@ -152,28 +246,86 @@ function Profile() {
     }
 
     useEffect(() => {
+        let responseStatus : number;
+
         if (auth.token == "") {
             navigate("/signin");
         } else {
-            fetch("https://bwxor.com/api/profile/find/" + key)
+            fetch("http://localhost:8080/api/profile/find/" + key)
                 .then((response) => {
+                    responseStatus = response.status;
                     return response.json();
                 })
                 .then((data) => {
-                    setProfile(data);
-                    fetchComments(data);
+                    if (responseStatus == 200){
+                        setProfile(data);
+                        fetchFollowCount(data.email);
+                        fetchComments(data);
+                        fetchFollowStatus(data);
+                    }
+                    else {
+                        navigate('/profile/' + auth.id);
+                    }
                 })
-                .catch((error) => console.error(error));
+                .catch((error) => {
+                    console.error(error);
+                });
         }
-
-
     }, [key])
 
     return (
         <>
             <div className="account-group">
                 <div className="account-group-item">
-                    <ProfileBanner displayName={profile?.displayName} email={profile?.email} isAdmin={profile?.admin}/>
+                    <div className={"profile-banner profile-banner-" + theme}>
+                        <div className="profile-banner-header">
+                            <div className="profile-banner-image-section">
+                                <div className={"profile-banner-image-placeholder profile-banner-image-placeholder-" + theme}>
+                                    {profile?.displayName?.substring(0, 1)}
+                                </div>
+                            </div>
+                            <div className="profile-banner-user-info-section">
+                                <div className="profile-banner-user-info-main-group">
+                                    <div className="profile-banner-user-info-header">
+                                        <div className="profile-banner-user-info-header-username">
+                                            {profile?.displayName}
+                                        </div>
+                                        {profile?.admin ?
+                                            <div
+                                                className={"tooltip profile-banner-user-info-header-badge profile-banner-user-info-header-badge-" + theme}>
+                                                <i className="fa-solid fa-shield-halved"></i>
+                                                <span className={"tooltiptext tooltiptext-" + theme}>Admin</span>
+                                            </div> : ""}
+                                    </div>
+                                    <div className="profile-banner-user-info-content">
+                                        {profile?.email}
+                                    </div>
+                                </div>
+                                {auth.email == profile?.email ?
+                                    <div className="profile-banner-user-info-buttons profile-banner-button-group">
+                                        <button className={"button button-" + theme}><i className="fa-solid fa-image"></i> Change
+                                            Avatar
+                                        </button>
+                                        <button className={"button button-" + theme}><i
+                                            className="fa-solid fa-life-ring"></i> Support Center
+                                        </button>
+                                        <button className={"button button-" + theme} onClick={handleLogout}><i
+                                            className="fa-solid fa-right-from-bracket"></i> Logout
+                                        </button>
+                                    </div>
+                                    :
+                                    <div className="profile-banner-user-info-buttons profile-banner-button-group">
+                                        {!followStatus ?
+                                            (<button onClick={handleFollow} className={"button button-" + theme}><i
+                                                className="fa-solid fa-user-plus"></i> Follow
+                                            </button>) :
+                                            <button onClick={handleUnfollow} className={"button button-red"}><i
+                                                className="fa-solid fa-user-minus"></i> Unfollow
+                                            </button>}
+                                    </div>}
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="account-group-item">
                     <div className="account-group-label">
@@ -234,6 +386,16 @@ function Profile() {
                 <div className="account-group-item">
                     <div className="account-elements">
                         <div className="account-elements-header">
+                            Followers <span className="follower-count">{followerCount}</span>
+                        </div>
+                        <div className="account-elements-content">
+                            Could not fetch friends data from this user.
+                        </div>
+                    </div>
+                </div>
+                <div className="account-group-item">
+                    <div className="account-elements">
+                        <div className="account-elements-header">
                             Latest Activity
                         </div>
                         <div className="account-elements-content">
@@ -251,16 +413,6 @@ function Profile() {
                                 : "No activity found for this user."
                             }
 
-                        </div>
-                    </div>
-                </div>
-                <div className="account-group-item">
-                    <div className="account-elements">
-                        <div className="account-elements-header">
-                            Friends
-                        </div>
-                        <div className="account-elements-content">
-                            Could not fetch friends data from this user.
                         </div>
                     </div>
                 </div>

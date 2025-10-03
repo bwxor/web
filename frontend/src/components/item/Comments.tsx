@@ -33,7 +33,7 @@ const Comments = (props: CommentsProps) => {
 
             console.log("postId: " + postId + ", content: " + content);
 
-            const createCommentResponse = await fetch("https://bwxor.com/api/comments/create", {
+            const createCommentResponse = await fetch("http://localhost:8080/api/comments/create", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -63,7 +63,7 @@ const Comments = (props: CommentsProps) => {
     }
 
     const fetchComments = async () => {
-        await fetch("https://bwxor.com/api/pages/" + props.category + "/" + props.slug)
+        await fetch("http://localhost:8080/api/pages/" + props.category + "/" + props.slug)
             .then((response) => {
                 return response.json();
             })
@@ -71,7 +71,7 @@ const Comments = (props: CommentsProps) => {
                 setPostId(data.id);
                 console.log(data.id);
 
-                fetch("https://bwxor.com/api/comments/post/" + data.id)
+                fetch("http://localhost:8080/api/comments/post/" + data.id)
                     .then((response) => response.json())
                     .then((data) => {
                         console.log(data);
