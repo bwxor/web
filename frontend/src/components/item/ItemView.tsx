@@ -7,6 +7,7 @@ import {useTheme} from "../../context/ThemeContext.tsx";
 import {Components} from "react-markdown";
 import {useAuth} from "../../context/AuthenticationContext.tsx";
 import Comments from "./Comments.tsx";
+import {Riple} from "react-loading-indicators";
 
 interface ItemViewProps {
     category: string | undefined;
@@ -20,11 +21,12 @@ interface ProfileType {
 
 function ItemView(props: ItemViewProps) {
     const {slug} = useParams();
-    const [markdown, setMarkdown] = useState("Loading...");
+    const [markdown, setMarkdown] = useState("");
     const {theme} = useTheme();
     const {auth} = useAuth();
     const [profile, setProfile] = useState<ProfileType | null>({biography: "", birthYear: "", admin: false});
     const navigate = useNavigate();
+    const [loadingMarkdown, setLoadingMarkdown] = useState(true);
 
 
     const handleEditPress = () => {
@@ -78,7 +80,10 @@ function ItemView(props: ItemViewProps) {
     useEffect(() => {
         fetch(`https://bwxor.com/api/pages/${props.category}/${slug}`)
             .then((response) => response.json())
-            .then((data) => setMarkdown(data.content))
+            .then((data) => {
+                setLoadingMarkdown(false);
+                setMarkdown(data.content);
+            })
             .catch(() => setMarkdown("Page with given info not found."));
     }, [props.category, slug]);
 
@@ -108,26 +113,39 @@ function ItemView(props: ItemViewProps) {
 
     return (
         <>
-            {auth.token != "" && profile?.admin ?
-                <div className="management-button-group">
-                    <button className={"button button-" + theme + " management-button-group-item"}
-                    onClick={handleEditPress}><span
-                        className="fa-solid fa-pen"> </span> Edit
-                    </button>
-                    <button className={"button button-red management-button-group-item"}
-                            onClick={handleDeletePress}><span
-                        className="fa-solid fa-trash"> </span> Delete
-                    </button>
-                </div>
-                : <></>}
+            {loadingMarkdown ?
+                <div className="center">
+                    <div className="center">
+                        {theme == "dark" ?
+                            <Riple color="#3c4751" size="medium" text="" textColor=""/>
+                            :
+                            <Riple color="#D1D1D1" size="medium" text="" textColor=""/>
+                        }
+                    </div>
+                </div> :
 
-            <ReactMarkdown components={components}>
-                {markdown}
-            </ReactMarkdown>
-
-            <Comments slug={slug} category={props.category} />
+                <>
+                    {auth.token != "" && profile?.admin ?
+                        <div className="management-button-group">
+                            <button className={"button button-" + theme + " management-button-group-item"}
+                                    onClick={handleEditPress}><span
+                                className="fa-solid fa-pen"> </span> Edit
+                            </button>
+                            <button className={"button button-red management-button-group-item"}
+                                    onClick={handleDeletePress}><span
+                                className="fa-solid fa-trash"> </span> Delete
+                            </button>
+                        </div>
+                        : <></>}
+                    <ReactMarkdown components={components}>
+                        {markdown}
+                    </ReactMarkdown><Comments
+                    slug={slug}
+                    category={props.category}/>
+                </>
+            }
         </>
-    );
+    )
 }
 
 export default ItemView;

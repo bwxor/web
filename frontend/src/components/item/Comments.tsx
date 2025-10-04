@@ -3,6 +3,7 @@ import {useTheme} from "../../context/ThemeContext.tsx";
 import Comment from "../item/Comment.tsx";
 import {useAuth} from "../../context/AuthenticationContext.tsx";
 import {Link} from "react-router-dom";
+import {Riple} from "react-loading-indicators";
 
 interface CommentsProps {
     slug: string | undefined;
@@ -26,6 +27,7 @@ const Comments = (props: CommentsProps) => {
     const [comments, setComments] = useState<CommentModel[]>([]);
     const [postId, setPostId] = useState<string | null>(null);
     const [createButtonEnabled, setCreateButtonEnabled] = useState(false);
+    const [loadingComments, setLoadingComments] = useState(true);
 
     const handleCreateComment = async () => {
         try {
@@ -74,7 +76,7 @@ const Comments = (props: CommentsProps) => {
                 fetch("https://bwxor.com/api/comments/post/" + data.id)
                     .then((response) => response.json())
                     .then((data) => {
-                        console.log(data);
+                        setLoadingComments(false);
                         setComments(data);
                         setCreateButtonEnabled(true);
                     })
@@ -125,10 +127,24 @@ const Comments = (props: CommentsProps) => {
                         }
                     </div>
                 </div>
-                <div className="comment-list">
-                    {comments.map((comment) => <Comment key={comment.commentId} id={comment.commentId} userId={comment.userId} displayName={comment.userDisplayName} content={comment.content}
-                                                        date={comment.dateTime}/>)}
-                </div>
+                {loadingComments ?
+                    <div className="center">
+                        <div className="center">
+                            {theme == "dark" ?
+                                <Riple color="#3c4751" size="medium" text="" textColor=""/>
+                                :
+                                <Riple color="#D1D1D1" size="medium" text="" textColor=""/>
+                            }
+                        </div>
+                    </div> :
+                    <div className="comment-list">
+                        {comments.map((comment) => <Comment key={comment.commentId} id={comment.commentId}
+                                                            userId={comment.userId}
+                                                            displayName={comment.userDisplayName}
+                                                            content={comment.content}
+                                                            date={comment.dateTime}/>)}
+                    </div>
+                }
             </div>
         </>
     );

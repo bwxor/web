@@ -3,6 +3,7 @@ import {useAuth} from "../../context/AuthenticationContext.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {useTheme} from "../../context/ThemeContext.tsx";
 import ProfileComment from "../item/ProfileComment.tsx";
+import {Riple} from "react-loading-indicators";
 
 interface ProfileType {
     displayName: string;
@@ -41,6 +42,10 @@ function Profile() {
     const [newBirthYear, setNewBirthYear] = useState("");
     const [errorBiography, setErrorBiography] = useState(false);
     const [errorBirthYear, setErrorBirthYear] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [fetchedFollowerCount, setFetchedFollowerCount] = useState(false);
+    const [fetchedComments, setFetchedComments] = useState(false);
+    const [fetchedProfile, setFetchedProfile] = useState(false);
 
     const handleLogout = () => {
         initAuth("", "", "", "");
@@ -67,7 +72,7 @@ function Profile() {
                 setFollowStatus(true);
                 fetchFollowCount(profile?.email);
             }
-        } catch(error) {
+        } catch (error) {
             console.error(error);
         }
     }
@@ -92,7 +97,7 @@ function Profile() {
                 setFollowStatus(false);
                 fetchFollowCount(profile?.email);
             }
-        } catch(error) {
+        } catch (error) {
             console.error(error);
         }
     }
@@ -202,6 +207,7 @@ function Profile() {
                 return response.json();
             })
             .then((data) => {
+                setFetchedFollowerCount(true);
                 console.log(data);
                 setFollowerCount(data);
             })
@@ -235,6 +241,7 @@ function Profile() {
 
         await fetch("https://bwxor.com/api/comments/user/" + profileData.email)
             .then((response) => {
+                setFetchedComments(true);
                 return response.json();
             })
             .then((data) => {
@@ -246,24 +253,24 @@ function Profile() {
     }
 
     useEffect(() => {
-        let responseStatus : number;
+        let responseStatus: number;
 
         if (auth.token == "") {
             navigate("/signin");
         } else {
             fetch("https://bwxor.com/api/profile/find/" + key)
                 .then((response) => {
+                    setFetchedProfile(true);
                     responseStatus = response.status;
                     return response.json();
                 })
                 .then((data) => {
-                    if (responseStatus == 200){
+                    if (responseStatus == 200) {
                         setProfile(data);
                         fetchFollowCount(data.email);
                         fetchComments(data);
                         fetchFollowStatus(data);
-                    }
-                    else {
+                    } else {
                         navigate('/profile/' + auth.id);
                     }
                 })
@@ -273,151 +280,169 @@ function Profile() {
         }
     }, [key])
 
+    useEffect(() => {
+        if (fetchedProfile && fetchedComments && fetchedFollowerCount){
+            setLoading(false);
+        }
+    })
+
     return (
         <>
-            <div className="account-group">
-                <div className="account-group-item">
-                    <div className={"profile-banner profile-banner-" + theme}>
-                        <div className="profile-banner-header">
-                            <div className="profile-banner-image-section">
-                                <div className={"profile-banner-image-placeholder profile-banner-image-placeholder-" + theme}>
-                                    {profile?.displayName?.substring(0, 1)}
+            {loading ?
+                <div className="center">
+                    {theme == "dark" ?
+                        <Riple color="#3c4751" size="medium" text="" textColor=""/>
+                        :
+                        <Riple color="#D1D1D1" size="medium" text="" textColor=""/>
+                    }
+                </div>
+
+                :
+                <div className="account-group">
+                    <div className="account-group-item">
+                        <div className={"profile-banner profile-banner-" + theme}>
+                            <div className="profile-banner-header">
+                                <div className="profile-banner-image-section">
+                                    <div
+                                        className={"profile-banner-image-placeholder profile-banner-image-placeholder-" + theme}>
+                                        {profile?.displayName?.substring(0, 1)}
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="profile-banner-user-info-section">
-                                <div className="profile-banner-user-info-main-group">
-                                    <div className="profile-banner-user-info-header">
-                                        <div className="profile-banner-user-info-header-username">
-                                            {profile?.displayName}
+                                <div className="profile-banner-user-info-section">
+                                    <div className="profile-banner-user-info-main-group">
+                                        <div className="profile-banner-user-info-header">
+                                            <div className="profile-banner-user-info-header-username">
+                                                {profile?.displayName}
+                                            </div>
+                                            {profile?.admin ?
+                                                <div
+                                                    className={"tooltip profile-banner-user-info-header-badge profile-banner-user-info-header-badge-" + theme}>
+                                                    <i className="fa-solid fa-shield-halved"></i>
+                                                    <span className={"tooltiptext tooltiptext-" + theme}>Admin</span>
+                                                </div> : ""}
                                         </div>
-                                        {profile?.admin ?
-                                            <div
-                                                className={"tooltip profile-banner-user-info-header-badge profile-banner-user-info-header-badge-" + theme}>
-                                                <i className="fa-solid fa-shield-halved"></i>
-                                                <span className={"tooltiptext tooltiptext-" + theme}>Admin</span>
-                                            </div> : ""}
+                                        <div className="profile-banner-user-info-content">
+                                            {profile?.email}
+                                        </div>
                                     </div>
-                                    <div className="profile-banner-user-info-content">
-                                        {profile?.email}
-                                    </div>
+                                    {auth.email == profile?.email ?
+                                        <div className="profile-banner-user-info-buttons profile-banner-button-group">
+                                            <button className={"button button-" + theme}><i
+                                                className="fa-solid fa-image"></i> Change
+                                                Avatar
+                                            </button>
+                                            <button className={"button button-" + theme}><i
+                                                className="fa-solid fa-life-ring"></i> Support Center
+                                            </button>
+                                            <button className={"button button-" + theme} onClick={handleLogout}><i
+                                                className="fa-solid fa-right-from-bracket"></i> Logout
+                                            </button>
+                                        </div>
+                                        :
+                                        <div className="profile-banner-user-info-buttons profile-banner-button-group">
+                                            {!followStatus ?
+                                                (<button onClick={handleFollow} className={"button button-" + theme}><i
+                                                    className="fa-solid fa-user-plus"></i> Follow
+                                                </button>) :
+                                                <button onClick={handleUnfollow} className={"button button-red"}><i
+                                                    className="fa-solid fa-user-minus"></i> Unfollow
+                                                </button>}
+                                        </div>}
                                 </div>
-                                {auth.email == profile?.email ?
-                                    <div className="profile-banner-user-info-buttons profile-banner-button-group">
-                                        <button className={"button button-" + theme}><i className="fa-solid fa-image"></i> Change
-                                            Avatar
-                                        </button>
-                                        <button className={"button button-" + theme}><i
-                                            className="fa-solid fa-life-ring"></i> Support Center
-                                        </button>
-                                        <button className={"button button-" + theme} onClick={handleLogout}><i
-                                            className="fa-solid fa-right-from-bracket"></i> Logout
-                                        </button>
-                                    </div>
-                                    :
-                                    <div className="profile-banner-user-info-buttons profile-banner-button-group">
-                                        {!followStatus ?
-                                            (<button onClick={handleFollow} className={"button button-" + theme}><i
-                                                className="fa-solid fa-user-plus"></i> Follow
-                                            </button>) :
-                                            <button onClick={handleUnfollow} className={"button button-red"}><i
-                                                className="fa-solid fa-user-minus"></i> Unfollow
-                                            </button>}
-                                    </div>}
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="account-group-item">
-                    <div className="account-group-label">
-                        <span className="fa-solid fa-info-circle"></span> <strong>Biography </strong>
-                        {auth.email == profile?.email ?
-                            editBiography ?
-                                <div className="delimited-links">
-                                    <a href="#" onClick={handleCancelEditBiographyPress}>Cancel</a>
-                                    <a href="#" onClick={handleBiographySavePress}>Save</a>
-                                </div> :
+                    <div className="account-group-item">
+                        <div className="account-group-label">
+                            <span className="fa-solid fa-info-circle"></span> <strong>Biography </strong>
+                            {auth.email == profile?.email ?
+                                editBiography ?
+                                    <div className="delimited-links">
+                                        <a href="#" onClick={handleCancelEditBiographyPress}>Cancel</a>
+                                        <a href="#" onClick={handleBiographySavePress}>Save</a>
+                                    </div> :
+                                    <>
+                                        <a href="#" onClick={handleEditBiographyPress}>Edit</a>
+                                    </>
+                                :
+                                <></>}
+                        </div>
+                        <div className={"account-group-content account-group-content-" + theme}>
+                            {editBiography ?
                                 <>
-                                    <a href="#" onClick={handleEditBiographyPress}>Edit</a>
-                                </>
-                            :
-                            <></>}
-                    </div>
-                    <div className={"account-group-content account-group-content-" + theme}>
-                        {editBiography ?
-                            <>
                                 <textarea placeholder="Write something interesting here..."
                                           className={"textarea textarea-" + theme + (errorBiography ? " textarea-error" : "")}
                                           onChange={handleBiographyInputChange}>{profile?.biography}</textarea>
-                            </>
-                            :
-                            profile?.biography
-                        }
-                    </div>
-                </div>
-                <div className="account-group-item">
-                    <div className="account-group-label">
-                        <span className="fa-solid fa-calendar"></span> <strong>Birth year </strong>
-                        {
-                            auth.email == profile?.email ?
-                                editBirthYear ?
-                                    <div className="delimited-links">
-                                        <a href="#" onClick={handleCancelEditBirthYearPress}>Cancel</a>
-                                        <a href="#" onClick={handleBirthYearSavePress}>Save</a>
-                                    </div> :
-                                    <>
-                                        <a href="#" onClick={handleEditBirthYearPress}>Edit</a>
-                                    </>
-                                : <></>
-                        }
-                    </div>
-                    <div className={"account-group-content account-group-content-" + theme}>
-                        {
-                            editBirthYear ?
-                                <input type="number"
-                                       className={"textbox textbox-" + theme + (errorBirthYear ? " textbox-error" : "")}
-                                       min="1900"
-                                       max="2025"
-                                       defaultValue={profile?.birthYear} onChange={handleBirthYearInputChange}/>
+                                </>
                                 :
-                                profile?.birthYear
-                        }
-                    </div>
-                </div>
-                <div className="account-group-item">
-                    <div className="account-elements">
-                        <div className="account-elements-header">
-                            Followers <span className="follower-count">{followerCount}</span>
-                        </div>
-                        <div className="account-elements-content">
-                            Could not fetch friends data from this user.
-                        </div>
-                    </div>
-                </div>
-                <div className="account-group-item">
-                    <div className="account-elements">
-                        <div className="account-elements-header">
-                            Latest Activity
-                        </div>
-                        <div className="account-elements-content">
-                            {comments.length > 0 ?
-                                <div className="profile-comment-list">
-                                    {comments.map((comment) => <ProfileComment key={comment.commentId}
-                                                                               id={comment.commentId}
-                                                                               userId={comment.userId}
-                                                                               postId={comment.postId}
-                                                                               content={comment.content}
-                                                                               date={comment.dateTime}/>)
-                                    }
-
-                                </div>
-                                : "No activity found for this user."
+                                profile?.biography
                             }
+                        </div>
+                    </div>
+                    <div className="account-group-item">
+                        <div className="account-group-label">
+                            <span className="fa-solid fa-calendar"></span> <strong>Birth year </strong>
+                            {
+                                auth.email == profile?.email ?
+                                    editBirthYear ?
+                                        <div className="delimited-links">
+                                            <a href="#" onClick={handleCancelEditBirthYearPress}>Cancel</a>
+                                            <a href="#" onClick={handleBirthYearSavePress}>Save</a>
+                                        </div> :
+                                        <>
+                                            <a href="#" onClick={handleEditBirthYearPress}>Edit</a>
+                                        </>
+                                    : <></>
+                            }
+                        </div>
+                        <div className={"account-group-content account-group-content-" + theme}>
+                            {
+                                editBirthYear ?
+                                    <input type="number"
+                                           className={"textbox textbox-" + theme + (errorBirthYear ? " textbox-error" : "")}
+                                           min="1900"
+                                           max="2025"
+                                           defaultValue={profile?.birthYear} onChange={handleBirthYearInputChange}/>
+                                    :
+                                    profile?.birthYear
+                            }
+                        </div>
+                    </div>
+                    <div className="account-group-item">
+                        <div className="account-elements">
+                            <div className="account-elements-header">
+                                Followers <span className="follower-count">{followerCount}</span>
+                            </div>
+                            <div className="account-elements-content">
+                                Could not fetch friends data from this user.
+                            </div>
+                        </div>
+                    </div>
+                    <div className="account-group-item">
+                        <div className="account-elements">
+                            <div className="account-elements-header">
+                                Latest Activity
+                            </div>
+                            <div className="account-elements-content">
+                                {comments.length > 0 ?
+                                    <div className="profile-comment-list">
+                                        {comments.map((comment) => <ProfileComment key={comment.commentId}
+                                                                                   id={comment.commentId}
+                                                                                   userId={comment.userId}
+                                                                                   postId={comment.postId}
+                                                                                   content={comment.content}
+                                                                                   date={comment.dateTime}/>)
+                                        }
 
+                                    </div>
+                                    : "No activity found for this user."
+                                }
+
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
+            }
         </>
     )
         ;

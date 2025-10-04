@@ -3,6 +3,7 @@ import ItemSummary from "./ItemSummary.tsx";
 import {useAuth} from "../../context/AuthenticationContext.tsx";
 import {useTheme} from "../../context/ThemeContext.tsx";
 import {Link} from "react-router-dom";
+import {Riple} from "react-loading-indicators";
 
 interface ItemListProps {
     category: string | undefined;
@@ -26,6 +27,7 @@ function ItemList(props: ItemListProps) {
     const {auth} = useAuth();
     const {theme} = useTheme();
     const [profile, setProfile] = useState<ProfileType | null>({biography: "", birthYear: "", admin: false});
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (auth.token != "") {
@@ -43,6 +45,7 @@ function ItemList(props: ItemListProps) {
     useEffect(() => {
         fetch("https://bwxor.com/api/pages/" + props.category)
             .then((response) => {
+                setLoading(false);
                 return response.json();
             })
             .then((data) => {
@@ -57,7 +60,7 @@ function ItemList(props: ItemListProps) {
             <input type="text" className={"textbox textbox-medium textbox-" + theme} placeholder="Search..."></input>
             {auth.token != "" && profile?.admin ?
                 <div className="management-button-group">
-                    <Link to={"/new/" + props.category} style={{ textDecoration: 'none' }}>
+                    <Link to={"/new/" + props.category} style={{textDecoration: 'none'}}>
                         <button className={"button button-" + theme + " management-button-group-item"}><span
                             className="fa-solid fa-plus"> </span> Add new
                         </button>
@@ -67,10 +70,19 @@ function ItemList(props: ItemListProps) {
                     </button>
                 </div>
                 : <></>}
-            <div className="items">
-                {items.map((item: ItemInfo) => <ItemSummary key={item.id} category={props.category} slug={item.slug}
-                                                            title={item.title} description={item.description}/>)}
-            </div>
+            {loading ?
+                <div className="center">
+                    {theme == "dark" ?
+                        <Riple color="#3c4751" size="medium" text="" textColor=""/>
+                        :
+                        <Riple color="#D1D1D1" size="medium" text="" textColor=""/>
+                    }
+                </div>
+                : <div className="items">
+                    {items.map((item: ItemInfo) => <ItemSummary key={item.id} category={props.category} slug={item.slug}
+                                                                title={item.title} description={item.description}/>)}
+                </div>
+            }
         </section>
     );
 }
