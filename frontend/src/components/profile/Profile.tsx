@@ -49,7 +49,7 @@ function Profile() {
 
     const handleFollow = async () => {
         try {
-            const createFollowResponse = await fetch("http://localhost:8080/api/follows/create", {
+            const createFollowResponse = await fetch("https://bwxor.com/api/follows/create", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -74,7 +74,7 @@ function Profile() {
 
     const handleUnfollow = async () => {
         try {
-            const deleteFollowResponse = await fetch("http://localhost:8080/api/follows/delete", {
+            const deleteFollowResponse = await fetch("https://bwxor.com/api/follows/delete", {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -133,7 +133,7 @@ function Profile() {
         } else {
             setErrorBiography(false);
 
-            const response = await fetch("http://localhost:8080/api/profile/update", {
+            const response = await fetch("https://bwxor.com/api/profile/update", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -165,7 +165,7 @@ function Profile() {
         } else {
             setErrorBirthYear(false);
 
-            const response = await fetch("http://localhost:8080/api/profile/update", {
+            const response = await fetch("https://bwxor.com/api/profile/update", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -192,7 +192,7 @@ function Profile() {
     }
 
     const fetchFollowCount = async (email: string | undefined) => {
-        await fetch("http://localhost:8080/api/follows/count/" + email, {
+        await fetch("https://bwxor.com/api/follows/count/" + email, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + auth.token
@@ -211,7 +211,7 @@ function Profile() {
     }
 
     const fetchFollowStatus = async (profileData: ProfileType) => {
-        await fetch("http://localhost:8080/api/follows/status/" + profileData.email, {
+        await fetch("https://bwxor.com/api/follows/status/" + profileData.email, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + auth.token
@@ -233,7 +233,7 @@ function Profile() {
     const fetchComments = async (profileData: ProfileType) => {
         console.log(profileData);
 
-        await fetch("http://localhost:8080/api/comments/user/" + profileData.email)
+        await fetch("https://bwxor.com/api/comments/user/" + profileData.email)
             .then((response) => {
                 return response.json();
             })
@@ -251,7 +251,7 @@ function Profile() {
         if (auth.token == "") {
             navigate("/signin");
         } else {
-            fetch("http://localhost:8080/api/profile/find/" + key)
+            fetch("https://bwxor.com/api/profile/find/" + key)
                 .then((response) => {
                     responseStatus = response.status;
                     return response.json();
