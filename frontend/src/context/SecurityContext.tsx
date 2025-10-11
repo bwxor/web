@@ -14,7 +14,7 @@ const SecurityContext = createContext<SecurityContextType | undefined>(undefined
 export const SecurityContextProvider: React.FC<{children: React.ReactNode}> = ({children}) => {
     const getInitialSecurity = (): SecurityType => {
         return {
-            security: sessionStorage.getItem("invalidLoginCount") || 0,
+            invalidLoginCount: sessionStorage.getItem("invalidLoginCount") || 0,
         };
     };
 
@@ -34,7 +34,7 @@ export const SecurityContextProvider: React.FC<{children: React.ReactNode}> = ({
             invalidLoginCount,
         });
 
-        sessionStorage.setItem("invalidLoginCount", invalidLoginCount);
+        sessionStorage.setItem("invalidLoginCount", string(invalidLoginCount));
     }
 
     return (
