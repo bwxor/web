@@ -14,14 +14,14 @@ const SecurityContext = createContext<SecurityContextType | undefined>(undefined
 export const SecurityContextProvider: React.FC<{children: React.ReactNode}> = ({children}) => {
     const getInitialSecurity = (): SecurityType => {
         return {
-            invalidLoginCount: parseInt(sessionStorage.getItem("invalidLoginCount") | null) || 0,
+            invalidLoginCount: parseInt(sessionStorage.getItem("invalidLoginCount")) || 0,
         };
     };
 
     const [security, setSecurity] = useState<SecurityType>(getInitialSecurity);
 
     useEffect(() => {
-        const invalidLoginCount = parseInt(sessionStorage.getItem("invalidLoginCount") | null);
+        const invalidLoginCount = parseInt(sessionStorage.getItem("invalidLoginCount"));
         if (invalidLoginCount != undefined) {
             setSecurity({
                 invalidLoginCount,
