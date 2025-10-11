@@ -10,10 +10,12 @@
 
 .menu-light {
     background-color: #f8fafb;
+    box-shadow: 0 0 3px rgba(0,0,0,0.08);
 }
 
 .menu-dark {
     background-color: #24272c;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.20);
 }
 
 .menu-branding-text-light {

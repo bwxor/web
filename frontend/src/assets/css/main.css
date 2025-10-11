@@ -162,10 +162,12 @@ img {
 
 .body-content-dark {
     background-color: #202327;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.20);
 }
 
 .body-content-light {
     background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
 a {
@@ -606,7 +608,6 @@ input[type=range] {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    margin-top: 1rem;
 }
 
 .comment-list {
@@ -644,7 +645,7 @@ input[type=range] {
 
 .profile-comment-content {
     word-break: break-all;
-    font-style: italic;
+    font-size: .8rem;
 }
 
 .comment-user {
@@ -707,7 +708,7 @@ input[type=range] {
 }
 
 .item-summary-light:active {
-    background-color: #ededed;
+    background-color: #d5d5d5;
 }
 
 .item-summary-dark:hover {

@@ -24,6 +24,7 @@ interface ProfileType {
 
 function ItemList(props: ItemListProps) {
     const [items, setItems] = useState<ItemInfo[]>([]);
+    const [displayedItems, setDisplayedItems] = useState<ItemInfo[]>([]);
     const {auth} = useAuth();
     const {theme} = useTheme();
     const [profile, setProfile] = useState<ProfileType | null>({biography: "", birthYear: "", admin: false});
@@ -50,14 +51,28 @@ function ItemList(props: ItemListProps) {
             })
             .then((data) => {
                 setItems(data);
+                setDisplayedItems(data);
             })
             .catch((error) => console.error(error));
 
     }, [props.category]);
 
+    const searchItems = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const key = event.target.value;
+
+        if (key.length != 0) {
+            setDisplayedItems(items.filter(
+                s => s.title?.toLowerCase().includes(key.toLowerCase()) || s.slug?.toLowerCase()?.includes(key.toLowerCase())
+            ));
+        } else {
+            setDisplayedItems(items);
+        }
+    }
+
     return (
         <section className="projects">
-            <input type="text" className={"textbox textbox-medium textbox-" + theme} placeholder="Search..."></input>
+            <input type="text" className={"textbox textbox-medium textbox-" + theme} placeholder="Search..."
+                   onChange={searchItems}></input>
             {auth.token != "" && profile?.admin ?
                 <div className="management-button-group">
                     <Link to={"/new/" + props.category} style={{textDecoration: 'none'}}>
@@ -79,7 +94,7 @@ function ItemList(props: ItemListProps) {
                     }
                 </div>
                 : <div className="items">
-                    {items.map((item: ItemInfo) => <ItemSummary key={item.id} category={props.category} slug={item.slug}
+                    {displayedItems.map((item: ItemInfo) => <ItemSummary key={item.id} category={props.category} slug={item.slug}
                                                                 title={item.title} description={item.description}/>)}
                 </div>
             }
