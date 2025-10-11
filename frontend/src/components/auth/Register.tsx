@@ -2,6 +2,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {useTheme} from "../../context/ThemeContext.tsx";
 import {useEffect, useState} from "react";
 import {useAuth} from "../../context/AuthenticationContext.tsx";
+import ReCAPTCHA from "react-google-recaptcha";
 
 function Register() {
     const {theme} = useTheme();
@@ -14,6 +15,7 @@ function Register() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [capVal, setCapVal] = useState<string | null>(null);
 
     useEffect(() => {
         if (auth.token != "") {
@@ -39,6 +41,14 @@ function Register() {
     }
 
     const handleRegister = async () => {
+        setError(false);
+
+        if (capVal == null) {
+            setError(true);
+            setErrorMessage("ReCAPTCHA challenge response is invalid.")
+            return;
+        }
+
         try {
             const registerResponse = await fetch("https://bwxor.com/api/auth/register", {
                 method: "POST",
@@ -136,6 +146,12 @@ function Register() {
                         <input type="password" placeholder="PickASecurePassword"
                                className={"form-input-area textbox textbox-" + theme}
                                onChange={handleConfirmPasswordChange}></input>
+                    </div>
+                    <div className="form-input-group">
+                        <div className="recaptcha">
+                            <ReCAPTCHA sitekey="6LcgPuYrAAAAAHfk3Jdu6eg_xyDXOyJuyR2t3LtN"
+                                       onChange={(val: string | null) => setCapVal(val)} />
+                        </div>
                     </div>
                     <div className="form-input-group">
                         <button className={"button button-" + theme} onClick={handleRegister}><span

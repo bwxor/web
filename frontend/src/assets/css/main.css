@@ -718,3 +718,9 @@ input[type=range] {
 .item-summary-dark:active {
     background-color: #23292e;
 }
+
+.recaptcha {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
