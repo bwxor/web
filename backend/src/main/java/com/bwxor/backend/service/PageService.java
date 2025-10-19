@@ -3,6 +3,7 @@ package com.bwxor.backend.service;
 import com.bwxor.backend.dto.page.CreatePageRequestDto;
 import com.bwxor.backend.dto.page.DeletePageRequestDto;
 import com.bwxor.backend.dto.page.UpdatePageRequestDto;
+import com.bwxor.backend.repository.CommentRepository;
 import com.bwxor.backend.reqres.ServiceResponse;
 import com.bwxor.backend.entity.Page;
 import com.bwxor.backend.entity.Profile;
@@ -27,6 +28,8 @@ public class PageService {
     private PageRepository pageRepository;
     @Autowired
     private ProfileRepository profileRepository;
+    @Autowired
+    private CommentRepository commentRepository;
     @Autowired
     private SlugValidator slugValidator;
 
@@ -137,6 +140,7 @@ public class PageService {
                     return ServiceResponse.ofError(Page.class, "Could not find page with specified slug for current category.");
                 }
 
+                commentRepository.removeByPostId(foundPage.get().getId());
                 pageRepository.deleteById(foundPage.get().getId());
                 return ServiceResponse.ofItem(foundPage.get());
             } else {
