@@ -176,22 +176,19 @@ function Spy() {
                             </>
                             :
                             <>
-                                <div className="app-input-group">
-                                    <div className="app-input-group-items">
-                                        <div className="app-input-group-item">
+                                <div className="spy-input-group">
+                                    <div className="spy-input-group-items">
+                                        <div className="spy-input-group-item">
                                             <div className="spy-title-group">
                                                 <div className="spy-title-group-item fa-solid fa-user-secret"></div>
                                                 <div className="spy-title-group-item spy-title">Spy</div>
                                             </div>
                                         </div>
-                                        <div className="app-input-group-item">
-
-                                        </div>
-                                        <div className="app-input-group-item">
+                                        <div className="spy-input-group-item">
                                             <textarea id="words" className={error ? "spy-textarea spy-textarea-error" : "spy-textarea"}
                                                       placeholder={placeholder} onChange={handleWords}>{words}</textarea>
                                         </div>
-                                        <div className="app-input-group-item">
+                                        <div className="spy-input-group-item">
                                             <div className="spy-slider-group">
                                                 <div className="spy-slider-group-item">
                                                     <h4>Players: {noPlayers}</h4>
@@ -208,7 +205,7 @@ function Spy() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="app-input-group-buttons">
+                                    <div className="spy-input-group-buttons">
                                         <button className="spy-button button-full-width"
                                                 onClick={handleGameStarted}>Start
                                         </button>

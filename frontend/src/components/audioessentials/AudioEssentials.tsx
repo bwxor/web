@@ -97,57 +97,62 @@ function AudioEssentials() {
 
     return (
         <>
-            <div className="app-box">
-                <div className="app-input-group app-limit-width">
-                    <div className="app-input-group-items">
-                        <div className="app-input-group-item">
-                            <h2 className="text-title">AudioEssentials</h2>
-                            <input type="file" id="file" accept=".mp3,.mp4,.wav,.aac,.m4a,.ogg,.flac,.wma,.mkv"
-                                   onChange={handleChangeFile}/>
-                        </div>
-                        <div className="app-input-group-item">
-                            <div className="app-slider-group">
-                                <div className="app-slider-group-item">
-                                    Speed: {tempoMultiplier}x
+            <div className="ae-body">
+                <div className="ae-box">
+                    <div className="ae-input-group">
+                        <div className="ae-input-group-item">
+                            <h2 className="ae-text-title">AudioEssentials</h2>
+                            <div className="ae-input-file-group">
+                                <div className="ae-input-file-group-item">
+                                    <div className="ae-input-file-name">
+                                        {file != null ? file.name : "No file selected."}
+                                    </div>
                                 </div>
-                                <div className="app-slider-group-item">
-                                    <input type="range" min="0.5" step="0.05" max="5" value={tempoMultiplier}
-                                           onChange={handleChangeTempo}/>
-                                </div>
-                            </div>
-                            <div className="app-slider-group">
-                                <div className="app-slider-group-item">
-                                    Pitch: {pitchMultiplier}x
-                                </div>
-                                <div className="app-slider-group-item">
-                                    <input type="range" min="0.5" step="0.05" max="5" value={pitchMultiplier}
-                                           onChange={handleChangePitch}/>
+                                <div className="ae-input-file-group-item">
+                                    <input id="file-input" className="ae-input-file" type="file"
+                                           accept=".mp3,.mp4,.wav,.aac,.m4a,.ogg,.flac,.wma,.mkv"
+                                           onChange={handleChangeFile}/>
+                                    <label className="ae-button" htmlFor="file-input">
+                                        <span className={"fa-solid fa-upload"}></span> &nbsp; Upload
+                                    </label>
                                 </div>
                             </div>
                         </div>
-                        <div className="app-input-group-item">
-                            <div className="audioessentials-select-group">
-                                <div className="audioessentials-select-group-item">
-                                    Output format:
-                                </div>
-                                <div className="audioessentials-select-group-item">
-                                    <select id="to" onChange={handleChangeTo}>
-                                        <option value="mp3">mp3</option>
-                                        <option value="mp4">mp4</option>
-                                        <option value="wav">wav</option>
-                                        <option value="aac">aac</option>
-                                        <option value="m4a">m4a</option>
-                                        <option value="ogg">ogg</option>
-                                        <option value="flac">flac</option>
-                                        <option value="wma">wma</option>
-                                        <option value="mkv">mkv</option>
-                                    </select>
-                                </div>
+                        <div className="ae-input-group-item">
+                            <div>
+                                Speed: {tempoMultiplier}x
+                            </div>
+                            <div>
+                                <input className="ae-slider" type="range" min="0.5" step="0.05" max="5"
+                                       value={tempoMultiplier}
+                                       onChange={handleChangeTempo}/>
+                            </div>
+                            <div>
+                                Pitch: {pitchMultiplier}x
+                            </div>
+                            <div>
+                                <input className="ae-slider" type="range" min="0.5" step="0.05" max="5"
+                                       value={pitchMultiplier}
+                                       onChange={handleChangePitch}/>
                             </div>
                         </div>
+
+                        <div className="ae-input-group-item">
+                                <select className="ae-select" id="to" onChange={handleChangeTo}>
+                                    <option value="mp3">mp3</option>
+                                    <option value="mp4">mp4</option>
+                                    <option value="wav">wav</option>
+                                    <option value="aac">aac</option>
+                                    <option value="m4a">m4a</option>
+                                    <option value="ogg">ogg</option>
+                                    <option value="flac">flac</option>
+                                    <option value="wma">wma</option>
+                                    <option value="mkv">mkv</option>
+                                </select>
+                            </div>
                     </div>
-                    <div className="app-input-group-buttons">
-                        <button className="button button-gray button-full-width" onClick={handleProcess}>Process
+                    <div className="ae-input-group">
+                        <button className="ae-button" onClick={handleProcess}>Process
                         </button>
                     </div>
                     {loading ?
@@ -170,7 +175,8 @@ function AudioEssentials() {
                 </div>
             </div>
         </>
-    );
+    )
+        ;
 }
 
 export default AudioEssentials;

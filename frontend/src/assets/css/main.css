@@ -305,46 +305,12 @@ a:hover {
     background-color: #ff1f53;
 }
 
-
 .text-title {
     font-family: Roboto;
 }
 
 .text-normal {
     font-family: Roboto;
-}
-
-.app-box {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    font-family: Roboto;
-    height: 100svh;
-}
-
-@media (orientation: landscape) {
-    .app-box {
-        min-height: 100svh;
-        height: auto;
-    }
-}
-
-.app-input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 1rem;
-}
-
-.app-input-group-items {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.app-input-group-item {
-    flex: 1;
 }
 
 .slider {
@@ -371,22 +337,9 @@ a:hover {
     border-radius: 5px;
 }
 
-.app-limit-width {
-    max-width: 300px;
-}
-
 .text {
     min-width: 250px;
     min-height: 30px;
-}
-
-.app-slider-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.app-slider-group-item {
-    flex: 1;
 }
 
 input[type=range] {
