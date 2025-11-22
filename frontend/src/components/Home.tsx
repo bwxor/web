@@ -139,7 +139,7 @@ function Home() {
                                 </a>
                             </div>
                             <div className="button-group-item">
-                                <a href="mailto:mario@bwxor.com" style={{textDecoration: 'none'}}>
+                                <a href="mailto:mario@mail.bwxor.com" style={{textDecoration: 'none'}}>
                                     <button className={"button button-" + theme + " full-width button-social"}><img src={mail}
                                                                                                     width="24"
                                                                                                     height="24"/><span
