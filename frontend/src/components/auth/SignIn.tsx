@@ -96,7 +96,7 @@ function Register() {
                     </div>
                     <div className="form-input-group">
                         <label className="form-input-label">E-Mail Address</label>
-                        <input type="email" placeholder="johndoe@mail.bwxor.com"
+                        <input type="email" placeholder="johndoe@bwxor.com"
                                className={"form-input-area textbox textbox-" + theme}
                                onChange={handleEmailChange}></input>
                     </div>

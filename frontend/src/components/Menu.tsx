@@ -30,9 +30,6 @@ function PopupMenu(props: PopupMenuProps) {
             <Link to="/docu" style={{color: 'inherit'}} className={"menu-item-small-" + theme}>
                 Documentation
             </Link>
-            <Link to="https://mail.bwxor.com/webmail" style={{color: 'inherit'}} className={"menu-item-small-" + theme}>
-                Mail
-            </Link>
             {auth.token == "" ?
                 <Link to="/signin" style={{color: 'inherit'}} className={"menu-item-small-" + theme}>
                     Sign in
@@ -85,9 +82,6 @@ function Menu() {
                             </Link>
                             <Link to="/docu">
                                 <span className={"menu-item menu-item-" + theme}>Documentation</span>
-                            </Link>
-                            <Link to="https://mail.bwxor.com/webmail">
-                                <span className={"menu-item menu-item-" + theme}>Mail</span>
                             </Link>
                             {auth.token == "" ?
                                 <Link to="/signin">
