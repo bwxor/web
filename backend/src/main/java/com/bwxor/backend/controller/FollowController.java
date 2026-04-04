@@ -61,4 +61,15 @@ public class FollowController {
 
         return ResponseEntity.badRequest().body(Map.of("message", followCountResponse.serviceError().message()));
     }
+
+    @GetMapping("/list/{toKey}")
+    public ResponseEntity<?> getFollowers(@PathVariable String toKey) {
+        var followCountResponse = followService.findFollowers(toKey);
+
+        if (followCountResponse.ok()) {
+            return ResponseEntity.ok(followCountResponse.item());
+        }
+
+        return ResponseEntity.badRequest().body(Map.of("message", followCountResponse.serviceError().message()));
+    }
 }

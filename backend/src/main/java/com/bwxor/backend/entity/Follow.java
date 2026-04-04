@@ -9,10 +9,12 @@ public class Follow {
     private String id;
     private String fromId;
     private String toId;
+    private String fromName;
 
-    public Follow(String fromId, String toId) {
+    public Follow(String fromId, String toId, String fromName) {
         this.fromId = fromId;
         this.toId = toId;
+        this.fromName = fromName;
     }
 
     public String getId() {
@@ -37,5 +39,13 @@ public class Follow {
 
     public void setToId(String toId) {
         this.toId = toId;
+    }
+
+    public String getFromName() {
+        return fromName;
+    }
+
+    public void setFromName(String fromName) {
+        this.fromName = fromName;
     }
 }

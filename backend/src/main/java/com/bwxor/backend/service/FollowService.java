@@ -2,9 +2,11 @@ package com.bwxor.backend.service;
 
 import com.bwxor.backend.dto.follow.CreateFollowDto;
 import com.bwxor.backend.dto.follow.DeleteFollowDto;
+import com.bwxor.backend.dto.follow.ListFollowDto;
 import com.bwxor.backend.entity.Follow;
 import com.bwxor.backend.entity.User;
 import com.bwxor.backend.repository.FollowRepository;
+import com.bwxor.backend.repository.ProfileRepository;
 import com.bwxor.backend.repository.UserRepository;
 import com.bwxor.backend.reqres.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,6 +24,8 @@ public class FollowService {
     private FollowRepository followRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ProfileRepository profileRepository;
 
     public ServiceResponse<Follow> createFollow(CreateFollowDto createFollowDto) {
         String toId = createFollowDto.toId();
@@ -54,7 +59,13 @@ public class FollowService {
                     return ServiceResponse.ofError(Follow.class, "Follow from specified id to specified id already exists.");
                 }
 
-                Follow followToCreate = new Follow(id, toUser.get().getId());
+                var profile = profileRepository.findByEmail(userOptional.get().getUsername());
+
+                if (profile.isEmpty()) {
+                    return ServiceResponse.ofError(Follow.class, "Could not fetch profile data for the authenticated user.");
+                }
+
+                Follow followToCreate = new Follow(id, toUser.get().getId(), profile.get().getDisplayName());
                 followRepository.insert(followToCreate);
 
                 return ServiceResponse.ofItem(followToCreate);
@@ -169,6 +180,31 @@ public class FollowService {
             }
         } else {
             return ServiceResponse.ofError(Boolean.class, "You are not authenticated.");
+        }
+    }
+
+    public ServiceResponse<List<ListFollowDto>> findFollowers(String key) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            if (authentication.getPrincipal() instanceof UserDetails) {
+                Optional<User> toUser = userRepository.findById(key);
+
+                if (toUser.isEmpty()) {
+                    toUser = userRepository.findByEmail(key);
+
+                    if (toUser.isEmpty()) {
+                        return ServiceResponse.ofError("Error fetching info for specified user id or email address.");
+                    }
+                }
+
+                var followers = followRepository.findByToId(toUser.get().getId());
+                return ServiceResponse.ofItem(followers.stream().map(f -> new ListFollowDto(f.getFromId(), f.getFromName())).toList());
+            } else {
+                return ServiceResponse.ofError("Could not fetch authentication info.");
+            }
+        } else {
+            return ServiceResponse.ofError("You are not authenticated.");
         }
     }
 }
