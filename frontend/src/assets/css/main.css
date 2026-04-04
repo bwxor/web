@@ -677,3 +677,9 @@ input[type=range] {
     flex-direction: row;
     justify-content: center;
 }
+
+.follower-container {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+}

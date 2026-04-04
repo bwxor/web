@@ -4,6 +4,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useTheme} from "../../context/ThemeContext.tsx";
 import ProfileComment from "../item/ProfileComment.tsx";
 import {Riple} from "react-loading-indicators";
+import Follower from "../item/Follower.tsx";
 
 interface ProfileType {
     displayName: string;
@@ -21,6 +22,11 @@ interface CommentModel {
     dateTime: string | undefined
 }
 
+interface FollowerModel {
+    fromId: string | undefined;
+    fromName: string | undefined;
+}
+
 function Profile() {
     const {key} = useParams();
     const {auth, initAuth} = useAuth();
@@ -36,6 +42,7 @@ function Profile() {
     const [comments, setComments] = useState<CommentModel[]>([]);
     const [followerCount, setFollowerCount] = useState(0);
     const [followStatus, setFollowStatus] = useState(false);
+    const [followers, setFollowers] = useState<FollowerModel[]>([])
     const [editBiography, setEditBiography] = useState(false);
     const [editBirthYear, setEditBirthYear] = useState(false);
     const [newBiography, setNewBiography] = useState("");
@@ -71,6 +78,11 @@ function Profile() {
             } else {
                 setFollowStatus(true);
                 fetchFollowCount(profile?.email);
+                const newFollower : FollowerModel = {
+                    fromId: auth?.id,
+                    fromName: auth?.displayName
+                };
+                setFollowers(followers => [...followers, newFollower]);
             }
         } catch (error) {
             console.error(error);
@@ -96,6 +108,7 @@ function Profile() {
             } else {
                 setFollowStatus(false);
                 fetchFollowCount(profile?.email);
+                setFollowers(followers.filter(f => f.fromId !== auth?.id));
             }
         } catch (error) {
             console.error(error);
@@ -252,6 +265,24 @@ function Profile() {
             });
     }
 
+    const fetchFollowers = async (profileData: ProfileType) => {
+        await fetch("https://bwxor.com/api/follows/list/" + profileData.email, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + auth.token
+            },
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                setFollowers(data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
     useEffect(() => {
         let responseStatus: number;
 
@@ -270,6 +301,7 @@ function Profile() {
                         fetchFollowCount(data.email);
                         fetchComments(data);
                         fetchFollowStatus(data);
+                        fetchFollowers(data);
                     } else {
                         navigate('/profile/' + auth.id);
                     }
@@ -281,7 +313,7 @@ function Profile() {
     }, [key])
 
     useEffect(() => {
-        if (fetchedProfile && fetchedComments && fetchedFollowerCount){
+        if (fetchedProfile && fetchedComments && fetchedFollowerCount) {
             setLoading(false);
         }
     })
@@ -414,7 +446,13 @@ function Profile() {
                                 Followers <span className="follower-count">{followerCount}</span>
                             </div>
                             <div className="account-elements-content">
-                                Could not fetch friends data from this user.
+                                <div className="follower-container">
+                                    {
+                                        followers.map((follower) => <>
+                                            <Follower fromId={follower.fromId} fromName={follower.fromName}/>
+                                        </>)
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
