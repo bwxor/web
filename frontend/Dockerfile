@@ -25,6 +25,9 @@ COPY --from=build /usr/src/app/frontend/nginx /etc/nginx/conf.d
 # Copy the build output from the dist folder into the Nginx html directory
 COPY --from=build /usr/src/app/frontend/dist /usr/share/nginx/html
 
+# Permissions to assets
+RUN chmod -R 755 /usr/share/nginx/html
+
 # Expose port 80 to allow access to the app
 EXPOSE 80
 
