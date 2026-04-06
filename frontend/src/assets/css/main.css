@@ -467,6 +467,17 @@ input[type=range] {
     justify-content: center;
 }
 
+.profile-banner-image-placeholder-small {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
 .profile-banner-image-placeholder-light {
     background-color: #398bd6;
 }

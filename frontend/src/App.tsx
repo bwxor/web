@@ -19,6 +19,7 @@ import Profile from "./components/profile/Profile.tsx";
 import CreateItem from "./components/item/CreateItem.tsx";
 import UpdateItem from "./components/item/UpdateItem.tsx";
 import {SecurityContextProvider} from "./context/SecurityContext.tsx";
+import Chat from "./components/chat/Chat.tsx";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -34,6 +35,7 @@ const router = createBrowserRouter(
                 <Route path="profile/:key" element={<Profile/>}/>
                 <Route path="new/:category" element={<CreateItem/>}/>
                 <Route path="update/:category/:oldSlug" element={<UpdateItem/>}/>
+                <Route path="chat" element={<Chat/>}/>
             </Route>
         </>
     )

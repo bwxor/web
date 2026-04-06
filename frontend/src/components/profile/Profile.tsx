@@ -5,6 +5,7 @@ import {useTheme} from "../../context/ThemeContext.tsx";
 import ProfileComment from "../item/ProfileComment.tsx";
 import {Riple} from "react-loading-indicators";
 import Follower from "../item/Follower.tsx";
+import ProfileImage from "./ProfileImage.tsx";
 
 interface ProfileType {
     displayName: string;
@@ -335,10 +336,7 @@ function Profile() {
                         <div className={"profile-banner profile-banner-" + theme}>
                             <div className="profile-banner-header">
                                 <div className="profile-banner-image-section">
-                                    <div
-                                        className={"profile-banner-image-placeholder profile-banner-image-placeholder-" + theme}>
-                                        {profile?.displayName?.substring(0, 1)}
-                                    </div>
+                                    <ProfileImage fullName={profile?.displayName} small={false}></ProfileImage>
                                 </div>
                                 <div className="profile-banner-user-info-section">
                                     <div className="profile-banner-user-info-main-group">

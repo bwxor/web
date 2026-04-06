@@ -35,9 +35,14 @@ function PopupMenu(props: PopupMenuProps) {
                     Sign in
                 </Link>
                 :
-                <Link to={"/profile/" + auth.id} style={{color: 'inherit'}} className={"menu-item-small-" + theme}>
-                    {auth.displayName}
-                </Link>
+                <>
+                    <Link to={"/chat/"} style={{color: 'inherit'}} className={"menu-item-small-" + theme}>
+                        Chat
+                    </Link>
+                    <Link to={"/profile/" + auth.id} style={{color: 'inherit'}} className={"menu-item-small-" + theme}>
+                        {auth.displayName}
+                    </Link>
+                </>
             }
         </div>
     );
@@ -58,12 +63,12 @@ function Menu() {
             <div className={"body-padded body-padded-" + theme}>
                 <nav className={"menu menu-" + theme}>
                     <div className="menu-branding">
-                        <Link to="/" style={{ textDecoration: 'none' }}>
+                        <Link to="/" style={{textDecoration: 'none'}}>
                             <span className={"menu-branding-text-" + theme}>bwxor</span>
                         </Link>
                     </div>
                     <div className="menu-small-buttons" key={theme}>
-                        <button className="menu-item-burger" onClick={toggleTheme} >
+                        <button className="menu-item-burger" onClick={toggleTheme}>
                             <span
                                 className={"fa-solid fa-" + (theme == "light" ? "moon" : "sun") + " menu-item-burger-" + theme}></span>
                         </button>
@@ -88,9 +93,14 @@ function Menu() {
                                     <span className={"menu-item menu-item-" + theme}>Sign&nbsp;In</span>
                                 </Link>
                                 :
+                                <>
+                                <Link to={"/chat/"}>
+                                    <span className={"menu-item menu-item-" + theme}>Chat</span>
+                                </Link>
                                 <Link to={"/profile/" + auth.id}>
                                     <span className={"menu-item menu-item-" + theme}>{auth.displayName}</span>
                                 </Link>
+                                </>
                             }
 
                         </div>
