@@ -1,3 +1,5 @@
+import './assets/js/fontawesome-all.js'
+
 import {
     createBrowserRouter,
     createRoutesFromElements,
