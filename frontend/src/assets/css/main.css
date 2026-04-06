@@ -672,6 +672,21 @@ input[type=range] {
     background-color: #23292e;
 }
 
+.item-summary-title {
+    font-size: 1.75rem;
+}
+
+.item-summary-title-dark {
+    color: #48a5ff;
+}
+
+.item-summary-title-light {
+    color: #1b7cda;
+}
+
+.item-summary-description {
+}
+
 .recaptcha {
     display: flex;
     flex-direction: row;

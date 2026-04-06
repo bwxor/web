@@ -16,31 +16,31 @@ const applications = [
     {
         "title": "PDF Editor",
         "description": "Provides options to split, merge, or convert images into PDF files.",
-        "url": "/apps/pdf",
+        "url": "https://apps.bwxor.com/pdf",
         "category": "Utility"
     },
     {
         "title": "Spy",
         "description": "Spy game with custom words.",
-        "url": "/apps/spy",
+        "url": "https://apps.bwxor.com/spy",
         "category": "Game"
     },
     {
         "title": "Randomizer",
         "description": "Various ways to get random output based on your input.",
-        "url": "/apps/randomizer",
+        "url": "https://apps.bwxor.com/randomizer",
         "category": "Utility",
     },
     {
         "title": "YouTubeToMP3",
         "description": "Extract audio from any YouTube video.",
-        "url": "/apps/yt2mp3",
+        "url": "https://apps.bwxor.com/yt2mp3",
         "category": "Utility"
     },
     {
         "title": "AudioEssentials",
         "description": "Tools for audio conversion.",
-        "url": "/apps/ae",
+        "url": "https://apps.bwxor.com/audio",
         "category": "Utility"
     }
 ]
