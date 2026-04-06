@@ -62,8 +62,8 @@ function Menu() {
                             <span className={"menu-branding-text-" + theme}>bwxor</span>
                         </Link>
                     </div>
-                    <div className="menu-small-buttons">
-                        <button className="menu-item-burger" onClick={toggleTheme}>
+                    <div className="menu-small-buttons" key={theme}>
+                        <button className="menu-item-burger" onClick={toggleTheme} >
                             <span
                                 className={"fa-solid fa-" + (theme == "light" ? "moon" : "sun") + " menu-item-burger-" + theme}></span>
                         </button>
@@ -94,7 +94,7 @@ function Menu() {
                             }
 
                         </div>
-                        <div className="menu-items-secondary">
+                        <div className="menu-items-secondary" key={theme}>
                             <div className={"menu-item menu-item-" + theme} onClick={toggleTheme}>
                                 <span
                                     className={"fa-solid fa-" + (theme == "light" ? "moon" : "sun") + " menu-item-burger-" + theme}></span>
