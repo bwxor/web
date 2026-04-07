@@ -53,8 +53,8 @@ function MessageBox(props: MessageBoxProps) {
 
     // todo: replace with db call
     const DUMMY_MESSAGES: Message[] = [
-        {id: "m1", senderId: auth.email, receiverId: props.email, content: "These are just demo messages."},
-        {id: "m2", senderId: props.email, receiverId: auth.email, content: "They will get replaced with actual DB calls."},
+        {senderId: auth.email, receiverId: props.email, content: "These are just demo messages."},
+        {senderId: props.email, receiverId: auth.email, content: "They will get replaced with actual DB calls."},
     ];
 
     const [messages, setMessages] = useState<Message[]>([]);
@@ -107,8 +107,7 @@ function MessageBox(props: MessageBoxProps) {
                         <div className={"message-container-top"}>
                             {
                                 messages?.map((message) => {
-                                    return <div key={message.id}
-                                                className={"message-row message-row-" + (message.senderId == auth.email ? "sender" : "receiver")}>
+                                    return <div className={"message-row message-row-" + (message.senderId == auth.email ? "sender" : "receiver")}>
                                         <div className={"message message-" + theme}>
                                             <div className={"message-name message-name-" + theme}>
                                                 {message.senderId == auth.email ? "You" : props.fullName}
