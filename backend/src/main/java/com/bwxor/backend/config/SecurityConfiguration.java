@@ -39,6 +39,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/api/profile/update").authenticated()
                         .requestMatchers("/api/pages/create").authenticated()
+                        .requestMatchers("/chat/**").permitAll()
                         .anyRequest().permitAll())
                 .sessionManagement((sess) -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

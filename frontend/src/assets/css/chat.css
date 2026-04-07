@@ -103,7 +103,7 @@
     flex-direction: column;
     height: 100%;
     gap: 1rem;
-    max-height: 750px;
+    height: 750px;
 }
 
 .message-container-top {

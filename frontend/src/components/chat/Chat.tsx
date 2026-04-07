@@ -44,7 +44,7 @@ function Chat() {
 
         if (key.length != 0) {
             setDisplayedContacts(contacts?.filter(
-                contact => contact.displayName?.toLowerCase().includes(key.toLowerCase()) || contact.id?.toLowerCase()?.includes(key.toLowerCase())
+                contact => contact.displayName?.toLowerCase().includes(key.toLowerCase()) || contact.email?.toLowerCase()?.includes(key.toLowerCase())
             ));
         } else {
             setDisplayedContacts(contacts);
@@ -71,16 +71,16 @@ function Chat() {
                                    className={"textbox textbox-" + theme} onChange={searchContacts}>
                             </input>
                             <div className={"contact-list"}>
-                                {displayedContacts?.map((contact) => <ContactBox key={contact.id} id={contact.id}
+                                {displayedContacts?.map((contact) => <ContactBox key={contact.email} id={contact.email}
                                                                         fullName={contact.displayName}
-                                                                        selected={(contact.id == selectedContact?.id)}
+                                                                        selected={(contact.email == selectedContact?.email)}
                                                                         onClick={() => onContactClick(contact)}/>)}
                             </div>
                         </div>
                         <div className="chat-container-right">
                             {
                                 selectedContact ?
-                                    <MessageBox id={selectedContact?.id} fullName={selectedContact?.displayName}/>
+                                    <MessageBox email={selectedContact?.email} fullName={selectedContact?.displayName}/>
                                     :
                                     <div className={"chat-prompt"}>
                                         <div className={"chat-prompt-items"}>
