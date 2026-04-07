@@ -80,7 +80,7 @@ function CreateItem() {
     }
 
     const fetchProfile = async () => {
-        await fetch("https://bwxor.com/api/profile/find/" + auth.email)
+        await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/profile/find/` + auth.email)
             .then((response) => {
                 return response.json();
             })
@@ -142,7 +142,7 @@ function CreateItem() {
         } else if (content.trim() == "") {
             setErrorContent(true);
         } else {
-            const response = await fetch("https://bwxor.com/api/pages/create", {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pages/create`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -50,7 +50,7 @@ function Register() {
         }
 
         try {
-            const registerResponse = await fetch("https://bwxor.com/api/auth/register", {
+            const registerResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/register`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -68,7 +68,7 @@ function Register() {
                 setError(true);
                 setErrorMessage(errorData.message);
             } else {
-                const loginResponse = await fetch("https://bwxor.com/api/auth/login", {
+                const loginResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -84,7 +84,7 @@ function Register() {
                 } else {
                     const loginData = await loginResponse.json();
 
-                    const profileResponse = await fetch("https://bwxor.com/api/profile/find/" + loginData.user.id);
+                    const profileResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/profile/find/` + loginData.user.id);
                     const profileData = await profileResponse.json();
 
                     initAuth(loginData.token, loginData.user.id, loginData.user.email, profileData.displayName);

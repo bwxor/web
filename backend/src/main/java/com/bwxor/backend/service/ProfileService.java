@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class ProfileService {
@@ -16,6 +17,11 @@ public class ProfileService {
     private ProfileRepository profileRepository;
     @Autowired
     private UserRepository userRepository;
+
+    public ServiceResponse<List<Profile>> findAll() {
+        var profiles = profileRepository.findAll();
+        return ServiceResponse.ofItem(profiles);
+    }
 
     public ServiceResponse<Profile> findByKey(String key) {
         var foundProfile = profileRepository.findByEmail(key);

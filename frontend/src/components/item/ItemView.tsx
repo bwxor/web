@@ -37,7 +37,7 @@ function ItemView(props: ItemViewProps) {
         const confirmed = window.confirm("Are you sure you want to delete the page?");
         if (confirmed) {
             try {
-                const registerResponse = await fetch("https://bwxor.com/api/pages/delete", {
+                const registerResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pages/delete`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
@@ -66,7 +66,7 @@ function ItemView(props: ItemViewProps) {
 
     useEffect(() => {
         if (auth.token != "") {
-            fetch("https://bwxor.com/api/profile/find/" + auth.email)
+            fetch(`${import.meta.env.VITE_BACKEND_URL}/api/profile/find/` + auth.email)
                 .then((response) => {
                     return response.json();
                 })
@@ -78,7 +78,7 @@ function ItemView(props: ItemViewProps) {
     }, [])
 
     useEffect(() => {
-        fetch(`https://bwxor.com/api/pages/${props.category}/${slug}`)
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pages/${props.category}/${slug}`)
             .then((response) => response.json())
             .then((data) => {
                 setLoadingMarkdown(false);

@@ -62,7 +62,7 @@ function Profile() {
 
     const handleFollow = async () => {
         try {
-            const createFollowResponse = await fetch("https://bwxor.com/api/follows/create", {
+            const createFollowResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/follows/create`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -92,7 +92,7 @@ function Profile() {
 
     const handleUnfollow = async () => {
         try {
-            const deleteFollowResponse = await fetch("https://bwxor.com/api/follows/delete", {
+            const deleteFollowResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/follows/delete`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -152,7 +152,7 @@ function Profile() {
         } else {
             setErrorBiography(false);
 
-            const response = await fetch("https://bwxor.com/api/profile/update", {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/profile/update`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -184,7 +184,7 @@ function Profile() {
         } else {
             setErrorBirthYear(false);
 
-            const response = await fetch("https://bwxor.com/api/profile/update", {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/profile/update`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -211,7 +211,7 @@ function Profile() {
     }
 
     const fetchFollowCount = async (email: string | undefined) => {
-        await fetch("https://bwxor.com/api/follows/count/" + email, {
+        await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/follows/count/` + email, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + auth.token
@@ -231,7 +231,7 @@ function Profile() {
     }
 
     const fetchFollowStatus = async (profileData: ProfileType) => {
-        await fetch("https://bwxor.com/api/follows/status/" + profileData.email, {
+        await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/follows/status/` + profileData.email, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + auth.token
@@ -253,7 +253,7 @@ function Profile() {
     const fetchComments = async (profileData: ProfileType) => {
         console.log(profileData);
 
-        await fetch("https://bwxor.com/api/comments/user/" + profileData.email)
+        await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/comments/user/` + profileData.email)
             .then((response) => {
                 setFetchedComments(true);
                 return response.json();
@@ -267,7 +267,7 @@ function Profile() {
     }
 
     const fetchFollowers = async (profileData: ProfileType) => {
-        await fetch("https://bwxor.com/api/follows/list/" + profileData.email, {
+        await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/follows/list/` + profileData.email, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + auth.token
@@ -290,7 +290,7 @@ function Profile() {
         if (auth.token == "") {
             navigate("/signin");
         } else {
-            fetch("https://bwxor.com/api/profile/find/" + key)
+            fetch(`${import.meta.env.VITE_BACKEND_URL}/api/profile/find/` + key)
                 .then((response) => {
                     setFetchedProfile(true);
                     responseStatus = response.status;

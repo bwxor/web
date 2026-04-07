@@ -24,7 +24,7 @@ const Comment = (props: Comment) => {
         const confirmed = window.confirm("Are you sure you want to delete the comment?");
         if (confirmed) {
             try {
-                const registerResponse = await fetch("https://bwxor.com/api/comments/delete", {
+                const registerResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/comments/delete`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",

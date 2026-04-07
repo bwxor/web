@@ -19,6 +19,13 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
+    @GetMapping("find/")
+    public ResponseEntity<?> findAll() {
+        var findProfileResponse = profileService.findAll();
+
+        return ResponseEntity.ok().body(findProfileResponse);
+    }
+
     @GetMapping("find/{key}")
     public ResponseEntity<?> findByKey(@PathVariable String key) {
         var findProfileResponse = profileService.findByKey(key);

@@ -32,7 +32,7 @@ function ItemList(props: ItemListProps) {
 
     useEffect(() => {
         if (auth.token != "") {
-            fetch("https://bwxor.com/api/profile/find/" + auth.email)
+            fetch(`${import.meta.env.VITE_BACKEND_URL}/api/profile/find/` + auth.email)
                 .then((response) => {
                     return response.json();
                 })
@@ -44,7 +44,7 @@ function ItemList(props: ItemListProps) {
     }, [])
 
     useEffect(() => {
-        fetch("https://bwxor.com/api/pages/" + props.category)
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pages/` + props.category)
             .then((response) => {
                 setLoading(false);
                 return response.json();

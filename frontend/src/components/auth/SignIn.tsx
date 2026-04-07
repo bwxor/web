@@ -44,7 +44,7 @@ function Register() {
         }
 
         try {
-            const userResponse = await fetch("https://bwxor.com/api/auth/login", {
+            const userResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -65,7 +65,7 @@ function Register() {
                 const userData = await userResponse.json();
                 initSecurity(0);
 
-                const profileResponse = await fetch("https://bwxor.com/api/profile/find/" + userData.user.id);
+                const profileResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/profile/find/` + userData.user.id);
                 const profileData = await profileResponse.json();
 
                 initAuth(userData.token, userData.user.id, userData.user.email, profileData.displayName);
