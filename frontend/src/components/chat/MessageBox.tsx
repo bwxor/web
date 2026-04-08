@@ -22,7 +22,7 @@ function MessageBox(props: MessageBoxProps) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const socket = new SockJS(`${import.meta.env.VITE_BACKEND_URL}/chat`);
+        const socket = new SockJS(`${import.meta.env.VITE_BACKEND_URL}/api/chat`);
         const stompClient = Stomp.over(socket);
 
         const headers = {
